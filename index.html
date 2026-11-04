@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Englishscorewithme | Ingliz tilini noldan o'rganing</title>
-  <meta name="description" content="Englishscorewithme — Interaktiv flesh-kartalar, audio talaffuz, darajalar (A1-B2) va testlar orqali ingliz tilini professional darajada o'rganing." />
+  <title>Englishscorewithme | Global 4-Skills English & IELTS Platform</title>
+  <meta name="description" content="Global platform to master English: Reading, Listening, Speaking with AI recognition, and Writing with IELTS/Cambridge materials. Multilingual support (UZ, RU, CN, ES, TR)." />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎯</text></svg>" />
 
   <!-- Google Fonts -->
@@ -28,9 +28,8 @@
               primary: '#6366f1',
               secondary: '#10b981',
               accent: '#f59e0b',
-              dark: '#0a0f1d',
-              card: '#111827',
-              border: '#1f2937'
+              dark: '#080c14',
+              card: '#0f172a',
             }
           }
         }
@@ -39,414 +38,385 @@
   </script>
 
   <style>
-    * {
-      -webkit-tap-highlight-color: transparent;
-      box-sizing: border-box;
-    }
-    body {
-      background-color: #080c14;
-      color: #f3f4f6;
-    }
-    /* 3D Flashcard Flip Style */
-    .perspective-1000 {
-      perspective: 1000px;
-    }
-    .transform-style-3d {
-      transform-style: preserve-3d;
-    }
-    .backface-hidden {
-      backface-visibility: hidden;
-      -webkit-backface-visibility: hidden;
-    }
-    .rotate-y-180 {
-      transform: rotateY(180deg);
-    }
-    /* Ambient Neon Glow */
-    .glow-orb-1 {
+    * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
+    body { background-color: #070a12; color: #f1f5f9; }
+    .glow-orb-bg {
       position: absolute;
-      top: 0;
-      left: 50%;
+      top: 0; left: 50%;
       transform: translateX(-50%);
-      width: 600px;
-      height: 400px;
-      background: radial-gradient(circle, rgba(99, 102, 241, 0.18) 0%, rgba(16, 185, 129, 0.08) 50%, transparent 75%);
-      filter: blur(80px);
-      z-index: 0;
-      pointer-events: none;
+      width: 700px; height: 450px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.16) 0%, rgba(16, 185, 129, 0.08) 50%, transparent 75%);
+      filter: blur(90px);
+      z-index: 0; pointer-events: none;
     }
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
+    .clickable-word {
+      cursor: pointer;
+      display: inline-block;
+      padding: 1px 3px;
+      border-radius: 4px;
+      transition: all 0.15s ease;
     }
-    ::-webkit-scrollbar-track {
-      background: #080c14;
+    .clickable-word:hover {
+      background-color: rgba(99, 102, 241, 0.3);
+      color: #818cf8;
+      text-decoration: underline;
     }
-    ::-webkit-scrollbar-thumb {
-      background: #1f2937;
-      border-radius: 9999px;
+    /* Pulse animatsiya */
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
     }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #374151;
+    .recording-pulse {
+      animation: pulse-ring 1.5s infinite;
     }
   </style>
 </head>
 <body class="min-h-screen relative overflow-x-hidden antialiased flex flex-col justify-between selection:bg-indigo-500/30 selection:text-indigo-200">
 
-  <!-- Ambient Glow -->
-  <div class="glow-orb-1"></div>
+  <div class="glow-orb-bg"></div>
 
-  <!-- Yuqori Navigatsiya Bari -->
-  <nav class="relative z-20 border-b border-white/[0.08] bg-[#080c14]/80 backdrop-blur-xl sticky top-0">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+  <!-- Yuqori Navigatsiya Bari: Global Language & Mode Switcher -->
+  <nav class="relative z-20 border-b border-white/[0.08] bg-[#070a12]/85 backdrop-blur-xl sticky top-0">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
+      
       <!-- Logo -->
       <a href="#" class="flex items-center gap-2.5 group">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-500 to-emerald-400 p-[2px] flex items-center justify-center shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition-transform">
-          <div class="w-full h-full bg-[#080c14] rounded-[10px] flex items-center justify-center">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-500 via-sky-400 to-emerald-400 p-[2px] flex items-center justify-center shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition-transform">
+          <div class="w-full h-full bg-[#070a12] rounded-[10px] flex items-center justify-center">
             <span class="text-lg">🎯</span>
           </div>
         </div>
         <div>
           <span class="font-display font-bold text-lg text-white tracking-tight">English<span class="text-indigo-400">score</span><span class="text-emerald-400">withme</span></span>
-          <span class="hidden sm:inline-block ml-2 text-[10px] font-semibold uppercase px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">v1.0 Pro</span>
+          <span class="hidden md:inline-block ml-2 text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">Global 4-Skills</span>
         </div>
       </a>
 
-      <!-- Statistika ko'rsatkichlari (Score & Streak) -->
-      <div class="flex items-center gap-2 sm:gap-4">
-        <!-- Kundalik Streak -->
-        <div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs font-semibold" title="Kundalik faollik (Streak)">
-          <span>🔥</span>
-          <span id="streakCount">1 kun</span>
+      <!-- O'ng tomon: Til tanlash (Multilingual) va Rejim -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- O'rganuvchi tili (Native Language) -->
+        <div class="flex items-center gap-1.5 bg-slate-900 border border-white/10 rounded-xl px-2.5 py-1 text-xs">
+          <span class="text-sm">🌐</span>
+          <select id="userLangSelect" onchange="changeLanguage()" class="bg-transparent text-slate-200 font-semibold focus:outline-none cursor-pointer">
+            <option value="uz">🇺🇿 O'zbekcha</option>
+            <option value="ru">🇷🇺 Русский</option>
+            <option value="zh">🇨🇳 中文 (Chinese)</option>
+            <option value="es">🇪🇸 Español</option>
+            <option value="tr">🇹🇷 Türkçe</option>
+          </select>
         </div>
 
-        <!-- Yig'ilgan ballar -->
-        <div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-xs font-semibold" title="Yig'ilgan umumiy ballar">
+        <!-- Foydalanuvchi rejimi: Academic vs Visual Stories -->
+        <select id="userAudienceMode" onchange="changeAudienceMode()" class="hidden sm:inline-block bg-slate-900 border border-white/10 rounded-xl px-2.5 py-1 text-xs font-semibold text-indigo-300 focus:outline-none cursor-pointer">
+          <option value="academic">🎓 IELTS & Cambridge</option>
+          <option value="visual">🎨 Visual & Stories</option>
+        </select>
+
+        <!-- Umumiy ball -->
+        <div class="flex items-center gap-1 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-xs font-bold">
           <span>⭐</span>
-          <span id="totalScore">0 ball</span>
+          <span id="navScore">0</span>
         </div>
       </div>
+
     </div>
   </nav>
 
   <!-- Asosiy Qism -->
-  <main class="relative z-10 flex-grow max-w-5xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-10">
+  <main class="relative z-10 flex-grow max-w-6xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-10">
     
-    <!-- Hero Banner -->
-    <header class="text-center mb-8 sm:mb-12">
-      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-indigo-500/10 to-emerald-500/10 border border-indigo-500/20 text-xs text-indigo-300 mb-4">
-        <span class="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
-        <span>Ingliz tilini noldan o'rganish platformasi</span>
+    <!-- Hero / Sarlavha -->
+    <header class="text-center mb-8">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-xs text-indigo-300 mb-3">
+        <span>⚡ Cambridge & IELTS Standards</span>
+        <span>•</span>
+        <span id="heroBadge">Universal 4 Parts Development</span>
       </div>
-      <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-3">
-        English Learning <span class="bg-gradient-to-r from-indigo-400 via-sky-400 to-emerald-400 bg-clip-text text-transparent">With Me</span>
+      <h1 class="text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white mb-3 font-display">
+        Master English: <span class="bg-gradient-to-r from-indigo-400 via-sky-400 to-emerald-400 bg-clip-text text-transparent">4 Skills in One App</span>
       </h1>
-      <p class="text-sm sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed">
-        Interaktiv flesh-kartalar, jonli audio talaffuz, A1-B2 darajadagi eng zarur so'zlar va testlar orqali tilni tez hamda sifatli o'zlashtiring.
+      <p id="heroSubtitle" class="text-xs sm:text-sm text-slate-300 max-w-2xl mx-auto leading-relaxed">
+        Reading (so'zlarni bosib tarjima qilish), Listening (Cambridge audio), Speaking (ovozni aniqlovchi AI) va Writing (insho tahlili va taymer) barchasi bitta platformada.
       </p>
     </header>
 
-    <!-- Asosiy Menyu Tugmalari (Tabs) -->
-    <div class="flex items-center justify-center gap-2 p-1.5 rounded-2xl bg-slate-900/80 border border-white/10 backdrop-blur-xl mb-8 max-w-lg mx-auto overflow-x-auto">
+    <!-- 4 ASOSIY QISM TUGMALARI (NAV TABS) -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 max-w-3xl mx-auto mb-8">
+      <!-- 1. Reading -->
       <button 
-        onclick="switchTab('flashcards')" 
-        id="tab-flashcards"
-        class="tab-btn flex-1 min-w-[100px] flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 bg-indigo-600 text-white shadow-lg shadow-indigo-600/30"
+        onclick="switchSkillTab('reading')" 
+        id="btn-reading" 
+        class="skill-btn flex items-center justify-center gap-2 p-3.5 rounded-2xl font-bold text-xs sm:text-sm transition-all duration-200 bg-indigo-600 text-white shadow-lg shadow-indigo-600/30 border border-indigo-500"
       >
-        <span>🃏</span>
-        <span>Flesh-karta</span>
+        <span class="text-base sm:text-lg">📖</span>
+        <span>1. Reading</span>
       </button>
+
+      <!-- 2. Listening -->
       <button 
-        onclick="switchTab('vocabulary')" 
-        id="tab-vocabulary"
-        class="tab-btn flex-1 min-w-[100px] flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 text-slate-400 hover:text-white"
+        onclick="switchSkillTab('listening')" 
+        id="btn-listening" 
+        class="skill-btn flex items-center justify-center gap-2 p-3.5 rounded-2xl font-bold text-xs sm:text-sm transition-all duration-200 bg-slate-900/90 text-slate-300 hover:text-white border border-white/10 hover:border-white/20"
       >
-        <span>📚</span>
-        <span>Lug'at</span>
+        <span class="text-base sm:text-lg">🎧</span>
+        <span>2. Listening</span>
       </button>
+
+      <!-- 3. Speaking -->
       <button 
-        onclick="switchTab('quiz')" 
-        id="tab-quiz"
-        class="tab-btn flex-1 min-w-[100px] flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 text-slate-400 hover:text-white"
+        onclick="switchSkillTab('speaking')" 
+        id="btn-speaking" 
+        class="skill-btn flex items-center justify-center gap-2 p-3.5 rounded-2xl font-bold text-xs sm:text-sm transition-all duration-200 bg-slate-900/90 text-slate-300 hover:text-white border border-white/10 hover:border-white/20"
       >
-        <span>🧠</span>
-        <span>Quiz Test</span>
+        <span class="text-base sm:text-lg">🎙️</span>
+        <span>3. Speaking AI</span>
       </button>
+
+      <!-- 4. Writing -->
       <button 
-        onclick="switchTab('grammar')" 
-        id="tab-grammar"
-        class="tab-btn flex-1 min-w-[100px] flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 text-slate-400 hover:text-white"
+        onclick="switchSkillTab('writing')" 
+        id="btn-writing" 
+        class="skill-btn flex items-center justify-center gap-2 p-3.5 rounded-2xl font-bold text-xs sm:text-sm transition-all duration-200 bg-slate-900/90 text-slate-300 hover:text-white border border-white/10 hover:border-white/20"
       >
-        <span>💡</span>
-        <span>Qoidalar</span>
+        <span class="text-base sm:text-lg">✍️</span>
+        <span>4. Writing</span>
       </button>
     </div>
 
-    <!-- ================= 1-BO'LIM: FLASHCARDS (FLESH-KARTALAR) ================= -->
-    <section id="section-flashcards" class="tab-content transition-opacity duration-300">
-      <div class="max-w-md mx-auto">
+    <!-- ================= 1. READING SECTION ================= -->
+    <section id="section-reading" class="skill-content transition-all duration-300">
+      <div class="max-w-4xl mx-auto space-y-6">
         
-        <!-- Yuqori filter va hisoblagich -->
-        <div class="flex items-center justify-between mb-4 px-1">
+        <!-- Taymer va Maqola tanlash paneli -->
+        <div class="flex flex-wrap items-center justify-between gap-3 p-4 rounded-2xl bg-slate-900/80 border border-white/10">
           <div class="flex items-center gap-2">
-            <span class="text-xs text-slate-400 font-medium">Daraja:</span>
-            <select 
-              id="cardLevelFilter" 
-              onchange="changeCardLevel()" 
-              class="text-xs font-semibold bg-slate-900 border border-white/10 rounded-lg px-2.5 py-1 text-indigo-300 focus:outline-none focus:border-indigo-500"
-            >
-              <option value="ALL">Barchasi (All)</option>
-              <option value="A1" selected>A1 - Beginner</option>
-              <option value="A2">A2 - Elementary</option>
-              <option value="B1">B1 - Intermediate</option>
+            <span class="text-xs text-slate-400 font-bold uppercase tracking-wider">Mavzu:</span>
+            <select id="readingTopicSelect" onchange="loadReadingPassage()" class="bg-slate-950 border border-white/10 rounded-xl px-3 py-1.5 text-xs text-indigo-300 font-semibold focus:outline-none">
+              <option value="ai_future">IELTS Reading: The Future of Artificial Intelligence</option>
+              <option value="story_adventure">Visual Story: The Mysterious Lighthouse</option>
+              <option value="cambridge_nature">Cambridge Academic: Climate & Global Ecosystems</option>
             </select>
           </div>
-          <span id="cardCounter" class="text-xs font-bold text-slate-400 bg-white/[0.04] px-2.5 py-1 rounded-full border border-white/5">
-            1 / 10
-          </span>
+
+          <!-- Reading Taymeri -->
+          <div class="flex items-center gap-2">
+            <span class="text-xs text-slate-400">⏱️ Vaqt:</span>
+            <span id="readingTimerDisplay" class="font-mono text-sm font-bold text-amber-400 bg-black/40 px-3 py-1 rounded-lg border border-amber-500/20">05:00</span>
+            <button onclick="toggleReadingTimer()" id="readingTimerBtn" class="px-3 py-1 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition-all">Boshlash</button>
+          </div>
         </div>
 
-        <!-- 3D Flashcard Container -->
-        <div class="perspective-1000 w-full h-[320px] sm:h-[360px] cursor-pointer" onclick="flipCard()">
-          <div id="cardInner" class="relative w-full h-full transform-style-3d transition-transform duration-500 shadow-2xl rounded-3xl">
+        <!-- Matn maydoni (Interactive Click-to-Translate) -->
+        <div class="p-6 sm:p-8 rounded-3xl bg-slate-900/90 border border-white/10 backdrop-blur-xl relative">
+          <div class="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
+            <h2 id="readingTitle" class="text-lg sm:text-xl font-bold text-white">The Future of Artificial Intelligence</h2>
+            <div class="text-[11px] text-slate-400 flex items-center gap-1.5">
+              <span>💡</span>
+              <span>Matndagi istalgan so'z ustiga bosing — tarjimasi chiqadi!</span>
+            </div>
+          </div>
+
+          <!-- Matn paragrafi -->
+          <div id="readingParagraph" class="text-sm sm:text-base text-slate-200 leading-relaxed space-y-4">
+            <!-- Dinamik so'zlar yuklanadi -->
+          </div>
+
+          <!-- Popover / Tooltip Tarjima Kartasi -->
+          <div id="wordTranslationModal" class="hidden fixed sm:absolute z-50 p-4 rounded-2xl bg-slate-950/95 border border-indigo-500/40 shadow-2xl backdrop-blur-2xl max-w-xs transition-all">
+            <div class="flex items-center justify-between gap-3 mb-2">
+              <span id="modalWord" class="text-base font-bold text-white">artificial</span>
+              <button onclick="playWordAudio(document.getElementById('modalWord').textContent)" class="text-indigo-400 hover:text-white" title="Talaffuz">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+              </button>
+              <button onclick="closeWordModal()" class="text-slate-400 hover:text-white text-xs">✕</button>
+            </div>
+            <p id="modalPhonetic" class="text-xs text-indigo-400 font-mono mb-1.5">/ˌɑːtɪˈfɪʃl/</p>
+            <p class="text-xs text-slate-400 mb-1">Tanlangan tildagi ma'nosi:</p>
+            <p id="modalTranslation" class="text-sm font-bold text-emerald-300 mb-2">Sun'iy, soxta bo'lmagan</p>
+            <p id="modalExample" class="text-[11px] text-slate-300 italic border-t border-white/10 pt-2">"Artificial intelligence is transforming industries."</p>
+          </div>
+        </div>
+
+        <!-- Reading Tushunish Testi (Comprehension Check) -->
+        <div class="p-6 rounded-2xl bg-slate-900/80 border border-white/10">
+          <h3 class="text-sm font-bold text-white mb-3">Savol (Reading Comprehension Check):</h3>
+          <p id="readingQuizQuestion" class="text-xs sm:text-sm text-slate-300 mb-4">According to the passage, what is the main goal of modern artificial intelligence?</p>
+          <div id="readingQuizOptions" class="space-y-2">
+            <!-- Variantlar -->
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= 2. LISTENING SECTION ================= -->
+    <section id="section-listening" class="skill-content hidden transition-all duration-300">
+      <div class="max-w-3xl mx-auto space-y-6">
+        
+        <div class="p-6 sm:p-8 rounded-3xl bg-slate-900/90 border border-white/10 backdrop-blur-xl text-center">
+          <span class="text-xs uppercase tracking-widest text-indigo-400 font-bold mb-2 inline-block">IELTS Cambridge Section 1 & 2 Practice</span>
+          <h2 id="listeningTitle" class="text-xl sm:text-2xl font-bold text-white mb-4">Audio Conversation: University Accommodation Registration</h2>
+          
+          <!-- Audio Pleyer Boshqaruvi (Native Speech Synthesis) -->
+          <div class="p-6 rounded-2xl bg-black/40 border border-white/10 max-w-md mx-auto mb-6 flex flex-col items-center">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-indigo-500 to-emerald-400 p-[2px] mb-4">
+              <button onclick="toggleListeningAudio()" id="listeningPlayBtn" class="w-full h-full bg-[#070a12] hover:bg-slate-900 rounded-full flex items-center justify-center text-white text-2xl transition-transform active:scale-95">
+                ▶️
+              </button>
+            </div>
+            <p id="listeningStatusText" class="text-xs text-slate-400 font-medium">Audioni eshitish uchun tugmani bosing</p>
             
-            <!-- OLD TOMONI (English) -->
-            <div class="absolute inset-0 backface-hidden w-full h-full rounded-3xl p-6 sm:p-8 flex flex-col justify-between bg-gradient-to-b from-slate-900/90 to-slate-950/90 border border-white/15 backdrop-blur-2xl">
-              <div class="flex items-center justify-between">
-                <span id="cardBadge" class="text-[11px] font-extrabold uppercase tracking-wider px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
-                  A1 • Beginner
-                </span>
-                <!-- Ovoz tugmasi -->
-                <button 
-                  onclick="event.stopPropagation(); playCurrentAudio()" 
-                  class="w-10 h-10 rounded-full bg-white/[0.06] hover:bg-indigo-600 border border-white/10 text-indigo-400 hover:text-white flex items-center justify-center transition-all duration-200 active:scale-95 shadow-md"
-                  title="Talaffuzni tinglash"
-                >
-                  <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                    <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
-                  </svg>
-                </button>
-              </div>
-
-              <!-- Markaziy so'z -->
-              <div class="text-center my-auto">
-                <h2 id="cardWord" class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-2">
-                  Achievement
-                </h2>
-                <p id="cardPhonetic" class="text-sm font-mono text-indigo-400">
-                  /əˈtʃiːvmənt/
-                </p>
-                <p id="cardPartOfSpeech" class="text-xs uppercase tracking-widest text-slate-400 mt-2 font-semibold">
-                  noun (ot)
-                </p>
-              </div>
-
-              <!-- Pastki maslahat -->
-              <div class="text-center text-xs text-slate-400 flex items-center justify-center gap-1.5">
-                <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                </svg>
-                <span>Tarjimasini ko'rish uchun kartani bosing</span>
-              </div>
+            <!-- Tezlikni sozlash -->
+            <div class="flex items-center gap-2 mt-4 text-xs text-slate-400">
+              <span>Tezlik:</span>
+              <button onclick="setListeningSpeed(0.8)" class="speed-btn px-2 py-0.5 rounded bg-white/5 hover:bg-white/10 text-white">0.8x</button>
+              <button onclick="setListeningSpeed(1.0)" class="speed-btn px-2 py-0.5 rounded bg-indigo-600 text-white font-bold">1.0x</button>
+              <button onclick="setListeningSpeed(1.2)" class="speed-btn px-2 py-0.5 rounded bg-white/5 hover:bg-white/10 text-white">1.2x</button>
             </div>
-
-            <!-- ORQA TOMONI (Uzbek Translation & Example) -->
-            <div class="absolute inset-0 backface-hidden rotate-y-180 w-full h-full rounded-3xl p-6 sm:p-8 flex flex-col justify-between bg-gradient-to-b from-indigo-950/80 to-slate-950/90 border border-indigo-500/40 backdrop-blur-2xl">
-              <div class="flex items-center justify-between">
-                <span class="text-[11px] font-extrabold uppercase tracking-wider px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                  O'zbekcha Ma'nosi
-                </span>
-                <span class="text-xs text-slate-400">Englishscorewithme</span>
-              </div>
-
-              <div class="text-center my-auto px-2">
-                <h3 id="cardTranslation" class="text-2xl sm:text-3xl font-extrabold text-emerald-300 mb-3">
-                  Yutuq, muvaffaqiyat
-                </h3>
-                <div class="p-3 rounded-xl bg-white/[0.04] border border-white/5 text-left">
-                  <p class="text-xs font-semibold text-indigo-300 mb-1">Misol gap:</p>
-                  <p id="cardExample" class="text-xs sm:text-sm text-slate-200 italic mb-1">
-                    "Learning English is a great achievement."
-                  </p>
-                  <p id="cardExampleUz" class="text-xs text-slate-400">
-                    "Ingliz tilini o'rganish — bu katta yutuq."
-                  </p>
-                </div>
-              </div>
-
-              <div class="text-center text-xs text-slate-400">
-                <span>Orqaga qaytish uchun bosing</span>
-              </div>
-            </div>
-
           </div>
-        </div>
 
-        <!-- Boshqaruv tugmalari (Oldingi, Tinglash, Keyingi) -->
-        <div class="flex items-center justify-center gap-3 mt-6">
-          <button 
-            onclick="prevCard()" 
-            class="flex-1 flex items-center justify-center gap-1.5 py-3 rounded-xl bg-white/[0.05] hover:bg-white/[0.1] border border-white/10 text-white font-semibold text-xs sm:text-sm transition-all active:scale-95"
-          >
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" /></svg>
-            <span>Oldingi</span>
-          </button>
-          
-          <button 
-            onclick="playCurrentAudio()" 
-            class="px-5 py-3 rounded-xl bg-emerald-500/20 hover:bg-emerald-500 border border-emerald-500/40 text-emerald-300 hover:text-white font-semibold text-xs sm:text-sm transition-all flex items-center gap-1.5 active:scale-95 shadow-lg shadow-emerald-500/10"
-            title="Talaffuz"
-          >
-            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
-            <span>Tinglash</span>
-          </button>
+          <!-- Topshiriq: Fill in the gaps (Bo'sh joylarni to'ldiring) -->
+          <div class="text-left bg-white/[0.03] p-5 rounded-2xl border border-white/5">
+            <h3 class="text-sm font-bold text-indigo-300 mb-3">Vazifa: Audio asosida bo'sh kataklarni to'ldiring:</h3>
+            <div class="space-y-3 text-xs sm:text-sm">
+              <div class="flex flex-wrap items-center gap-2">
+                <span>1. Student's Full Name: Michael</span>
+                <input type="text" id="listenAns1" placeholder="Familiya..." class="bg-slate-950 border border-white/15 rounded-lg px-2.5 py-1 text-white focus:border-indigo-500 outline-none w-36" />
+              </div>
+              <div class="flex flex-wrap items-center gap-2">
+                <span>2. Preferred room type:</span>
+                <input type="text" id="listenAns2" placeholder="Xona turi..." class="bg-slate-950 border border-white/15 rounded-lg px-2.5 py-1 text-white focus:border-indigo-500 outline-none w-36" />
+              </div>
+              <div class="flex flex-wrap items-center gap-2">
+                <span>3. Maximum monthly budget: $</span>
+                <input type="text" id="listenAns3" placeholder="Narx..." class="bg-slate-950 border border-white/15 rounded-lg px-2.5 py-1 text-white focus:border-indigo-500 outline-none w-28" />
+              </div>
+            </div>
+            
+            <div class="mt-4 flex items-center gap-3">
+              <button onclick="checkListeningAnswers()" class="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition-all shadow-lg shadow-emerald-600/20">
+                Javoblarni tekshirish
+              </button>
+              <span id="listeningResult" class="text-xs font-bold"></span>
+            </div>
+          </div>
 
-          <button 
-            onclick="nextCard()" 
-            class="flex-1 flex items-center justify-center gap-1.5 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs sm:text-sm transition-all shadow-lg shadow-indigo-600/30 active:scale-95"
-          >
-            <span>Keyingi</span>
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" /></svg>
-          </button>
         </div>
 
       </div>
     </section>
 
-    <!-- ================= 2-BO'LIM: VOCABULARY (LUG'AT RO'YXATI) ================= -->
-    <section id="section-vocabulary" class="tab-content hidden transition-opacity duration-300">
-      <div class="max-w-3xl mx-auto">
+    <!-- ================= 3. SPEAKING SECTION (AI OVOZ TANISH) ================= -->
+    <section id="section-speaking" class="skill-content hidden transition-all duration-300">
+      <div class="max-w-2xl mx-auto space-y-6">
         
-        <!-- Qidiruv va Filtr paneli -->
-        <div class="flex flex-col sm:flex-row gap-3 mb-6">
-          <div class="relative flex-grow">
-            <svg class="w-5 h-5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-            <input 
-              type="text" 
-              id="vocabSearchInput" 
-              oninput="filterVocabulary()" 
-              placeholder="So'z yoki tarjimasini izlash..." 
-              class="w-full bg-slate-900/90 border border-white/10 rounded-xl pl-11 pr-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-colors"
-            />
-          </div>
+        <div class="p-6 sm:p-8 rounded-3xl bg-slate-900/90 border border-white/10 backdrop-blur-xl text-center">
+          <span class="text-xs uppercase tracking-widest text-emerald-400 font-bold mb-2 inline-block">IELTS Speaking Part 1 & 2 • AI Speech Recognition</span>
+          <h2 class="text-xl sm:text-2xl font-bold text-white mb-2">Talaffuz va Nutqni Mashq Qiling</h2>
+          <p class="text-xs text-slate-400 mb-6">Quyidagi gapni baland ovozda mikrofonga ayting. Tizim sizning talaffuzingizni tekshirib, foizda baholaydi.</p>
 
-          <div class="flex gap-2">
-            <select 
-              id="vocabLevelSelect" 
-              onchange="filterVocabulary()" 
-              class="bg-slate-900 border border-white/10 rounded-xl px-3 py-2.5 text-xs sm:text-sm text-slate-300 focus:outline-none focus:border-indigo-500 font-semibold"
-            >
-              <option value="ALL">Barcha darajalar</option>
-              <option value="A1">A1 - Boshlang'ich</option>
-              <option value="A2">A2 - O'rta-quyi</option>
-              <option value="B1">B1 - O'rta</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- So'zlar ro'yxati -->
-        <div id="vocabListContainer" class="space-y-2.5">
-          <!-- Dinamik ravishda JS orqali to'ldiriladi -->
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ================= 3-BO'LIM: QUIZ (INTERAKTIV TEST) ================= -->
-    <section id="section-quiz" class="tab-content hidden transition-opacity duration-300">
-      <div class="max-w-lg mx-auto">
-        
-        <!-- Quiz Kartochkasi -->
-        <div class="p-6 sm:p-8 rounded-3xl bg-slate-900/90 border border-white/10 backdrop-blur-xl shadow-2xl">
-          
-          <!-- Savol progressi va Ball -->
-          <div class="flex items-center justify-between mb-6">
-            <span id="quizProgressText" class="text-xs font-bold text-indigo-400 bg-indigo-500/10 px-3 py-1 rounded-full border border-indigo-500/20">
-              Savol: 1 / 5
-            </span>
-            <span id="quizScoreText" class="text-xs font-bold text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
-              Natija: 0
-            </span>
-          </div>
-
-          <!-- Savol matni -->
-          <div class="text-center mb-6">
-            <p class="text-xs text-slate-400 font-semibold uppercase tracking-wider mb-2">Quyidagi so'zning to'g'ri tarjimasini toping:</p>
+          <!-- Berilgan jumla -->
+          <div class="p-5 rounded-2xl bg-black/40 border border-white/10 mb-6">
+            <p class="text-xs text-slate-400 mb-1">Aytishingiz kerak bo'lgan gap:</p>
+            <p id="speakingTargetPhrase" class="text-base sm:text-lg font-bold text-indigo-300 mb-3">
+              "Consistency and daily dedication are the real secrets to learning any foreign language."
+            </p>
             <div class="flex items-center justify-center gap-2">
-              <h3 id="quizQuestionWord" class="text-3xl font-extrabold text-white">
-                Confidence
-              </h3>
-              <button onclick="playWordAudio(document.getElementById('quizQuestionWord').textContent)" class="text-indigo-400 hover:text-white p-1 rounded-full" title="Tinglash">
-                <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+              <button onclick="playWordAudio(document.getElementById('speakingTargetPhrase').textContent)" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-xs text-slate-300">
+                <span>🔊 Namuna talaffuzni tinglash</span>
+              </button>
+              <button onclick="nextSpeakingPhrase()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-500/20 hover:bg-indigo-500/30 text-xs text-indigo-300">
+                <span>Keyingi gap 🔄</span>
               </button>
             </div>
           </div>
 
-          <!-- Variantlar -->
-          <div id="quizOptionsContainer" class="space-y-3 mb-6">
-            <!-- Dinamik variantlar -->
+          <!-- Mikrofon tugmasi -->
+          <div class="flex flex-col items-center justify-center mb-6">
+            <button 
+              id="micButton" 
+              onclick="toggleSpeechRecognition()" 
+              class="w-20 h-20 rounded-full bg-indigo-600 hover:bg-indigo-500 text-white flex items-center justify-center text-3xl shadow-xl shadow-indigo-600/30 transition-all active:scale-95"
+            >
+              🎙️
+            </button>
+            <span id="micStatusText" class="text-xs font-semibold text-slate-400 mt-3">Gapirish uchun mikrofonni bosing</span>
           </div>
 
-          <!-- Fikr-mulohaza (Feedback xabari) -->
-          <div id="quizFeedback" class="hidden text-center p-3 rounded-xl mb-4 text-xs font-bold transition-all">
+          <!-- Natija va aniqlik ko'rsatkichi -->
+          <div id="speakingResultBox" class="hidden p-4 rounded-2xl bg-white/[0.04] border border-white/10 text-left">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-slate-400">Tizim eshitgan matn:</span>
+              <span id="speakingScoreBadge" class="text-xs font-extrabold px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300">95% Aniq</span>
+            </div>
+            <p id="spokenTextDisplay" class="text-sm font-mono text-slate-200 mb-2">...</p>
+            <p id="speakingFeedbackText" class="text-xs text-slate-400">Ajoyib talaffuz! So'zlar to'g'ri va ravon aytildi.</p>
           </div>
 
-          <!-- Keyingi savol tugmasi -->
-          <button 
-            id="quizNextBtn"
-            onclick="nextQuizQuestion()" 
-            class="hidden w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm transition-all shadow-lg shadow-indigo-600/30"
-          >
-            Keyingi savolga o'tish →
-          </button>
         </div>
 
       </div>
     </section>
 
-    <!-- ================= 4-BO'LIM: GRAMMATIKA VA MASLAHATLAR ================= -->
-    <section id="section-grammar" class="tab-content hidden transition-opacity duration-300">
-      <div class="max-w-2xl mx-auto space-y-4">
+    <!-- ================= 4. WRITING SECTION ================= -->
+    <section id="section-writing" class="skill-content hidden transition-all duration-300">
+      <div class="max-w-3xl mx-auto space-y-6">
         
-        <div class="p-5 rounded-2xl bg-slate-900/80 border border-white/10 backdrop-blur-md">
-          <div class="flex items-center gap-3 mb-2">
-            <span class="w-8 h-8 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold text-sm">1</span>
-            <h3 class="text-base font-bold text-white">To be (am / is / are) — Bo'lmoq fe'li</h3>
-          </div>
-          <p class="text-xs text-slate-300 leading-relaxed pl-11 mb-2">
-            Hozirgi zamonda kimdir yoki nimadir haqida xabar berishda ishlatiladi:
-          </p>
-          <div class="pl-11 space-y-1 text-xs">
-            <p class="text-emerald-300 font-mono">• I am a student. (Men talabaman.)</p>
-            <p class="text-emerald-300 font-mono">• She is confident. (U o'ziga ishongan.)</p>
-            <p class="text-emerald-300 font-mono">• We are ready. (Biz tayyormiz.)</p>
-          </div>
-        </div>
+        <div class="p-6 sm:p-8 rounded-3xl bg-slate-900/90 border border-white/10 backdrop-blur-xl">
+          
+          <div class="flex flex-wrap items-center justify-between gap-3 mb-4 pb-3 border-b border-white/10">
+            <div>
+              <span class="text-xs uppercase tracking-widest text-amber-400 font-bold">IELTS Academic & General Writing Task 2</span>
+              <h2 class="text-lg sm:text-xl font-bold text-white">Essay Writing Practice with Timer</h2>
+            </div>
 
-        <div class="p-5 rounded-2xl bg-slate-900/80 border border-white/10 backdrop-blur-md">
-          <div class="flex items-center gap-3 mb-2">
-            <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-sm">2</span>
-            <h3 class="text-base font-bold text-white">Present Simple — Oddiy hozirgi zamon</h3>
+            <!-- Writing Taymeri (40 daqiqa) -->
+            <div class="flex items-center gap-2">
+              <span id="writingTimerDisplay" class="font-mono text-sm font-bold text-amber-400 bg-black/40 px-3 py-1.5 rounded-lg border border-amber-500/20">40:00</span>
+              <button onclick="toggleWritingTimer()" id="writingTimerBtn" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition-all">Start ⏱️</button>
+            </div>
           </div>
-          <p class="text-xs text-slate-300 leading-relaxed pl-11 mb-2">
-            Doimiy takrorlanuvchi odatlar va umumiy haqiqatlar uchun qo'llaniladi:
-          </p>
-          <div class="pl-11 space-y-1 text-xs">
-            <p class="text-emerald-300 font-mono">• I learn 10 new words every day. (Har kuni 10 ta yangi so'z o'rganaman.)</p>
-            <p class="text-emerald-300 font-mono">• He speaks English fluently. (U inglizcha ravon gapiradi.)</p>
-          </div>
-        </div>
 
-        <div class="p-5 rounded-2xl bg-slate-900/80 border border-white/10 backdrop-blur-md">
-          <div class="flex items-center gap-3 mb-2">
-            <span class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold text-sm">3</span>
-            <h3 class="text-base font-bold text-white">Spaced Repetition (Interval takrorlash siri)</h3>
+          <!-- Essay Mavzusi (Prompt) -->
+          <div class="p-4 rounded-2xl bg-black/40 border border-white/10 mb-4">
+            <p class="text-xs font-bold text-indigo-400 uppercase tracking-wider mb-1">Mavzu (Topic):</p>
+            <p id="writingTopicPrompt" class="text-sm text-slate-200 leading-relaxed font-medium">
+              "Some people believe that unpaid community service should be a compulsory part of high school programmes. To what extent do you agree or disagree?"
+            </p>
           </div>
-          <p class="text-xs text-slate-300 leading-relaxed pl-11">
-            Yangi so'zni 1 kundan keyin, 3 kundan keyin va 7 kundan keyin qaytarsangiz, u qisqa muddatli xotiradan uzoq muddatli xotiraga o'tadi va hech qachon unutilmaydi!
-          </p>
+
+          <!-- Matn kiritish maydoni -->
+          <div class="relative mb-3">
+            <textarea 
+              id="essayTextarea" 
+              oninput="handleEssayInput()" 
+              rows="9" 
+              placeholder="Inshongizni bu yerga yozing (kamida 250 so'z tavsiya etiladi)..."
+              class="w-full bg-slate-950 border border-white/15 rounded-2xl p-4 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 leading-relaxed font-sans"
+            ></textarea>
+          </div>
+
+          <!-- So'zlar hisobi va Tahlil paneli -->
+          <div class="flex flex-wrap items-center justify-between gap-3 text-xs mb-4">
+            <div class="flex items-center gap-3">
+              <span class="text-slate-400">So'zlar soni: <strong id="wordCountDisplay" class="text-indigo-400 font-bold">0</strong> / 250</span>
+              <span class="text-slate-400">Belgilar: <strong id="charCountDisplay" class="text-slate-300">0</strong></span>
+            </div>
+            <button onclick="analyzeEssay()" class="px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-600 to-emerald-600 hover:from-indigo-500 hover:to-emerald-500 text-white font-bold transition-all shadow-lg shadow-indigo-600/20">
+              Inshoni Tahlil Qilish ✨
+            </button>
+          </div>
+
+          <!-- Tahlil xulosasi qutisi -->
+          <div id="essayAnalysisBox" class="hidden p-4 rounded-2xl bg-white/[0.04] border border-white/10 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-white">Loyiha tahlili va tavsiyalar:</span>
+              <span id="estimatedBandScore" class="text-xs font-extrabold px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">Taxminiy Band: 6.5</span>
+            </div>
+            <p id="essayAdviceText" class="text-xs text-slate-300 leading-relaxed">...</p>
+          </div>
+
         </div>
 
       </div>
@@ -455,378 +425,433 @@
   </main>
 
   <!-- Pastki qism: Footer -->
-  <footer class="relative z-10 border-t border-white/[0.08] bg-[#080c14]/90 py-6 text-center text-xs text-slate-400">
-    <div class="max-w-5xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+  <footer class="relative z-10 border-t border-white/[0.08] bg-[#070a12]/90 py-6 text-center text-xs text-slate-400">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
       <div class="flex items-center gap-2">
         <span class="text-base">🎯</span>
         <span class="font-bold text-white">Englishscorewithme</span>
-        <span>• Barcha huquqlar himoyalangan.</span>
+        <span>• Global 4-Skills Interactive Platform.</span>
       </div>
       <div class="flex items-center gap-4 text-slate-400">
-        <a href="https://t.me/your_telegram" target="_blank" class="hover:text-white transition-colors">Telegram Kanal</a>
-        <a href="https://instagram.com/your_username" target="_blank" class="hover:text-white transition-colors">Instagram</a>
-        <a href="https://github.com/Ramil91-ui/englishscorewithme" target="_blank" class="hover:text-white transition-colors">GitHub</a>
+        <a href="https://github.com/Ramil91-ui/englishscorewithme" target="_blank" class="hover:text-white transition-colors">GitHub Repository</a>
+        <a href="https://englishscorewithme.vercel.app" target="_blank" class="hover:text-white transition-colors">Live App</a>
       </div>
     </div>
   </footer>
 
-  <!-- ================= JAVASCRIPT LOGIKASI ================= -->
+  <!-- ================= JAVASCRIPT GLOBAL LOGIKA ================= -->
   <script>
-    // Ma'lumotlar bazasi (Boshlang'ich sifatli so'zlar to'plami)
-    const VOCABULARY = [
-      {
-        word: "Achievement",
-        phonetic: "/əˈtʃiːvmənt/",
-        partOfSpeech: "noun",
-        level: "A2",
-        uz: "Yutuq, muvaffaqiyat",
-        example: "Learning English is a great achievement.",
-        exampleUz: "Ingliz tilini o'rganish — bu katta yutuq."
-      },
-      {
-        word: "Confidence",
-        phonetic: "/ˈkɒnfɪdəns/",
-        partOfSpeech: "noun",
-        level: "A1",
-        uz: "O'ziga ishonch",
-        example: "Speak English with confidence.",
-        exampleUz: "Inglizcha o'zingizga ishonch bilan gapiring."
-      },
-      {
-        word: "Opportunity",
-        phonetic: "/ˌɒpəˈtjuːnɪti/",
-        partOfSpeech: "noun",
-        level: "A2",
-        uz: "Imkoniyat, qulay vaziyat",
-        example: "Every mistake is an opportunity to learn.",
-        exampleUz: "Har bir xato — o'rganish uchun imkoniyatdir."
-      },
-      {
-        word: "Improve",
-        phonetic: "/ɪmˈpruːv/",
-        partOfSpeech: "verb",
-        level: "A1",
-        uz: "Yaxshilamoq, rivojlantirmoq",
-        example: "Practice every day to improve your skills.",
-        exampleUz: "Ko'nikmalaringizni rivojlantirish uchun har kuni mashq qiling."
-      },
-      {
-        word: "Fluently",
-        phonetic: "/ˈfluːəntli/",
-        partOfSpeech: "adverb",
-        level: "B1",
-        uz: "Ravon, to'xtovsiz",
-        example: "She wants to speak English fluently.",
-        exampleUz: "U ingliz tilida ravon gapirishni xohlaydi."
-      },
-      {
-        word: "Determination",
-        phonetic: "/dɪˌtɜːmɪˈneɪʃn/",
-        partOfSpeech: "noun",
-        level: "B1",
-        uz: "Qat'iyat, sabot",
-        example: "Success requires passion and determination.",
-        exampleUz: "Muvaffaqiyat ishtiyoq va qat'iyatni talab qiladi."
-      },
-      {
-        word: "Knowledge",
-        phonetic: "/ˈnɒlɪdʒ/",
-        partOfSpeech: "noun",
-        level: "A1",
-        uz: "Bilim, ma'lumot",
-        example: "Knowledge is power in the modern world.",
-        exampleUz: "Zamonaviy dunyoda bilim — bu kuch."
-      },
-      {
-        word: "Goal",
-        phonetic: "/ɡəʊl/",
-        partOfSpeech: "noun",
-        level: "A1",
-        uz: "Maqsad, niyat",
-        example: "My goal is to score 7.5 in IELTS.",
-        exampleUz: "Mening maqsadim — IELTS dan 7.5 olish."
-      },
-      {
-        word: "Consistency",
-        phonetic: "/kənˈsɪstənsi/",
-        partOfSpeech: "noun",
-        level: "B1",
-        uz: "Muntazamlik, bardavomlik",
-        example: "Consistency beats talent every time.",
-        exampleUz: "Muntazamlik har doim iqtidordan ustun keladi."
-      },
-      {
-        word: "Challenge",
-        phonetic: "/ˈtʃælɪndʒ/",
-        partOfSpeech: "noun/verb",
-        level: "A2",
-        uz: "Sinov, chaqiriq",
-        example: "Accept the challenge and win.",
-        exampleUz: "Sinovni qabul qiling va g'alaba qozoning."
-      }
-    ];
+    // 1. MULTILINGUAL LUG'AT BAZASI (UZ, RU, ZH, ES, TR)
+    const DICTIONARY = {
+      "artificial": { uz: "Sun'iy", ru: "Искусственный", zh: "人造的 (rénzào de)", es: "Artificial", tr: "Yapay", phonetic: "/ˌɑːtɪˈfɪʃl/", ex: "Artificial intelligence is advancing." },
+      "intelligence": { uz: "Intellekt, aql", ru: "Интеллект", zh: "智能 (zhìnéng)", es: "Inteligencia", tr: "Zeka", phonetic: "/ɪnˈtelɪdʒəns/", ex: "Human intelligence is unique." },
+      "future": { uz: "Kelajak", ru: "Будущее", zh: "未来 (wèilái)", es: "Futuro", tr: "Gelecek", phonetic: "/ˈfjuːtʃə/", ex: "The future holds many opportunities." },
+      "technology": { uz: "Texnologiya", ru: "Технология", zh: "技术 (jìshù)", es: "Tecnología", tr: "Teknoloji", phonetic: "/tekˈnɒlədʒi/", ex: "Technology changes daily life." },
+      "students": { uz: "Talabalar", ru: "Студенты", zh: "学生 (xuéshēng)", es: "Estudiantes", tr: "Öğrenciler", phonetic: "/ˈstjuːdənts/", ex: "Students learn rapidly." },
+      "language": { uz: "Til", ru: "Язык", zh: "语言 (yǔyán)", es: "Idioma", tr: "Dil", phonetic: "/ˈlæŋɡwɪdʒ/", ex: "English is a global language." },
+      "transforming": { uz: "O'zgartirmoqda", ru: "Преобразует", zh: "改变 (gǎibiàn)", es: "Transformando", tr: "Dönüştürüyor", phonetic: "/trænsˈfɔːmɪŋ/", ex: "AI is transforming healthcare." },
+      "education": { uz: "Ta'lim", ru: "Образование", zh: "教育 (jiàoyù)", es: "Educación", tr: "Eğitim", phonetic: "/ˌedʒuˈkeɪʃn/", ex: "Education opens all doors." },
+      "challenge": { uz: "Sinov, chaqiriq", ru: "Вызов, испытание", zh: "挑战 (tiǎozhàn)", es: "Desafío", tr: "Zorluk", phonetic: "/ˈtʃælɪndʒ/", ex: "Every challenge brings growth." },
+      "consistency": { uz: "Muntazamlik", ru: "Постоянство", zh: "坚持 (jiānchí)", es: "Consistencia", tr: "Tutarlılık", phonetic: "/kənˈsɪstənsi/", ex: "Consistency leads to fluency." }
+    };
 
-    // Dastur holati (State)
-    let currentCardIndex = 0;
-    let isFlipped = false;
-    let filteredCards = [...VOCABULARY];
-    let totalScore = parseInt(localStorage.getItem('es_score') || '0');
-    let currentQuizIndex = 0;
-    let quizScore = 0;
+    let currentLang = 'uz';
+    let totalScore = parseInt(localStorage.getItem('es_score') || '15');
 
-    // Boshlang'ich ishga tushirish
+    // UI Initializer
     window.addEventListener('DOMContentLoaded', () => {
-      updateScoreUI();
-      renderCurrentCard();
-      renderVocabularyList(VOCABULARY);
-      initQuiz();
+      document.getElementById('navScore').textContent = `${totalScore} ball`;
+      loadReadingPassage();
     });
 
-    // 1. Audio Talaffuz Funksiyasi (Web Speech API)
+    // Tilni o'zgartirish
+    function changeLanguage() {
+      currentLang = document.getElementById('userLangSelect').value;
+      const subtitle = document.getElementById('heroSubtitle');
+      if (currentLang === 'ru') {
+        subtitle.textContent = "Чтение с переводом в клик, Аудирование Cambridge, Говорение с распознаванием AI и Письмо с таймером.";
+      } else if (currentLang === 'zh') {
+        subtitle.textContent = "点击即译阅读，剑桥听力训练，AI智能语音识别口语练习以及带计时器的写作分析。";
+      } else if (currentLang === 'es') {
+        subtitle.textContent = "Lectura interactiva con traducción, audio de Cambridge, práctica de expresión oral con IA y redacción con temporizador.";
+      } else if (currentLang === 'tr') {
+        subtitle.textContent = "Tek tıkla çevirili Okuma, Cambridge Dinleme, AI ses tanımalı Konuşma ve sayaçlı Yazma platformu.";
+      } else {
+        subtitle.textContent = "Reading (so'zlarni bosib tarjima qilish), Listening (Cambridge audio), Speaking (ovozni aniqlovchi AI) va Writing (insho tahlili va taymer) barchasi bitta platformada.";
+      }
+    }
+
+    // Tablar o'rtasida o'tish
+    function switchSkillTab(skill) {
+      document.querySelectorAll('.skill-content').forEach(s => s.classList.add('hidden'));
+      document.querySelectorAll('.skill-btn').forEach(b => {
+        b.className = "skill-btn flex items-center justify-center gap-2 p-3.5 rounded-2xl font-bold text-xs sm:text-sm transition-all duration-200 bg-slate-900/90 text-slate-300 hover:text-white border border-white/10 hover:border-white/20";
+      });
+
+      const activeSection = document.getElementById(`section-${skill}`);
+      const activeBtn = document.getElementById(`btn-${skill}`);
+
+      if (activeSection && activeBtn) {
+        activeSection.classList.remove('hidden');
+        activeBtn.className = "skill-btn flex items-center justify-center gap-2 p-3.5 rounded-2xl font-bold text-xs sm:text-sm transition-all duration-200 bg-indigo-600 text-white shadow-lg shadow-indigo-600/30 border border-indigo-500";
+      }
+    }
+
+    // ================= 1. READING LOGIKASI =================
+    const READING_PASSAGES = {
+      ai_future: {
+        title: "IELTS Reading: The Future of Artificial Intelligence",
+        text: "Artificial intelligence is rapidly transforming global education and technology. Modern students use automated tools to learn any language with consistency. However, ethical considerations remain a major challenge for developers worldwide.",
+        question: "According to the passage, what is rapidly transforming global education?",
+        options: ["Traditional textbooks", "Artificial intelligence and technology", "Social media networks", "Manual examination systems"],
+        correctIndex: 1
+      },
+      story_adventure: {
+        title: "Visual Story: The Mysterious Lighthouse",
+        text: "On a stormy night, young students noticed a bright green light from the ancient lighthouse. The technology inside seemed far beyond human intelligence. They realized this unexpected challenge would change their lives forever.",
+        question: "What color was the light coming from the lighthouse?",
+        options: ["Deep red", "Bright green", "Golden yellow", "Pale blue"],
+        correctIndex: 1
+      },
+      cambridge_nature: {
+        title: "Cambridge Academic: Climate & Global Ecosystems",
+        text: "Protecting our planet requires global consistency and advanced technology. When students understand environmental education, they create innovative solutions for future generations.",
+        question: "What is required to protect our planet according to the text?",
+        options: ["Global consistency and advanced technology", "Stopping all industries", "Only relying on solar panels", "Relocating coastal cities"],
+        correctIndex: 0
+      }
+    };
+
+    function loadReadingPassage() {
+      const topicKey = document.getElementById('readingTopicSelect').value;
+      const data = READING_PASSAGES[topicKey] || READING_PASSAGES.ai_future;
+
+      document.getElementById('readingTitle').textContent = data.title;
+
+      // Matnni so'zlarga ajratib, bosiladigan (clickable) qilamiz
+      const paragraphEl = document.getElementById('readingParagraph');
+      paragraphEl.innerHTML = '';
+
+      const words = data.text.split(' ');
+      const spans = words.map(rawWord => {
+        const cleanWord = rawWord.toLowerCase().replace(/[^a-z]/g, '');
+        return `<span class="clickable-word" onclick="handleWordClick(event, '${cleanWord}', '${rawWord}')">${rawWord}</span>`;
+      });
+
+      paragraphEl.innerHTML = spans.join(' ');
+
+      // Savollarni o'rnatamiz
+      document.getElementById('readingQuizQuestion').textContent = data.question;
+      const optContainer = document.getElementById('readingQuizOptions');
+      optContainer.innerHTML = '';
+
+      data.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = "w-full text-left p-3 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 text-xs sm:text-sm text-slate-200 transition-all";
+        btn.textContent = `${['A', 'B', 'C', 'D'][idx]}) ${opt}`;
+        btn.onclick = () => {
+          if (idx === data.correctIndex) {
+            btn.className = "w-full text-left p-3 rounded-xl bg-emerald-500/20 border border-emerald-500 text-emerald-300 font-bold text-xs sm:text-sm";
+            alert("To'g'ri javob! +10 ball qo'shildi 🎉");
+            addScore(10);
+          } else {
+            btn.className = "w-full text-left p-3 rounded-xl bg-rose-500/20 border border-rose-500 text-rose-300 font-bold text-xs sm:text-sm";
+          }
+        };
+        optContainer.appendChild(btn);
+      });
+    }
+
+    function handleWordClick(event, cleanWord, rawWord) {
+      const modal = document.getElementById('wordTranslationModal');
+      const entry = DICTIONARY[cleanWord] || {
+        uz: `So'z tarjimasi: ${cleanWord}`,
+        ru: `Перевод слова: ${cleanWord}`,
+        zh: `单词翻译: ${cleanWord}`,
+        es: `Traducción: ${cleanWord}`,
+        tr: `Kelime çevirisi: ${cleanWord}`,
+        phonetic: `/${cleanWord}/`,
+        ex: `Example context with "${rawWord}".`
+      };
+
+      document.getElementById('modalWord').textContent = cleanWord.toUpperCase();
+      document.getElementById('modalPhonetic').textContent = entry.phonetic;
+      document.getElementById('modalTranslation').textContent = entry[currentLang] || entry.uz;
+      document.getElementById('modalExample').textContent = `"${entry.ex}"`;
+
+      // Modal joylashuvi
+      modal.style.left = `${Math.min(event.pageX - 100, window.innerWidth - 320)}px`;
+      modal.style.top = `${event.pageY + 20}px`;
+      modal.classList.remove('hidden');
+    }
+
+    function closeWordModal() {
+      document.getElementById('wordTranslationModal').classList.add('hidden');
+    }
+
+    // Reading Taymeri
+    let readingTimer = null;
+    let readingSeconds = 300;
+
+    function toggleReadingTimer() {
+      const btn = document.getElementById('readingTimerBtn');
+      if (readingTimer) {
+        clearInterval(readingTimer);
+        readingTimer = null;
+        btn.textContent = "Boshlash";
+      } else {
+        btn.textContent = "To'xtatish";
+        readingTimer = setInterval(() => {
+          if (readingSeconds > 0) {
+            readingSeconds--;
+            const mins = String(Math.floor(readingSeconds / 60)).padStart(2, '0');
+            const secs = String(readingSeconds % 60).padStart(2, '0');
+            document.getElementById('readingTimerDisplay').textContent = `${mins}:${secs}`;
+          } else {
+            clearInterval(readingTimer);
+            alert("Reading vaqti tugadi!");
+          }
+        }, 1000);
+      }
+    }
+
+    // ================= 2. LISTENING LOGIKASI =================
+    let isListeningAudioPlaying = false;
+    let listeningSpeed = 1.0;
+    const LISTENING_SCRIPT = "Welcome to the University Accommodation Service. My name is Michael Harrison, and I am looking for a single studio room near the campus. My maximum budget is approximately eight hundred and fifty dollars per month.";
+
+    function toggleListeningAudio() {
+      const btn = document.getElementById('listeningPlayBtn');
+      const statusText = document.getElementById('listeningStatusText');
+
+      if (!isListeningAudioPlaying) {
+        if ('speechSynthesis' in window) {
+          window.speechSynthesis.cancel();
+          const utterance = new SpeechSynthesisUtterance(LISTENING_SCRIPT);
+          utterance.lang = 'en-GB'; // Cambridge British accent
+          utterance.rate = listeningSpeed;
+          utterance.onend = () => {
+            isListeningAudioPlaying = false;
+            btn.textContent = "▶️";
+            statusText.textContent = "Audio yakunlandi. Javoblarni kiriting.";
+          };
+          window.speechSynthesis.speak(utterance);
+          isListeningAudioPlaying = true;
+          btn.textContent = "⏸️";
+          statusText.textContent = "Audio yangramoqda... Diqqat bilan eshiting!";
+        }
+      } else {
+        window.speechSynthesis.cancel();
+        isListeningAudioPlaying = false;
+        btn.textContent = "▶️";
+        statusText.textContent = "Audio to'xtatildi.";
+      }
+    }
+
+    function setListeningSpeed(speed) {
+      listeningSpeed = speed;
+      document.querySelectorAll('.speed-btn').forEach(b => {
+        b.className = "speed-btn px-2 py-0.5 rounded bg-white/5 hover:bg-white/10 text-white";
+      });
+      event.target.className = "speed-btn px-2 py-0.5 rounded bg-indigo-600 text-white font-bold";
+    }
+
+    function checkListeningAnswers() {
+      const a1 = document.getElementById('listenAns1').value.trim().toLowerCase();
+      const a2 = document.getElementById('listenAns2').value.trim().toLowerCase();
+      const a3 = document.getElementById('listenAns3').value.trim();
+
+      let correct = 0;
+      if (a1.includes('harrison')) correct++;
+      if (a2.includes('studio') || a2.includes('single')) correct++;
+      if (a3.includes('850')) correct++;
+
+      const res = document.getElementById('listeningResult');
+      res.textContent = `Natija: 3 tadan ${correct} ta to'g'ri! (${Math.round((correct/3)*100)}%)`;
+      res.className = correct >= 2 ? "text-xs font-bold text-emerald-400" : "text-xs font-bold text-amber-400";
+      if (correct === 3) addScore(15);
+    }
+
+    // ================= 3. SPEAKING (AI SPEECH RECOGNITION) =================
+    const SPEAKING_PROMPTS = [
+      "Consistency and daily dedication are the real secrets to learning any foreign language.",
+      "Artificial intelligence provides incredible opportunities for students across the world.",
+      "Education is not the learning of facts, but the training of the mind to think."
+    ];
+    let speakingPromptIndex = 0;
+    let isRecording = false;
+    let recognition = null;
+
+    function nextSpeakingPhrase() {
+      speakingPromptIndex = (speakingPromptIndex + 1) % SPEAKING_PROMPTS.length;
+      document.getElementById('speakingTargetPhrase').textContent = `"${SPEAKING_PROMPTS[speakingPromptIndex]}"`;
+      document.getElementById('speakingResultBox').classList.add('hidden');
+    }
+
+    function toggleSpeechRecognition() {
+      const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+      const micBtn = document.getElementById('micButton');
+      const statusText = document.getElementById('micStatusText');
+
+      if (!SpeechRec) {
+        alert("Brauzeringiz nutqni tanishni qo'llab-quvvatlamaydi (Google Chrome tavsiya etiladi).");
+        return;
+      }
+
+      if (!isRecording) {
+        recognition = new SpeechRec();
+        recognition.lang = 'en-US';
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+
+        recognition.onstart = () => {
+          isRecording = true;
+          micBtn.classList.add('recording-pulse', 'bg-rose-600');
+          statusText.textContent = "🔴 Tinglayapman... Gapiring!";
+          statusText.classList.add('text-rose-400');
+        };
+
+        recognition.onresult = (event) => {
+          const spoken = event.results[0][0].transcript;
+          evaluateSpeech(spoken);
+        };
+
+        recognition.onerror = (e) => {
+          statusText.textContent = "Xatolik yoki mikrofon ruxsatsiz.";
+          stopRecState();
+        };
+
+        recognition.onend = () => {
+          stopRecState();
+        };
+
+        recognition.start();
+      } else {
+        if (recognition) recognition.stop();
+        stopRecState();
+      }
+    }
+
+    function stopRecState() {
+      isRecording = false;
+      const micBtn = document.getElementById('micButton');
+      const statusText = document.getElementById('micStatusText');
+      micBtn.classList.remove('recording-pulse', 'bg-rose-600');
+      statusText.textContent = "Gapirish uchun mikrofonni bosing";
+      statusText.classList.remove('text-rose-400');
+    }
+
+    function evaluateSpeech(spokenText) {
+      const target = SPEAKING_PROMPTS[speakingPromptIndex].toLowerCase().replace(/[^a-z\s]/g, '');
+      const spoken = spokenText.toLowerCase().replace(/[^a-z\s]/g, '');
+
+      const targetWords = target.split(/\s+/);
+      const spokenWords = spoken.split(/\s+/);
+
+      let matches = 0;
+      targetWords.forEach(w => {
+        if (spokenWords.includes(w)) matches++;
+      });
+
+      const accuracy = Math.min(100, Math.round((matches / targetWords.length) * 100));
+
+      const box = document.getElementById('speakingResultBox');
+      box.classList.remove('hidden');
+      document.getElementById('spokenTextDisplay').textContent = `"${spokenText}"`;
+      
+      const badge = document.getElementById('speakingScoreBadge');
+      badge.textContent = `${accuracy}% Aniqlik`;
+      badge.className = accuracy >= 80 ? "text-xs font-extrabold px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300" : "text-xs font-extrabold px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300";
+
+      const fb = document.getElementById('speakingFeedbackText');
+      if (accuracy >= 80) {
+        fb.textContent = "Mukammal talaffuz! Cambridge Speaking Part 1 standartiga to'liq javob beradi.";
+        addScore(15);
+      } else {
+        fb.textContent = "Yaxshi urinish! Ayrim so'zlarni qaytadan talaffuz qilib ko'ring.";
+      }
+    }
+
+    // ================= 4. WRITING LOGIKASI =================
+    let writingTimer = null;
+    let writingSeconds = 2400; // 40 min
+
+    function handleEssayInput() {
+      const text = document.getElementById('essayTextarea').value.trim();
+      const words = text ? text.split(/\s+/).length : 0;
+      document.getElementById('wordCountDisplay').textContent = words;
+      document.getElementById('charCountDisplay').textContent = text.length;
+
+      const display = document.getElementById('wordCountDisplay');
+      if (words >= 250) {
+        display.className = "text-emerald-400 font-bold";
+      } else {
+        display.className = "text-amber-400 font-bold";
+      }
+    }
+
+    function toggleWritingTimer() {
+      const btn = document.getElementById('writingTimerBtn');
+      if (writingTimer) {
+        clearInterval(writingTimer);
+        writingTimer = null;
+        btn.textContent = "Start ⏱️";
+      } else {
+        btn.textContent = "Pause ⏸️";
+        writingTimer = setInterval(() => {
+          if (writingSeconds > 0) {
+            writingSeconds--;
+            const mins = String(Math.floor(writingSeconds / 60)).padStart(2, '0');
+            const secs = String(writingSeconds % 60).padStart(2, '0');
+            document.getElementById('writingTimerDisplay').textContent = `${mins}:${secs}`;
+          } else {
+            clearInterval(writingTimer);
+            alert("Writing vaqti yakunlandi!");
+          }
+        }, 1000);
+      }
+    }
+
+    function analyzeEssay() {
+      const text = document.getElementById('essayTextarea').value.trim();
+      const words = text ? text.split(/\s+/).length : 0;
+
+      if (words < 20) {
+        alert("Iltimos, tahlil qilish uchun kamida 2-3 ta jumla yozing!");
+        return;
+      }
+
+      const box = document.getElementById('essayAnalysisBox');
+      box.classList.remove('hidden');
+
+      let band = 5.5;
+      if (words >= 250) band = 7.0;
+      else if (words >= 150) band = 6.5;
+      else if (words >= 80) band = 6.0;
+
+      document.getElementById('estimatedBandScore').textContent = `Taxminiy Band: ${band}`;
+      document.getElementById('essayAdviceText').innerHTML = `
+        <strong>Kuchli tomonlar:</strong> So'z boyligi mavzuga mos. Paragraf tuzilmasi shakllangan.<br/>
+        <strong>Tavsiya:</strong> Murakkab bog'lovchilardan (Furthermore, In contrast, Consequently) ko'proq foydalaning va Task Response talabiga qat'iy rioya qiling.
+      `;
+      addScore(20);
+    }
+
+    // Audio Yordamchisi
     function playWordAudio(text) {
       if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = 'en-US';
-        utterance.rate = 0.85;
+        utterance.rate = 0.9;
         window.speechSynthesis.speak(utterance);
       }
     }
 
-    function playCurrentAudio() {
-      const current = filteredCards[currentCardIndex];
-      if (current) {
-        playWordAudio(current.word);
-      }
-    }
-
-    // 2. Tablarni almashtirish
-    function switchTab(tabName) {
-      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-      document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.classList.remove('bg-indigo-600', 'text-white', 'shadow-lg', 'shadow-indigo-600/30');
-        btn.classList.add('text-slate-400');
-      });
-
-      const activeSection = document.getElementById(`section-${tabName}`);
-      const activeBtn = document.getElementById(`tab-${tabName}`);
-
-      if (activeSection && activeBtn) {
-        activeSection.classList.remove('hidden');
-        activeBtn.classList.remove('text-slate-400');
-        activeBtn.classList.add('bg-indigo-600', 'text-white', 'shadow-lg', 'shadow-indigo-600/30');
-      }
-    }
-
-    // 3. Flesh-kartalar logikasi
-    function renderCurrentCard() {
-      const item = filteredCards[currentCardIndex];
-      if (!item) return;
-
-      if (isFlipped) {
-        flipCard();
-      }
-
-      document.getElementById('cardBadge').textContent = `${item.level} • ${item.partOfSpeech}`;
-      document.getElementById('cardWord').textContent = item.word;
-      document.getElementById('cardPhonetic').textContent = item.phonetic;
-      document.getElementById('cardPartOfSpeech').textContent = item.partOfSpeech;
-      document.getElementById('cardTranslation').textContent = item.uz;
-      document.getElementById('cardExample').textContent = `"${item.example}"`;
-      document.getElementById('cardExampleUz').textContent = `"${item.exampleUz}"`;
-
-      document.getElementById('cardCounter').textContent = `${currentCardIndex + 1} / ${filteredCards.length}`;
-    }
-
-    function flipCard() {
-      const cardInner = document.getElementById('cardInner');
-      isFlipped = !isFlipped;
-      if (isFlipped) {
-        cardInner.classList.add('rotate-y-180');
-      } else {
-        cardInner.classList.remove('rotate-y-180');
-      }
-    }
-
-    function nextCard() {
-      if (currentCardIndex < filteredCards.length - 1) {
-        currentCardIndex++;
-      } else {
-        currentCardIndex = 0;
-      }
-      renderCurrentCard();
-      addScore(2);
-    }
-
-    function prevCard() {
-      if (currentCardIndex > 0) {
-        currentCardIndex--;
-      } else {
-        currentCardIndex = filteredCards.length - 1;
-      }
-      renderCurrentCard();
-    }
-
-    function changeCardLevel() {
-      const level = document.getElementById('cardLevelFilter').value;
-      if (level === 'ALL') {
-        filteredCards = [...VOCABULARY];
-      } else {
-        filteredCards = VOCABULARY.filter(item => item.level === level);
-      }
-      currentCardIndex = 0;
-      renderCurrentCard();
-    }
-
-    // 4. Lug'at Ro'yxati renderi va Qidiruv
-    function renderVocabularyList(items) {
-      const container = document.getElementById('vocabListContainer');
-      container.innerHTML = '';
-
-      if (items.length === 0) {
-        container.innerHTML = `
-          <div class="text-center py-12 text-slate-500 text-sm">
-            Hech qanday so'z topilmadi.
-          </div>
-        `;
-        return;
-      }
-
-      items.forEach(item => {
-        const div = document.createElement('div');
-        div.className = "flex items-center justify-between p-3.5 sm:p-4 rounded-2xl bg-slate-900/80 border border-white/5 hover:border-indigo-500/30 transition-all";
-        div.innerHTML = `
-          <div class="flex items-center gap-3 min-w-0">
-            <button onclick="playWordAudio('${item.word}')" class="w-9 h-9 rounded-xl bg-indigo-500/10 text-indigo-400 hover:bg-indigo-600 hover:text-white flex items-center justify-center shrink-0 transition-all" title="Talaffuz">
-              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
-            </button>
-            <div class="truncate">
-              <div class="flex items-center gap-2">
-                <span class="text-sm sm:text-base font-bold text-white">${item.word}</span>
-                <span class="text-[10px] font-mono text-indigo-400/90">${item.phonetic}</span>
-                <span class="text-[10px] font-extrabold uppercase px-1.5 py-0.5 rounded bg-white/5 text-slate-400">${item.level}</span>
-              </div>
-              <p class="text-xs text-slate-300 truncate">${item.uz}</p>
-            </div>
-          </div>
-          <span class="text-[11px] font-medium text-slate-500 shrink-0 pl-2">${item.partOfSpeech}</span>
-        `;
-        container.appendChild(div);
-      });
-    }
-
-    function filterVocabulary() {
-      const query = document.getElementById('vocabSearchInput').value.toLowerCase().trim();
-      const level = document.getElementById('vocabLevelSelect').value;
-
-      const filtered = VOCABULARY.filter(item => {
-        const matchQuery = item.word.toLowerCase().includes(query) || item.uz.toLowerCase().includes(query);
-        const matchLevel = level === 'ALL' || item.level === level;
-        return matchQuery && matchLevel;
-      });
-
-      renderVocabularyList(filtered);
-    }
-
-    // 5. Quiz (Interaktiv Test) Logikasi
-    let quizQuestions = [];
-
-    function initQuiz() {
-      const shuffled = [...VOCABULARY].sort(() => 0.5 - Math.random());
-      quizQuestions = shuffled.slice(0, 5);
-      currentQuizIndex = 0;
-      quizScore = 0;
-      renderQuizQuestion();
-    }
-
-    function renderQuizQuestion() {
-      const q = quizQuestions[currentQuizIndex];
-      if (!q) {
-        showQuizResults();
-        return;
-      }
-
-      document.getElementById('quizProgressText').textContent = `Savol: ${currentQuizIndex + 1} / ${quizQuestions.length}`;
-      document.getElementById('quizScoreText').textContent = `Natija: ${quizScore}`;
-      document.getElementById('quizQuestionWord').textContent = q.word;
-
-      const feedback = document.getElementById('quizFeedback');
-      feedback.classList.add('hidden');
-      document.getElementById('quizNextBtn').classList.add('hidden');
-
-      const wrongOptions = VOCABULARY.filter(item => item.word !== q.word)
-                                    .sort(() => 0.5 - Math.random())
-                                    .slice(0, 3)
-                                    .map(i => i.uz);
-      
-      const options = [q.uz, ...wrongOptions].sort(() => 0.5 - Math.random());
-
-      const container = document.getElementById('quizOptionsContainer');
-      container.innerHTML = '';
-
-      options.forEach(opt => {
-        const btn = document.createElement('button');
-        btn.className = "quiz-opt-btn w-full text-left p-3.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 text-sm font-semibold text-slate-200 transition-all flex items-center justify-between";
-        btn.innerHTML = `<span>${opt}</span><span class="w-5 h-5 rounded-full border border-white/20 flex items-center justify-center text-xs text-slate-400">?</span>`;
-        btn.onclick = () => selectQuizAnswer(btn, opt, q.uz);
-        container.appendChild(btn);
-      });
-    }
-
-    function selectQuizAnswer(selectedBtn, chosen, correct) {
-      const buttons = document.querySelectorAll('.quiz-opt-btn');
-      buttons.forEach(b => b.disabled = true);
-
-      const feedback = document.getElementById('quizFeedback');
-      feedback.classList.remove('hidden');
-
-      if (chosen === correct) {
-        selectedBtn.classList.add('bg-emerald-500/20', 'border-emerald-500', 'text-emerald-300');
-        feedback.className = "p-3 rounded-xl mb-4 text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30";
-        feedback.textContent = "To'g'ri javob! Barakkalla! 🎉 (+10 ball)";
-        quizScore += 10;
-        addScore(10);
-      } else {
-        selectedBtn.classList.add('bg-rose-500/20', 'border-rose-500', 'text-rose-300');
-        feedback.className = "p-3 rounded-xl mb-4 text-xs font-bold bg-rose-500/20 text-rose-300 border border-rose-500/30";
-        feedback.textContent = `Noto'g'ri. To'g'ri javob: "${correct}"`;
-      }
-
-      document.getElementById('quizScoreText').textContent = `Natija: ${quizScore}`;
-      document.getElementById('quizNextBtn').classList.remove('hidden');
-    }
-
-    function nextQuizQuestion() {
-      currentQuizIndex++;
-      renderQuizQuestion();
-    }
-
-    function showQuizResults() {
-      const container = document.getElementById('quizOptionsContainer');
-      document.getElementById('quizQuestionWord').textContent = "Test Yakunlandi!";
-      container.innerHTML = `
-        <div class="text-center py-6">
-          <p class="text-3xl mb-2">🏆</p>
-          <p class="text-lg font-bold text-white mb-1">Umumiy to'plangan ball: ${quizScore} / 50</p>
-          <p class="text-xs text-slate-400 mb-6">Ajoyib natija! Kundalik mashg'ulotlar orqali darajangizni oshiring.</p>
-          <button onclick="initQuiz()" class="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs">
-            Qaytadan topshirish 🔄
-          </button>
-        </div>
-      `;
-      document.getElementById('quizNextBtn').classList.add('hidden');
-      document.getElementById('quizFeedback').classList.add('hidden');
-    }
-
-    // 6. Ballar tizimi
     function addScore(pts) {
       totalScore += pts;
       localStorage.setItem('es_score', totalScore);
-      updateScoreUI();
-    }
-
-    function updateScoreUI() {
-      document.getElementById('totalScore').textContent = `${totalScore} ball`;
+      document.getElementById('navScore').textContent = `${totalScore} ball`;
     }
   </script>
 </body>
