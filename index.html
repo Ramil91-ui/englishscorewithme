@@ -4,12 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Englishscorewithme | Universal Global English & IELTS Platform</title>
-  <meta name="description" content="Global English learning platform with Warm Milk Luxury Palette, Vocabulary Matrix Table, 10-Minute Timers, and 1-Click Offline App Download." />
+  <meta name="description" content="Global English learning platform with Warm Milk Luxury Palette, Dynamic Vocabulary Packs (Next/Prev), Age-based Picture Quests, 10-Minute Timers, and Standalone App Download." />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%234338ca%22/><text y=%2270%22 x=%2215%22 font-size=%2265%22>🎯</text></svg>" />
   
   <!-- PWA Manifest & Meta -->
   <link rel="manifest" href="manifest.json" />
-  <meta name="theme-color" content="#F7F3EB" />
+  <meta name="theme-color" content="#FAF6ED" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-title" content="Englishscore" />
 
@@ -47,7 +47,6 @@
 
   <style>
     * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
-    /* Butun sahifa uchun tabiiy iliq sut rang fon */
     body {
       background-color: #FAF6ED;
       color: #211B17;
@@ -150,7 +149,7 @@
         English Learning <span class="bg-gradient-to-r from-amber-700 via-indigo-700 to-emerald-700 bg-clip-text text-transparent">With Me</span>
       </h1>
       <p id="heroSubtitle" class="text-xs sm:text-sm text-milk-muted max-w-2xl mx-auto leading-relaxed">
-        Istalgan ona tilidan turib ingliz tilini o'rganing: Universal Lug'at Jadvali, 10 daqiqalik Reading, Cambridge Listening, Speaking AI va Writing bitta joyda.
+        Istalgan ona tilidan turib ingliz tilini o'rganing: Dinamik so'zlar to'plami (Next Pack), 10 daqiqalik Reading, Cambridge Listening, Speaking AI va Yosh toifasiga mos Rasmli topshiriqlar bitta joyda.
       </p>
     </header>
 
@@ -189,7 +188,7 @@
 
     </div>
 
-    <!-- ================= 1-BO'LIM (BOSHLANG'ICH): UNIVERSAL LUG'AT JADVALI ================= -->
+    <!-- ================= 1-BO'LIM (BOSHLANG'ICH): UNIVERSAL LUG'AT JADVALI (DYNAMIC PACKS / NEXT BUTTON) ================= -->
     <section id="section-matrix" class="skill-content transition-all duration-300">
       <div class="max-w-5xl mx-auto space-y-6">
         
@@ -197,16 +196,19 @@
           
           <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-[#F3ECE0]">
             <div>
-              <span class="text-xs uppercase tracking-widest text-indigo-700 font-extrabold inline-block mb-1">So'z Boyligini Oshirish Uchun Maxsus Tizim</span>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-xs uppercase tracking-widest text-indigo-700 font-extrabold">So'z Boyligini Oshirish Tizimi</span>
+                <span id="packBadgeNumber" class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-indigo-50 border border-indigo-200 text-indigo-800">1-To'plam</span>
+              </div>
               <h2 class="text-xl sm:text-2xl font-bold text-milk-dark font-display">Ko'p Tilli Lug'at Boyligi Jadvali</h2>
-              <p class="text-xs text-milk-muted mt-0.5">Inglizcha so'z, uning fonetikasi, talaffuzi va to'g'risida siz tanlagan tildagi aniq ma'nosi.</p>
+              <p class="text-xs text-milk-muted mt-0.5">So'zlarni o'rganib tugatgach, <strong>"Keyingi to'plam"</strong> tugmasi orqali yangi so'zlarga o'ting.</p>
             </div>
 
-            <!-- JONLI KO'RSATKICHLAR: SO'ZLAR, TALAFUZ VA O'ZLASHTIRILGANLAR -->
+            <!-- JONLI KO'RSATKICHLAR -->
             <div class="flex flex-wrap items-center gap-2">
               <div class="px-3 py-1.5 rounded-xl bg-[#FAF6ED] border border-[#E8DEC9] text-xs font-semibold">
-                <span class="text-milk-muted">Jami so'zlar:</span>
-                <strong id="matrixTotalWords" class="text-indigo-800 font-bold ml-1">12 ta</strong>
+                <span class="text-milk-muted">Jami bazada:</span>
+                <strong id="matrixTotalWords" class="text-indigo-800 font-bold ml-1">24 ta</strong>
               </div>
               <div class="px-3 py-1.5 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-900 font-semibold">
                 <span>🔊 Talaffuz qilingan:</span>
@@ -219,28 +221,46 @@
             </div>
           </div>
 
-          <!-- Qidiruv va Filtr -->
-          <div class="flex flex-col sm:flex-row gap-3 mb-6">
-            <div class="relative flex-grow">
-              <input 
-                type="text" 
-                id="matrixSearchInput" 
-                oninput="renderVocabularyMatrix()" 
-                placeholder="Inglizcha so'z yoki o'z tilingizdagi tarjimasini izlang..." 
-                class="w-full bg-[#FAF6ED] border border-[#E8DEC9] rounded-xl px-4 py-2.5 text-xs sm:text-sm text-milk-dark placeholder-stone-400 focus:outline-none focus:border-indigo-600 shadow-sm"
-              />
+          <!-- To'plam Boshqaruvi va Navigatsiyasi (Yuqori Pagination) -->
+          <div class="flex flex-wrap items-center justify-between gap-3 p-3.5 rounded-2xl bg-[#FAF6ED] border border-[#E8DEC9]">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-bold text-milk-dark">To'plamni almashtirish:</span>
+              <button onclick="prevWordPack()" class="px-3 py-1.5 rounded-xl bg-white hover:bg-milk-200 border border-[#E8DEC9] text-xs font-bold text-milk-dark shadow-sm transition-all active:scale-95">
+                ← Oldingi to'plam
+              </button>
+              <span id="packIndicator" class="text-xs font-extrabold text-indigo-800 bg-white px-3 py-1.5 rounded-xl border border-[#E8DEC9]">
+                To'plam: 1 / 4
+              </span>
+              <button onclick="nextWordPack()" class="px-3 py-1.5 rounded-xl bg-indigo-700 hover:bg-indigo-800 text-white text-xs font-bold shadow-sm transition-all active:scale-95 flex items-center gap-1">
+                <span>Keyingi to'plam (Next Pack)</span>
+                <span>→</span>
+              </button>
             </div>
-            <select 
-              id="matrixLevelFilter" 
-              onchange="renderVocabularyMatrix()" 
-              class="bg-[#FAF6ED] border border-[#E8DEC9] rounded-xl px-3 py-2 text-xs text-milk-dark font-bold focus:outline-none shadow-sm cursor-pointer"
-            >
-              <option value="ALL">Barcha darajalar (A1-B2)</option>
-              <option value="A1">A1 - Boshlang'ich</option>
-              <option value="A2">A2 - O'rta-quyi</option>
-              <option value="B1">B1 - O'rta</option>
-              <option value="B2">B2 - Ilg'or Academic</option>
-            </select>
+
+            <div class="flex items-center gap-2">
+              <select 
+                id="matrixLevelFilter" 
+                onchange="handleLevelFilterChange()" 
+                class="bg-white border border-[#E8DEC9] rounded-xl px-3 py-1.5 text-xs text-milk-dark font-bold focus:outline-none shadow-sm cursor-pointer"
+              >
+                <option value="ALL">Barcha darajalar (A1-B2)</option>
+                <option value="A1">A1 - Boshlang'ich</option>
+                <option value="A2">A2 - O'rta-quyi</option>
+                <option value="B1">B1 - O'rta</option>
+                <option value="B2">B2 - Ilg'or Academic</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Qidiruv maydoni -->
+          <div>
+            <input 
+              type="text" 
+              id="matrixSearchInput" 
+              oninput="renderVocabularyMatrix()" 
+              placeholder="Joriy to'plamdan so'z yoki o'z tilingizdagi tarjimasini izlang..." 
+              class="w-full bg-[#FAF6ED] border border-[#E8DEC9] rounded-xl px-4 py-2.5 text-xs sm:text-sm text-milk-dark placeholder-stone-400 focus:outline-none focus:border-indigo-600 shadow-sm"
+            />
           </div>
 
           <!-- Asosiy Jadval (Toza Sut Rang Kontrastida) -->
@@ -260,6 +280,22 @@
                 <!-- JS orqali to'ldiriladi -->
               </tbody>
             </table>
+          </div>
+
+          <!-- Pastki "Keyingi so'zlar to'plami" chaqiruv tugmasi -->
+          <div class="flex flex-col sm:flex-row items-center justify-between gap-3 p-4 rounded-2xl bg-[#FAF6ED] border border-[#E8DEC9] mt-4">
+            <div class="text-xs text-milk-muted text-center sm:text-left">
+              <span>Ushbu to'plamni o'rganib bo'ldingizmi? Yangi so'zlar to'plamiga o'ting:</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="prevWordPack()" class="px-4 py-2 rounded-xl bg-white hover:bg-milk-200 border border-[#E8DEC9] text-xs font-bold text-milk-dark shadow-sm transition-all">
+                ← Oldingi to'plam
+              </button>
+              <button onclick="nextWordPack()" class="px-5 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold shadow-md shadow-emerald-700/20 transition-all flex items-center gap-1.5 active:scale-95">
+                <span>Keyingi yangi so'zlarga o'tish (Next)</span>
+                <span>✨</span>
+              </button>
+            </div>
           </div>
 
         </div>
@@ -474,35 +510,64 @@
       </div>
     </section>
 
-    <!-- ================= 6-BO'LIM: PICTURE QUEST (FOREST GREEN) ================= -->
+    <!-- ================= 6-BO'LIM: PICTURE QUEST (YOSH TOIFALARIGA QARAB O'ZGARUVCHAN RASMLI SAVOLLAR) ================= -->
     <section id="section-picture" class="skill-content hidden transition-all duration-300">
       <div class="max-w-3xl mx-auto space-y-6">
         
         <div class="p-6 sm:p-8 rounded-3xl bg-white border border-[#E8DEC9] shadow-md">
-          <div class="text-center mb-6">
-            <span class="text-xs uppercase tracking-widest text-emerald-700 font-bold inline-block mb-1">Duolingo & Cambridge Visual Task</span>
-            <h2 class="text-xl sm:text-2xl font-bold text-milk-dark">Rasmni Tasvirlang (Describe the Photo)</h2>
-            <p class="text-xs text-milk-muted mt-1">Rasmni ko'ring, berilgan yordamchi so'zlar yordamida uni yozing yoki mikrofonga gapiring.</p>
+          
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6 pb-4 border-b border-[#F3ECE0]">
+            <div>
+              <span class="text-xs uppercase tracking-widest text-emerald-700 font-bold inline-block mb-1">Duolingo & Cambridge Visual Task</span>
+              <h2 class="text-xl sm:text-2xl font-bold text-milk-dark font-display">Rasmni Tasvirlang (Describe the Photo)</h2>
+              <p class="text-xs text-milk-muted mt-0.5">Yosh toifangizni tanlang va <strong>"Keyingi rasm"</strong> tugmasi orqali yangi rasmlarga o'ting.</p>
+            </div>
+
+            <!-- Yosh toifasi filtri & Rasm hisoblagichi -->
+            <div class="flex items-center gap-2">
+              <select id="pictureAudienceFilter" onchange="changePictureCategory()" class="bg-[#FAF6ED] border border-[#E8DEC9] rounded-xl px-3 py-1.5 text-xs text-emerald-800 font-bold focus:outline-none shadow-sm cursor-pointer">
+                <option value="adults">🎓 Kattalar & IELTS (Akademik)</option>
+                <option value="teens">🧑 O'smirlar (Shahar va Mashg'ulotlar)</option>
+                <option value="kids">👶 Bolalar (Ertak va O'yinlar)</option>
+              </select>
+              <span id="pictureCounterBadge" class="text-xs font-bold text-milk-dark bg-[#FAF6ED] px-3 py-1.5 rounded-xl border border-[#E8DEC9]">
+                Rasm: 1 / 4
+              </span>
+            </div>
           </div>
 
-          <div class="relative rounded-2xl overflow-hidden mb-6 border border-[#E8DEC9] bg-stone-900 max-h-[340px]">
-            <img id="questImage" src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80" alt="Students collaborating" class="w-full h-full object-cover max-h-[340px]" />
-            <div class="absolute bottom-3 left-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full border border-white/40 text-[11px] text-milk-dark font-semibold shadow-sm">
+          <!-- Rasm maydoni -->
+          <div class="relative rounded-2xl overflow-hidden mb-4 border border-[#E8DEC9] bg-stone-900 max-h-[360px] shadow-sm">
+            <img id="questImage" src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80" alt="Quest Image" class="w-full h-full object-cover max-h-[360px] transition-all duration-500" />
+            <div id="questImageBadge" class="absolute bottom-3 left-3 bg-white/95 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/40 text-[11px] text-milk-dark font-bold shadow-md">
               📍 Topic: University students studying together in a modern library
             </div>
           </div>
 
+          <!-- Rasm almashtirish tugmalari (Oldingi / Keyingi Rasm) -->
+          <div class="flex items-center justify-between gap-3 p-3 rounded-2xl bg-[#FAF6ED] border border-[#E8DEC9] mb-4">
+            <button onclick="prevPictureQuest()" class="px-4 py-2 rounded-xl bg-white hover:bg-milk-200 border border-[#E8DEC9] text-xs font-bold text-milk-dark shadow-sm transition-all flex items-center gap-1">
+              <span>← Oldingi rasm</span>
+            </button>
+            <span class="text-xs font-semibold text-milk-muted">Yangi rasmni sinab ko'ring:</span>
+            <button onclick="nextPictureQuest()" class="px-5 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold shadow-md shadow-emerald-700/20 transition-all flex items-center gap-1.5 active:scale-95">
+              <span>Keyingi rasm (Next Photo)</span>
+              <span>🔄</span>
+            </button>
+          </div>
+
+          <!-- Yordamchi so'zlar (Key Vocabulary Prompts) -->
           <div class="p-4 rounded-2xl bg-[#FAF6ED] border border-[#E8DEC9] mb-4">
             <p class="text-xs font-bold text-emerald-800 mb-2">Foydali so'zlar (Yordam):</p>
-            <div class="flex flex-wrap gap-2 text-xs">
+            <div id="questHintsContainer" class="flex flex-wrap gap-2 text-xs">
               <span class="px-2.5 py-1 rounded-lg bg-white border border-[#E8DEC9] text-emerald-800 font-semibold">collaboration</span>
               <span class="px-2.5 py-1 rounded-lg bg-white border border-[#E8DEC9] text-emerald-800 font-semibold">concentrated</span>
               <span class="px-2.5 py-1 rounded-lg bg-white border border-[#E8DEC9] text-emerald-800 font-semibold">digital devices</span>
               <span class="px-2.5 py-1 rounded-lg bg-white border border-[#E8DEC9] text-emerald-800 font-semibold">discussion</span>
-              <span class="px-2.5 py-1 rounded-lg bg-white border border-[#E8DEC9] text-emerald-800 font-semibold">cheerful atmosphere</span>
             </div>
           </div>
 
+          <!-- Rasm bo'yicha yozma yoki og'zaki tasvir -->
           <div class="space-y-3">
             <textarea id="pictureDescriptionText" rows="4" placeholder="Rasmda nimalarni ko'ryapsiz? In English: In this picture, there are several young students..." class="w-full bg-[#FAF6ED] border border-[#E8DEC9] rounded-2xl p-4 text-xs sm:text-sm text-milk-dark placeholder-stone-400 focus:outline-none focus:border-emerald-700 leading-relaxed font-sans"></textarea>
 
@@ -545,7 +610,7 @@
 
   <!-- ================= JAVASCRIPT GLOBAL LOGIKA ================= -->
   <script>
-    // 1. ILOGANI TO'LIQ STANDALONE OFFLINE HTML QILIB YUKLAB OLISH FUNKSIYASI
+    // 1. ILOGANI TO'LIQ MUSTAQIL OFFLINE FAYL QILIB YUKLAB OLISH
     function downloadStandaloneApp() {
       const htmlContent = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
       const blob = new Blob([htmlContent], { type: "text/html;charset=utf-8" });
@@ -557,44 +622,293 @@
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
-      alert("Ilova fayli (Englishscorewithme-App.html) kompyuteringizga yuklab olindi! Uni internetsiz ham istalgan payt ikki marta bosib to'liq ishlatishingiz mumkin.");
+      alert("Ilova (Englishscorewithme-App.html) kompyuteringizga yuklab olindi! Uni internetsiz ham istalgan payt to'liq ishlatishingiz mumkin.");
     }
 
-    // 2. 12 TA JAHON TILI LUG'AT BAZASI
-    const GLOBAL_DICTIONARY = {
-      "artificial": { uz: "Sun'iy", ru: "Искусственный", zh: "人造的", es: "Artificial", tr: "Yapay", ar: "اصطناعي", de: "Künstlich", fr: "Artificiel", hi: "कृत्रिम", ja: "人工の", ko: "인공의", pt: "Artificial", phonetic: "/ˌɑːtɪˈfɪʃl/", level: "A2", type: "Adjective", ex: "Artificial intelligence is advancing rapidly." },
-      "intelligence": { uz: "Intellekt, aql", ru: "Интеллект", zh: "智能", es: "Inteligencia", tr: "Zeka", ar: "ذكاء", de: "Intelligenz", fr: "Intelligence", hi: "बुद्धिमत्ता", ja: "知能", ko: "지능", pt: "Inteligência", phonetic: "/ɪnˈtelɪdʒəns/", level: "A2", type: "Noun", ex: "Human intelligence is uniquely creative." },
-      "future": { uz: "Kelajak", ru: "Будущее", zh: "未来", es: "Futuro", tr: "Gelecek", ar: "مستقبل", de: "Zukunft", fr: "Futur", hi: "भविष्य", ja: "未来", ko: "미래", pt: "Futuro", phonetic: "/ˈfjuːtʃə/", level: "A1", type: "Noun", ex: "The future holds limitless opportunities." },
-      "technology": { uz: "Texnologiya", ru: "Технология", zh: "技术", es: "Tecnología", tr: "Teknoloji", ar: "تكنولوجيا", de: "Technologie", fr: "Technologie", hi: "प्रौद्योगिकी", ja: "技術", ko: "기술", pt: "Tecnologia", phonetic: "/tekˈnɒlədʒi/", level: "A1", type: "Noun", ex: "Technology changes how we communicate." },
-      "students": { uz: "Talabalar", ru: "Студенты", zh: "学生", es: "Estudiantes", tr: "Öğrenciler", ar: "طلاب", de: "Studenten", fr: "Étudiants", hi: "छात्र", ja: "学生", ko: "학생들", pt: "Estudantes", phonetic: "/ˈstjuːdənts/", level: "A1", type: "Noun", ex: "Motivated students learn faster." },
-      "language": { uz: "Til", ru: "Язык", zh: "语言", es: "Idioma", tr: "Dil", ar: "لغة", de: "Sprache", fr: "Langue", hi: "भाषा", ja: "言語", ko: "언어", pt: "Idioma", phonetic: "/ˈlæŋɡwɪdʒ/", level: "A1", type: "Noun", ex: "English is a universal global language." },
-      "collaboration": { uz: "Hamkorlik", ru: "Сотрудничество", zh: "合作", es: "Colaboración", tr: "İşbirliği", ar: "تعاون", de: "Zusammenarbeit", fr: "Collaboration", hi: "सहयोग", ja: "共同", ko: "협력", pt: "Colaboração", phonetic: "/kəˌlæbəˈreɪʃn/", level: "B1", type: "Noun", ex: "Effective collaboration brings success." },
-      "consistency": { uz: "Muntazamlik", ru: "Постоянство", zh: "坚持", es: "Consistencia", tr: "Tutarlılık", ar: "ثبات", de: "Beständigkeit", fr: "Régularité", hi: "स्थिरता", ja: "一貫性", ko: "일관성", pt: "Consistência", phonetic: "/kənˈsɪstənsi/", level: "B1", type: "Noun", ex: "Consistency leads to complete fluency." },
-      "opportunity": { uz: "Imkoniyat", ru: "Возможность", zh: "机会", es: "Oportunidad", tr: "Fırsat", ar: "فرصة", de: "Gelegenheit", fr: "Opportunité", hi: "अवसर", ja: "機会", ko: "기회", pt: "Oportunidade", phonetic: "/ˌɒpəˈtjuːnɪti/", level: "A2", type: "Noun", ex: "Every mistake is an opportunity to improve." },
-      "achievement": { uz: "Yutuq, muvaffaqiyat", ru: "Достижение", zh: "成就", es: "Logro", tr: "Başarı", ar: "إنجاز", de: "Leistung", fr: "Accomplissement", hi: "उपलब्धि", ja: "達成", ko: "성취", pt: "Conquista", phonetic: "/əˈtʃiːvmənt/", level: "B1", type: "Noun", ex: "Scoring Band 8 is an incredible achievement." },
-      "dedication": { uz: "Fidoyilik, qunt", ru: "Преданность делу", zh: "奉献", es: "Dedicación", tr: "Adanmışlık", ar: "تفان", de: "Hingabe", fr: "Dévouement", hi: "समर्पण", ja: "献身", ko: "헌신", pt: "Dedicação", phonetic: "/ˌdedɪˈkeɪʃn/", level: "B2", type: "Noun", ex: "Hard work and dedication always pay off." },
-      "determination": { uz: "Qat'iyat, sabot", ru: "Решимость", zh: "决心", es: "Determinación", tr: "Azim", ar: "عزيمة", de: "Entschlossenheit", fr: "Détermination", hi: "दृढ़ संकल्प", ja: "決意", ko: "결의", pt: "Determinação", phonetic: "/dɪˌtɜːmɪˈneɪʃn/", level: "B2", type: "Noun", ex: "With determination, any goal is achievable." }
+    // 2. KENGAYTIRILGAN TO'PLAMLI LUG'AT BAZASI (PACKS / PAGINATION BILAN)
+    const VOCABULARY_PACKS = [
+      // 1-TO'PLAM (Pack 1: Starter & Daily Life)
+      [
+        { word: "artificial", uz: "Sun'iy", ru: "Искусственный", zh: "人造的", es: "Artificial", tr: "Yapay", ar: "اصطناعي", de: "Künstlich", fr: "Artificiel", hi: "कृत्रिम", ja: "人工の", ko: "인공의", pt: "Artificial", phonetic: "/ˌɑːtɪˈfɪʃl/", level: "A2", type: "Adjective", ex: "Artificial intelligence is advancing rapidly." },
+        { word: "intelligence", uz: "Intellekt, aql", ru: "Интеллект", zh: "智能", es: "Inteligencia", tr: "Zeka", ar: "ذكاء", de: "Intelligenz", fr: "Intelligence", hi: "बुद्धिमत्ता", ja: "知能", ko: "지능", pt: "Inteligência", phonetic: "/ɪnˈtelɪdʒəns/", level: "A2", type: "Noun", ex: "Human intelligence is uniquely creative." },
+        { word: "future", uz: "Kelajak", ru: "Будущее", zh: "未来", es: "Futuro", tr: "Gelecek", ar: "مستقبل", de: "Zukunft", fr: "Futur", hi: "भविष्य", ja: "未来", ko: "미래", pt: "Futuro", phonetic: "/ˈfjuːtʃə/", level: "A1", type: "Noun", ex: "The future holds limitless opportunities." },
+        { word: "technology", uz: "Texnologiya", ru: "Технология", zh: "技术", es: "Tecnología", tr: "Teknoloji", ar: "تكنولوجيا", de: "Technologie", fr: "Technologie", hi: "प्रौद्योगिकी", ja: "技術", ko: "기술", pt: "Tecnologia", phonetic: "/tekˈnɒlədʒi/", level: "A1", type: "Noun", ex: "Technology changes how we communicate." },
+        { word: "students", uz: "Talabalar", ru: "Студенты", zh: "学生", es: "Estudiantes", tr: "Öğrenciler", ar: "طلاب", de: "Studenten", fr: "Étudiants", hi: "छात्र", ja: "学生", ko: "학생들", pt: "Estudantes", phonetic: "/ˈstjuːdənts/", level: "A1", type: "Noun", ex: "Motivated students learn faster." },
+        { word: "language", uz: "Til", ru: "Язык", zh: "语言", es: "Idioma", tr: "Dil", ar: "لغة", de: "Sprache", fr: "Langue", hi: "भाषा", ja: "言語", ko: "언어", pt: "Idioma", phonetic: "/ˈlæŋɡwɪdʒ/", level: "A1", type: "Noun", ex: "English is a universal global language." }
+      ],
+      // 2-TO'PLAM (Pack 2: Action & Improvement)
+      [
+        { word: "collaboration", uz: "Hamkorlik", ru: "Сотрудничество", zh: "合作", es: "Colaboración", tr: "İşbirliği", ar: "تعاون", de: "Zusammenarbeit", fr: "Collaboration", hi: "सहयोग", ja: "共同", ko: "협력", pt: "Colaboração", phonetic: "/kəˌlæbəˈreɪʃn/", level: "B1", type: "Noun", ex: "Effective collaboration brings great success." },
+        { word: "consistency", uz: "Muntazamlik", ru: "Постоянство", zh: "坚持", es: "Consistencia", tr: "Tutarlılık", ar: "ثبات", de: "Beständigkeit", fr: "Régularité", hi: "स्थिरता", ja: "一貫性", ko: "일관성", pt: "Consistência", phonetic: "/kənˈsɪstənsi/", level: "B1", type: "Noun", ex: "Consistency leads to complete fluency." },
+        { word: "opportunity", uz: "Imkoniyat", ru: "Возможность", zh: "机会", es: "Oportunidad", tr: "Fırsat", ar: "فرصة", de: "Gelegenheit", fr: "Opportunité", hi: "अवसर", ja: "機会", ko: "기회", pt: "Oportunidade", phonetic: "/ˌɒpəˈtjuːnɪti/", level: "A2", type: "Noun", ex: "Every mistake is an opportunity to improve." },
+        { word: "achievement", uz: "Yutuq, muvaffaqiyat", ru: "Достижение", zh: "成就", es: "Logro", tr: "Başarı", ar: "إنجاز", de: "Leistung", fr: "Accomplissement", hi: "उपलब्धि", ja: "達成", ko: "성취", pt: "Conquista", phonetic: "/əˈtʃiːvmənt/", level: "B1", type: "Noun", ex: "Scoring Band 8 is an incredible achievement." },
+        { word: "dedication", uz: "Fidoyilik, qunt", ru: "Преданность делу", zh: "奉献", es: "Dedicación", tr: "Adanmışlık", ar: "تفان", de: "Hingabe", fr: "Dévouement", hi: "समर्पण", ja: "献身", ko: "헌신", pt: "Dedicação", phonetic: "/ˌdedɪˈkeɪʃn/", level: "B2", type: "Noun", ex: "Hard work and dedication always pay off." },
+        { word: "determination", uz: "Qat'iyat, sabot", ru: "Решимость", zh: "决心", es: "Determinación", tr: "Azim", ar: "عزيمة", de: "Entschlossenheit", fr: "Détermination", hi: "दृढ़ संकल्प", ja: "決意", ko: "결의", pt: "Determinação", phonetic: "/dɪˌtɜːmɪˈneɪʃn/", level: "B2", type: "Noun", ex: "With determination, any goal is achievable." }
+      ],
+      // 3-TO'PLAM (Pack 3: Academic Mastery & IELTS)
+      [
+        { word: "significant", uz: "Ahamiyatli, muhim", ru: "Значительный", zh: "重大的", es: "Significativo", tr: "Önemli", ar: "هام", de: "Bedeutend", fr: "Significatif", hi: "महत्वपूर्ण", ja: "重要な", ko: "상당한", pt: "Significativo", phonetic: "/sɪɡˈnɪfɪkənt/", level: "B2", type: "Adjective", ex: "There is a significant rise in language learners." },
+        { word: "perspective", uz: "Nuqtai nazar, qarash", ru: "Перспектива, точка зрения", zh: "视角", es: "Perspectiva", tr: "Bakış açısı", ar: "منظور", de: "Perspektive", fr: "Perspective", hi: "दृष्टिकोण", ja: "視点", ko: "관점", pt: "Perspectiva", phonetic: "/pəˈspektɪv/", level: "B2", type: "Noun", ex: "Travel broadens your cultural perspective." },
+        { word: "comprehensive", uz: "Keng qamrovli, to'liq", ru: "Комплексный, всесторонний", zh: "综合的", es: "Integral", tr: "Kapsamlı", ar: "شامل", de: "Umfassend", fr: "Complet", hi: "व्यापक", ja: "包括的な", ko: "포괄적인", pt: "Abrangente", phonetic: "/ˌkɒmprɪˈhensɪv/", level: "B2", type: "Adjective", ex: "This app offers comprehensive IELTS practice." },
+        { word: "fluency", uz: "Ravonlik, to'xtovsizlik", ru: "Беглость речи", zh: "流利", es: "Fluidez", tr: "Akıcılık", ar: "طلاقة", de: "Flüssigkeit", fr: "Aisance", hi: "प्रवाह", ja: "流暢さ", ko: "유창함", pt: "Fluência", phonetic: "/ˈfluːənsi/", level: "B1", type: "Noun", ex: "Speaking daily is essential for natural fluency." },
+        { word: "innovative", uz: "Innovatsion, yangicha", ru: "Инновационный", zh: "创新的", es: "Innovador", tr: "Yenilikçi", ar: "مبتكر", de: "Innovativ", fr: "Innovant", hi: "अभिनव", ja: "革新的な", ko: "혁신적인", pt: "Inovador", phonetic: "/ˈɪnəveɪtɪv/", level: "B2", type: "Adjective", ex: "Innovative tools make studying fun and efficient." },
+        { word: "motivation", uz: "Ishtiyoq, motivatsiya", ru: "Мотивация", zh: "动机", es: "Motivación", tr: "Motivasyon", ar: "دافع", de: "Motivation", fr: "Motivation", hi: "प्रेरणा", ja: "動機", ko: "동기 부여", pt: "Motivação", phonetic: "/ˌməʊtɪˈveɪʃn/", level: "A2", type: "Noun", ex: "High motivation drives consistent learning." }
+      ],
+      // 4-TO'PLAM (Pack 4: Communication & Global Society)
+      [
+        { word: "diversity", uz: "Xilma-xillik", ru: "Разнообразие", zh: "多样性", es: "Diversidad", tr: "Çeşitlilik", ar: "تنوع", de: "Vielfalt", fr: "Diversité", hi: "विविधता", ja: "多様性", ko: "다양성", pt: "Diversidade", phonetic: "/daɪˈvɜːsəti/", level: "B2", type: "Noun", ex: "Global diversity enriches our community." },
+        { word: "essential", uz: "O'ta zarur, muhim", ru: "Существенный", zh: "必不可少的", es: "Esencial", tr: "Temel, zorunlu", ar: "أساسي", de: "Wesentlich", fr: "Essentiel", hi: "आवश्यक", ja: "不可欠な", ko: "필수적인", pt: "Essencial", phonetic: "/ɪˈsenʃl/", level: "A2", type: "Adjective", ex: "Water and sleep are essential for human life." },
+        { word: "environment", uz: "Atrof-muhit", ru: "Окружающая среда", zh: "环境", es: "Medio ambiente", tr: "Çevre", ar: "بيئة", de: "Umwelt", fr: "Environnement", hi: "पर्यावरण", ja: "環境", ko: "환경", pt: "Ambiente", phonetic: "/ɪnˈvaɪrənmənt/", level: "A2", type: "Noun", ex: "We must preserve our natural environment." },
+        { word: "challenge", uz: "Sinov, chaqiriq", ru: "Вызов, трудность", zh: "挑战", es: "Desafío", tr: "Meydan okuma", ar: "تحدي", de: "Herausforderung", fr: "Défi", hi: "चुनौती", ja: "挑戦", ko: "도전", pt: "Desafio", phonetic: "/ˈtʃælɪndʒ/", level: "B1", type: "Noun", ex: "Overcoming a challenge builds inner strength." },
+        { word: "efficient", uz: "Samarali, tezkor", ru: "Эффективный", zh: "高效率的", es: "Eficiente", tr: "Verimli", ar: "فعال", de: "Effizient", fr: "Efficace", hi: "कुशल", ja: "効率的な", ko: "효율적인", pt: "Eficiente", phonetic: "/ɪˈfɪʃnt/", level: "B2", type: "Adjective", ex: "An efficient routine saves precious time." },
+        { word: "curiosity", uz: "Qiziquvchanlik", ru: "Любопытство", zh: "好奇心", es: "Curiosidad", tr: "Merak", ar: "فضول", de: "Neugier", fr: "Curiosité", hi: "जिज्ञासा", ja: "好奇心", ko: "호기심", pt: "Curiosidade", phonetic: "/ˌkjʊəriˈɒsəti/", level: "B1", type: "Noun", ex: "Curiosity is the engine of intellect." }
+      ]
+    ];
+
+    // 3. YOSH TOIFALARIGA QARAB O'ZGARUVCHAN RASMLI SAVOLLAR (PICTURE QUESTS)
+    const PICTURE_QUESTS_BY_AUDIENCE = {
+      // 🎓 Kattalar & IELTS (Akademik, ish, texnologiya, aeroport)
+      adults: [
+        {
+          img: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80",
+          topic: "University students collaborating with laptops in a modern library",
+          hints: ["collaboration", "concentrated", "digital devices", "discussion", "academic atmosphere"]
+        },
+        {
+          img: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=800&q=80",
+          topic: "Corporate professionals discussing financial strategy in a conference room",
+          hints: ["strategy", "charts & data", "presentation", "brainstorming", "business attire"]
+        },
+        {
+          img: "https://images.unsplash.com/photo-1530521954074-e64f6810b32d?auto=format&fit=crop&w=800&q=80",
+          topic: "Travelers checking flight schedules at a busy international airport terminal",
+          hints: ["departures board", "luggage", "passenger terminal", "journey", "announcement"]
+        },
+        {
+          img: "https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?auto=format&fit=crop&w=800&q=80",
+          topic: "Engineers inspecting renewable solar and wind energy equipment outdoors",
+          hints: ["renewable energy", "solar panels", "sustainability", "technical inspection", "clean future"]
+        }
+      ],
+      // 🧑 O'smirlar (Shahar hayoti, do'stlar, musiqa, sport)
+      teens: [
+        {
+          img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80",
+          topic: "Teenage band practicing musical instruments and singing in a studio",
+          hints: ["acoustic guitar", "rehearsal", "melody", "creative hobby", "rhythm"]
+        },
+        {
+          img: "https://images.unsplash.com/photo-1526676037777-05a232554f77?auto=format&fit=crop&w=800&q=80",
+          topic: "Friends riding skateboards and hanging out in a sunny urban skatepark",
+          hints: ["skateboarding", "urban park", "sunny day", "friendship", "active lifestyle"]
+        },
+        {
+          img: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80",
+          topic: "Students laughing, drinking coffee and chatting at an outdoor terrace cafe",
+          hints: ["coffee terrace", "laughter", "relaxing weekend", "casual chat", "cheerful"]
+        }
+      ],
+      // 👶 Bolalar & Boshlovchilar (Ertaknamo, o'yin, hayvonlar, rasm chizish)
+      kids: [
+        {
+          img: "https://images.unsplash.com/photo-1576759871155-bd741369527f?auto=format&fit=crop&w=800&q=80",
+          topic: "Happy children playing with a cute puppy outdoors on green grass",
+          hints: ["cute puppy", "green lawn", "sunny weather", "smiling kids", "playful"]
+        },
+        {
+          img: "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=800&q=80",
+          topic: "Little children painting colorful animals with watercolors in art class",
+          hints: ["colorful paint", "art brush", "drawing animals", "happy creativity", "masterpiece"]
+        },
+        {
+          img: "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80",
+          topic: "Joyful birthday celebration with colorful balloons and birthday cake",
+          hints: ["birthday cake", "colourful balloons", "party hats", "making a wish", "celebration"]
+        }
+      ]
     };
 
+    // Dastur holati (State)
+    let currentPackIndex = 0;
     let currentLang = 'uz';
     let totalScore = parseInt(localStorage.getItem('es_score') || '15');
     let listenedWords = JSON.parse(localStorage.getItem('es_listened') || '[]');
     let masteredWords = JSON.parse(localStorage.getItem('es_mastered') || '[]');
 
+    let currentAudience = 'adults';
+    let currentPictureIndex = 0;
+
     window.addEventListener('DOMContentLoaded', () => {
       document.getElementById('navScore').textContent = `${totalScore} ball`;
-      loadReadingPassage();
       renderVocabularyMatrix();
+      renderPictureQuest();
+      loadReadingPassage();
     });
 
+    // 4. TO'PLAMLAR BO'YICHA NAVIGATSIYA (NEXT / PREV WORD PACK)
+    function nextWordPack() {
+      if (currentPackIndex < VOCABULARY_PACKS.length - 1) {
+        currentPackIndex++;
+      } else {
+        currentPackIndex = 0; // Birinchi to'plamga qaytadi
+      }
+      renderVocabularyMatrix();
+      alert(`Siz ${currentPackIndex + 1}-to'plamga o'tdingiz! Yangi so'zlarni o'rganishni boshlang.`);
+    }
+
+    function prevWordPack() {
+      if (currentPackIndex > 0) {
+        currentPackIndex--;
+      } else {
+        currentPackIndex = VOCABULARY_PACKS.length - 1;
+      }
+      renderVocabularyMatrix();
+    }
+
+    function handleLevelFilterChange() {
+      renderVocabularyMatrix();
+    }
+
+    // 5. LUG'AT JADVALINI RENDER QILISH
+    function renderVocabularyMatrix() {
+      const tbody = document.getElementById('matrixTableBody');
+      const searchQuery = (document.getElementById('matrixSearchInput')?.value || '').toLowerCase().trim();
+      const levelFilter = document.getElementById('matrixLevelFilter')?.value || 'ALL';
+
+      const currentPack = VOCABULARY_PACKS[currentPackIndex];
+      tbody.innerHTML = '';
+
+      // Jami bazadagi barcha so'zlar sonini hisoblash
+      let allWordsCount = 0;
+      VOCABULARY_PACKS.forEach(p => allWordsCount += p.length);
+      document.getElementById('matrixTotalWords').textContent = `${allWordsCount} ta`;
+
+      // Indikatorlarni yangilash
+      document.getElementById('packBadgeNumber').textContent = `${currentPackIndex + 1}-To'plam`;
+      document.getElementById('packIndicator').textContent = `To'plam: ${currentPackIndex + 1} / ${VOCABULARY_PACKS.length}`;
+      document.getElementById('matrixListenedCount').textContent = `${listenedWords.length} ta`;
+      document.getElementById('matrixMasteredCount').textContent = `${masteredWords.length} ta`;
+
+      let packMasteredCount = 0;
+
+      currentPack.forEach(item => {
+        const translation = item[currentLang] || item.uz;
+
+        const matchesSearch = item.word.toLowerCase().includes(searchQuery) || translation.toLowerCase().includes(searchQuery);
+        const matchesLevel = levelFilter === 'ALL' || item.level === levelFilter;
+
+        if (matchesSearch && matchesLevel) {
+          const isMastered = masteredWords.includes(item.word);
+          if (isMastered) packMasteredCount++;
+
+          const tr = document.createElement('tr');
+          tr.className = "hover:bg-[#FAF6ED] transition-colors";
+          tr.innerHTML = `
+            <td class="p-3 sm:p-4 text-center">
+              <button onclick="playMatrixWord('${item.word}')" class="w-8 h-8 rounded-xl bg-amber-100 hover:bg-amber-600 text-amber-900 hover:text-white flex items-center justify-center mx-auto transition-all shadow-sm active:scale-95" title="Talaffuzni tinglash">
+                <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+              </button>
+            </td>
+            <td class="p-3 sm:p-4 font-bold text-milk-dark">
+              <span>${item.word}</span>
+              <span class="block text-[11px] font-mono text-indigo-700">${item.phonetic}</span>
+            </td>
+            <td class="p-3 sm:p-4">
+              <span class="text-xs text-milk-muted font-medium">${item.type}</span>
+              <span class="ml-1 text-[10px] font-extrabold uppercase px-1.5 py-0.5 rounded bg-amber-100 border border-amber-200 text-amber-900">${item.level}</span>
+            </td>
+            <td class="p-3 sm:p-4 font-bold text-emerald-800">${translation}</td>
+            <td class="p-3 sm:p-4 text-xs text-milk-muted italic max-w-xs">"${item.ex}"</td>
+            <td class="p-3 sm:p-4 text-center">
+              <button onclick="toggleMasteredWord('${item.word}')" class="px-3 py-1 rounded-xl text-xs font-bold transition-all ${isMastered ? 'bg-emerald-100 text-emerald-900 border border-emerald-300 shadow-sm' : 'bg-stone-100 text-stone-600 hover:bg-emerald-50'}">
+                ${isMastered ? '✅ O\'rganildi' : '○ Yodlash'}
+              </button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        }
+      });
+
+      // Agar to'plamdagi barcha so'zlar o'rganilgan bo'lsa
+      if (packMasteredCount === currentPack.length && currentPack.length > 0) {
+        // Avtomatik rag'batlantirish
+        setTimeout(() => {
+          if (confirm(`Tabriklaymiz! 🎉 Siz ${currentPackIndex + 1}-to'plamdagi barcha so'zlarni to'liq o'zlashtirdingiz!\n\nKeyingi to'plamga (Next Pack) o'tishni xohlaysizmi?`)) {
+            nextWordPack();
+          }
+        }, 600);
+      }
+    }
+
+    function playMatrixWord(word) {
+      playWordAudio(word);
+      if (!listenedWords.includes(word)) {
+        listenedWords.push(word);
+        localStorage.setItem('es_listened', JSON.stringify(listenedWords));
+        renderVocabularyMatrix();
+      }
+    }
+
+    function toggleMasteredWord(word) {
+      if (masteredWords.includes(word)) {
+        masteredWords = masteredWords.filter(w => w !== word);
+      } else {
+        masteredWords.push(word);
+        addScore(5);
+      }
+      localStorage.setItem('es_mastered', JSON.stringify(masteredWords));
+      renderVocabularyMatrix();
+    }
+
+    // 6. RASMLI SAVOLLAR (PICTURE QUESTS) DİNAMİK ALMASHINUVI
+    function changePictureCategory() {
+      currentAudience = document.getElementById('pictureAudienceFilter').value;
+      currentPictureIndex = 0;
+      renderPictureQuest();
+    }
+
+    function nextPictureQuest() {
+      const list = PICTURE_QUESTS_BY_AUDIENCE[currentAudience] || PICTURE_QUESTS_BY_AUDIENCE.adults;
+      currentPictureIndex = (currentPictureIndex + 1) % list.length;
+      renderPictureQuest();
+    }
+
+    function prevPictureQuest() {
+      const list = PICTURE_QUESTS_BY_AUDIENCE[currentAudience] || PICTURE_QUESTS_BY_AUDIENCE.adults;
+      currentPictureIndex = (currentPictureIndex - 1 + list.length) % list.length;
+      renderPictureQuest();
+    }
+
+    function renderPictureQuest() {
+      const list = PICTURE_QUESTS_BY_AUDIENCE[currentAudience] || PICTURE_QUESTS_BY_AUDIENCE.adults;
+      const quest = list[currentPictureIndex];
+
+      document.getElementById('questImage').src = quest.img;
+      document.getElementById('questImageBadge').textContent = `📍 Topic: ${quest.topic}`;
+      document.getElementById('pictureCounterBadge').textContent = `Rasm: ${currentPictureIndex + 1} / ${list.length}`;
+
+      // Yordamchi so'zlar (Hints)
+      const hintsContainer = document.getElementById('questHintsContainer');
+      hintsContainer.innerHTML = '';
+      quest.hints.forEach(hint => {
+        const span = document.createElement('span');
+        span.className = "px-2.5 py-1 rounded-lg bg-white border border-[#E8DEC9] text-emerald-800 font-semibold shadow-xs";
+        span.textContent = hint;
+        hintsContainer.appendChild(span);
+      });
+
+      // Tozalash
+      document.getElementById('pictureDescriptionText').value = '';
+      document.getElementById('pictureResultBox').classList.add('hidden');
+    }
+
+    // 7. TILNI O'ZGARTIRISH
     function changeLanguage() {
       currentLang = document.getElementById('userLangSelect').value;
-      const subtitle = document.getElementById('heroSubtitle');
-      const tipText = document.getElementById('readingTipText');
       const colHeader = document.getElementById('matrixLangColHeader');
 
       const langNames = {
-        uz: "O'zbekcha Tarjima", ru: "Русский перевод", zh: "中文翻译",
+        uz: "Tanlangan Tildagi Tarjimasi", ru: "Русский перевод", zh: "中文翻译",
         es: "Traducción en Español", tr: "Türkçe Çeviri", ar: "الترجمة العربية",
         de: "Deutsche Übersetzung", fr: "Traduction Française", hi: "हिन्दी अनुवाद",
         ja: "日本語訳", ko: "한국어 번역", pt: "Tradução em Português"
@@ -616,7 +930,6 @@
 
       if (activeSection && activeBtn) {
         activeSection.classList.remove('hidden');
-        // Tanlangan tab o'zining maxsus rangida bo'ladi
         const colors = {
           matrix: "bg-indigo-700 text-white shadow-md border-indigo-800",
           reading: "bg-amber-600 text-white shadow-md border-amber-700",
@@ -627,78 +940,6 @@
         };
         activeBtn.className = `skill-tab-btn flex items-center justify-center gap-1.5 p-3 rounded-2xl font-bold text-xs sm:text-sm transition-all ${colors[skill]} shadow-md`;
       }
-    }
-
-    // ================= LUG'AT JADVALI LOGIKASI =================
-    function renderVocabularyMatrix() {
-      const tbody = document.getElementById('matrixTableBody');
-      const searchQuery = (document.getElementById('matrixSearchInput')?.value || '').toLowerCase().trim();
-      const levelFilter = document.getElementById('matrixLevelFilter')?.value || 'ALL';
-
-      const words = Object.keys(GLOBAL_DICTIONARY);
-      tbody.innerHTML = '';
-
-      words.forEach(wordKey => {
-        const item = GLOBAL_DICTIONARY[wordKey];
-        const translation = item[currentLang] || item.uz;
-
-        const matchesSearch = wordKey.toLowerCase().includes(searchQuery) || translation.toLowerCase().includes(searchQuery);
-        const matchesLevel = levelFilter === 'ALL' || item.level === levelFilter;
-
-        if (matchesSearch && matchesLevel) {
-          const isMastered = masteredWords.includes(wordKey);
-
-          const tr = document.createElement('tr');
-          tr.className = "hover:bg-[#FAF6ED] transition-colors";
-          tr.innerHTML = `
-            <td class="p-3 sm:p-4 text-center">
-              <button onclick="playMatrixWord('${wordKey}')" class="w-8 h-8 rounded-xl bg-amber-100 hover:bg-amber-600 text-amber-900 hover:text-white flex items-center justify-center mx-auto transition-all shadow-sm active:scale-95" title="Talaffuzni tinglash">
-                <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
-              </button>
-            </td>
-            <td class="p-3 sm:p-4 font-bold text-milk-dark">
-              <span>${wordKey}</span>
-              <span class="block text-[11px] font-mono text-indigo-700">${item.phonetic}</span>
-            </td>
-            <td class="p-3 sm:p-4">
-              <span class="text-xs text-milk-muted font-medium">${item.type}</span>
-              <span class="ml-1 text-[10px] font-extrabold uppercase px-1.5 py-0.5 rounded bg-amber-100 border border-amber-200 text-amber-900">${item.level}</span>
-            </td>
-            <td class="p-3 sm:p-4 font-bold text-emerald-800">${translation}</td>
-            <td class="p-3 sm:p-4 text-xs text-milk-muted italic max-w-xs">"${item.ex}"</td>
-            <td class="p-3 sm:p-4 text-center">
-              <button onclick="toggleMasteredWord('${wordKey}')" class="px-3 py-1 rounded-xl text-xs font-bold transition-all ${isMastered ? 'bg-emerald-100 text-emerald-900 border border-emerald-300 shadow-sm' : 'bg-stone-100 text-stone-600 hover:bg-emerald-50'}">
-                ${isMastered ? '✅ O\'rganildi' : '○ Yodlash'}
-              </button>
-            </td>
-          `;
-          tbody.appendChild(tr);
-        }
-      });
-
-      document.getElementById('matrixTotalWords').textContent = `${words.length} ta`;
-      document.getElementById('matrixListenedCount').textContent = `${listenedWords.length} ta`;
-      document.getElementById('matrixMasteredCount').textContent = `${masteredWords.length} ta`;
-    }
-
-    function playMatrixWord(word) {
-      playWordAudio(word);
-      if (!listenedWords.includes(word)) {
-        listenedWords.push(word);
-        localStorage.setItem('es_listened', JSON.stringify(listenedWords));
-        renderVocabularyMatrix();
-      }
-    }
-
-    function toggleMasteredWord(word) {
-      if (masteredWords.includes(word)) {
-        masteredWords = masteredWords.filter(w => w !== word);
-      } else {
-        masteredWords.push(word);
-        addScore(5);
-      }
-      localStorage.setItem('es_mastered', JSON.stringify(masteredWords));
-      renderVocabularyMatrix();
     }
 
     // ================= READING (10 DAQIQA - 600s) =================
@@ -765,11 +1006,16 @@
 
     function handleWordClick(event, cleanWord, rawWord) {
       const modal = document.getElementById('wordTranslationModal');
-      const entry = GLOBAL_DICTIONARY[cleanWord] || {
+      // Barcha to'plamlardan so'zni topish
+      let found = null;
+      for (const pack of VOCABULARY_PACKS) {
+        const match = pack.find(w => w.word.toLowerCase() === cleanWord);
+        if (match) { found = match; break; }
+      }
+
+      const entry = found || {
         uz: `So'z: ${cleanWord}`, ru: `Слово: ${cleanWord}`, zh: `单词: ${cleanWord}`,
         es: `Palabra: ${cleanWord}`, tr: `Kelime: ${cleanWord}`, ar: `كلمة: ${cleanWord}`,
-        de: `Wort: ${cleanWord}`, fr: `Mot: ${cleanWord}`, hi: `शब्द: ${cleanWord}`,
-        ja: `単語: ${cleanWord}`, ko: `단어: ${cleanWord}`, pt: `Palavra: ${cleanWord}`,
         phonetic: `/${cleanWord}/`, ex: `Example with "${rawWord}".`
       };
 
@@ -1013,7 +1259,7 @@
       addScore(20);
     }
 
-    // ================= PICTURE QUEST =================
+    // ================= PICTURE QUEST MIC & EVALUATION =================
     let isPicRecording = false;
     let picRecognition = null;
 
@@ -1052,7 +1298,7 @@
 
     function evaluatePictureDescription() {
       const text = document.getElementById('pictureDescriptionText').value.trim();
-      if (text.length < 15) {
+      if (text.length < 10) {
         alert("Iltimos, rasm haqida kamida bitta to'liq jumla yozing yoki mikrofonda ayting!");
         return;
       }
