@@ -4,17 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Englishscorewithme | Universal Global English & IELTS Platform</title>
-  <meta name="description" content="Global English learning platform with Warm Milk Luxury UI. 4 core skills, Picture Description, Vocabulary Matrix Table, and 1-click App Install." />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%234f46e5%22/><text y=%2270%22 x=%2215%22 font-size=%2265%22>🎯</text></svg>" />
+  <meta name="description" content="Global English learning platform with Warm Milk Luxury Palette, Vocabulary Matrix Table, 10-Minute Timers, and 1-Click Offline App Download." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%234338ca%22/><text y=%2270%22 x=%2215%22 font-size=%2265%22>🎯</text></svg>" />
   
-  <!-- PWA Manifest & Mobile Meta -->
+  <!-- PWA Manifest & Meta -->
   <link rel="manifest" href="manifest.json" />
-  <meta name="theme-color" content="#FAF7F2" />
+  <meta name="theme-color" content="#F7F3EB" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="Englishscore" />
 
-  <!-- Google Fonts -->
+  <!-- Google Fonts: Plus Jakarta Sans & Space Grotesk -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
@@ -30,20 +29,15 @@
             display: ['"Space Grotesk"', 'sans-serif'],
           },
           colors: {
+            // HAQIQIY SUT RANG (WARM MILK & CREAM) PALITRASI
             milk: {
-              bg: '#FAF7F2',       // Asosiy sut rang fon
-              surface: '#FFFFFF',  // Toza oq karta foni
-              card: '#FCFAF7',     // Ichki nozik karta
-              border: '#EBE5DA',   // Yumshoq krem hoshiya
-              hover: '#F4EFE6',    // Tugma hover
-              darkText: '#1F1A17', // To'q espresso asosiy matn
-              mutedText: '#635B54' // Yumshoq kulrang-jigarrang
-            },
-            accent: {
-              primary: '#4F46E5',  // Qirollik Indigosi (Alohida belgilangan buttonlar)
-              emerald: '#0D9488',  // Zangori-yashil
-              amber: '#D97706',    // Iliq kahrabo
-              rose: '#E11D48',     // Jonli qizil
+              50: '#FDFBF7',   // Toza sut ko'pigi
+              100: '#FAF6ED',  // Asosiy sut rang fon (Soft Milk)
+              200: '#F3ECE0',  // Iliq qaymoq
+              300: '#E8DEC9',  // Sutli qahva cheti / hoshiya
+              400: '#D6C8AC',  // Och qandolat
+              dark: '#211B17', // To'q qora-espresso matn (eng qulay o'qiluvchan)
+              muted: '#6E645B' // Yumshoq kakao matn
             }
           }
         }
@@ -53,82 +47,69 @@
 
   <style>
     * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
+    /* Butun sahifa uchun tabiiy iliq sut rang fon */
     body {
-      background-color: #FAF7F2;
-      color: #1F1A17;
-    }
-    /* Nozik ambient sut rang nuri */
-    .glow-orb-milk {
-      position: absolute;
-      top: 0; left: 50%;
-      transform: translateX(-50%);
-      width: 750px; height: 350px;
-      background: radial-gradient(circle, rgba(79, 70, 229, 0.06) 0%, rgba(217, 119, 6, 0.04) 50%, transparent 75%);
-      filter: blur(80px);
-      z-index: 0; pointer-events: none;
+      background-color: #FAF6ED;
+      color: #211B17;
+      min-height: 100vh;
     }
     .clickable-word {
       cursor: pointer;
       display: inline-block;
       padding: 1px 4px;
-      border-radius: 4px;
+      border-radius: 6px;
       transition: all 0.15s ease;
     }
     .clickable-word:hover {
-      background-color: #EEF2FF;
-      color: #4F46E5;
-      font-weight: 600;
+      background-color: #E0E7FF;
+      color: #4338CA;
+      font-weight: 700;
     }
     @keyframes pulse-ring {
       0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.6); }
-      70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(225, 29, 72, 0); }
+      70% { transform: scale(1); box-shadow: 0 0 0 12px rgba(225, 29, 72, 0); }
       100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(225, 29, 72, 0); }
     }
-    .recording-pulse {
-      animation: pulse-ring 1.5s infinite;
-    }
+    .recording-pulse { animation: pulse-ring 1.5s infinite; }
   </style>
 </head>
-<body class="min-h-screen relative overflow-x-hidden antialiased flex flex-col justify-between selection:bg-indigo-100 selection:text-indigo-900">
+<body class="antialiased flex flex-col justify-between selection:bg-amber-200 selection:text-amber-900">
 
-  <div class="glow-orb-milk"></div>
-
-  <!-- Yuqori Navigatsiya Bari: Sut Rang Dizayn, Til Tanlash va Ilovani O'rnatish -->
-  <nav class="relative z-20 border-b border-[#E8E2D5] bg-[#FAF7F2]/90 backdrop-blur-xl sticky top-0 shadow-[0_2px_15px_-3px_rgba(31,26,23,0.03)]">
+  <!-- ================= 1. YUQORI NAVIGATSIYA: SUT RANGI VA HAR XIL RANGDAGI TUGMALAR ================= -->
+  <nav class="sticky top-0 z-40 bg-[#FAF6ED]/95 backdrop-blur-md border-b border-[#E8DEC9] shadow-[0_2px_15px_-4px_rgba(33,27,23,0.04)]">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-2 sm:gap-4">
       
       <!-- Logo -->
       <a href="#" class="flex items-center gap-2.5 group shrink-0">
-        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-indigo-600 to-amber-500 p-[2px] flex items-center justify-center shadow-md shadow-indigo-500/10 group-hover:scale-105 transition-transform">
-          <div class="w-full h-full bg-[#FAF7F2] rounded-[14px] flex items-center justify-center">
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-amber-600 via-indigo-600 to-emerald-600 p-[2px] flex items-center justify-center shadow-sm">
+          <div class="w-full h-full bg-[#FAF6ED] rounded-[14px] flex items-center justify-center">
             <span class="text-lg">🎯</span>
           </div>
         </div>
         <div>
-          <span class="font-display font-bold text-base sm:text-lg text-milk-darkText tracking-tight">English<span class="text-indigo-600">score</span><span class="text-emerald-700">withme</span></span>
-          <span class="hidden lg:inline-block ml-1 text-[9px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200">Global Edition</span>
+          <span class="font-display font-bold text-base sm:text-lg text-milk-dark tracking-tight">English<span class="text-indigo-600">score</span><span class="text-emerald-700">withme</span></span>
+          <span class="hidden md:inline-block ml-1.5 text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-200">Global Edition</span>
         </div>
       </a>
 
-      <!-- Markaz/O'ng: Til, Ilovani Yuklab Olish va Ball -->
-      <div class="flex items-center gap-1.5 sm:gap-2.5">
+      <!-- Markaz / O'ng: Rangli Tugmalar & Funksiyalar -->
+      <div class="flex items-center gap-2 sm:gap-3">
         
-        <!-- 📲 Ilovani o'rnatish (PWA Download) Tugmasi -->
+        <!-- 📥 ALOHIDA YUKLAB OLISH (DOWNLOAD APP) TUGMASI - EMERALD RANG -->
         <button 
-          id="installAppBtn" 
-          onclick="handleAppInstallClick()" 
-          class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white text-xs font-bold shadow-md shadow-indigo-600/20 active:scale-95 transition-all"
-          title="Ushbu ilovani kompyuter yoki telefonga alohida dastur qilib o'rnatish"
+          onclick="downloadStandaloneApp()" 
+          class="flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-md shadow-emerald-600/20 active:scale-95 transition-all"
+          title="Ushbu ilovani to'liq mustaqil fayl ko'rinishida kompyuter yoki telefoningizga yuklab olish"
         >
-          <span>📲</span>
-          <span class="hidden sm:inline">Ilovani o'rnatish</span>
-          <span class="sm:hidden">App</span>
+          <span>📥</span>
+          <span class="hidden sm:inline">Ilovani yuklab olish</span>
+          <span class="sm:hidden">Yuklab olish</span>
         </button>
 
-        <!-- 12 ta Jahon Tili Menyusi -->
-        <div class="flex items-center gap-1 bg-white border border-[#E5DFD3] rounded-xl px-2 py-1 text-xs shadow-sm">
+        <!-- 🌐 12 TA JAHON TILI TANLASH - OQ SUT RANG BLOK -->
+        <div class="flex items-center gap-1 bg-white border border-[#E8DEC9] rounded-xl px-2.5 py-1.5 text-xs shadow-sm">
           <span>🌐</span>
-          <select id="userLangSelect" onchange="changeLanguage()" class="bg-transparent text-milk-darkText font-semibold focus:outline-none cursor-pointer max-w-[105px] sm:max-w-none">
+          <select id="userLangSelect" onchange="changeLanguage()" class="bg-transparent text-milk-dark font-bold focus:outline-none cursor-pointer max-w-[105px] sm:max-w-none">
             <option value="uz">🇺🇿 O'zbekcha</option>
             <option value="ru">🇷🇺 Русский</option>
             <option value="zh">🇨🇳 中文 (Chinese)</option>
@@ -144,8 +125,8 @@
           </select>
         </div>
 
-        <!-- Umumiy ball -->
-        <div class="flex items-center gap-1 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold shadow-sm">
+        <!-- BALL KO'RSATKICHI - AMBER RANG -->
+        <div class="flex items-center gap-1 px-3 py-1.5 rounded-full bg-amber-100 border border-amber-300 text-amber-900 text-xs font-extrabold shadow-sm">
           <span>⭐</span>
           <span id="navScore">15 ball</span>
         </div>
@@ -155,158 +136,238 @@
     </div>
   </nav>
 
-  <!-- Asosiy Qism -->
-  <main class="relative z-10 flex-grow max-w-6xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8">
+  <!-- ================= ASOSIY MAZMUN ================= -->
+  <main class="flex-grow max-w-6xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8">
     
-    <!-- Hero / Sarlavha: Sut rang nozik estetika -->
-    <header class="text-center mb-6 sm:mb-8">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#E5DFD3] text-xs font-semibold text-indigo-700 mb-2 shadow-sm">
-        <span class="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
-        <span>Universal Global English Learning Platform</span>
+    <!-- Hero / Sarlavha (Sut rang dizaynda) -->
+    <header class="text-center mb-8">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#E8DEC9] text-xs font-bold text-amber-800 mb-2 shadow-sm">
+        <span>🥛 Sut Rang Estetik Dizayn</span>
+        <span>•</span>
+        <span>Universal Multilingual Platform</span>
       </div>
-      <h1 class="text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-milk-darkText mb-2 font-display">
-        English Learning <span class="bg-gradient-to-r from-indigo-600 via-amber-600 to-emerald-700 bg-clip-text text-transparent">With Me</span>
+      <h1 class="text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-milk-dark mb-2 font-display">
+        English Learning <span class="bg-gradient-to-r from-amber-700 via-indigo-700 to-emerald-700 bg-clip-text text-transparent">With Me</span>
       </h1>
-      <p id="heroSubtitle" class="text-xs sm:text-sm text-milk-mutedText max-w-2xl mx-auto leading-relaxed">
-        12+ jahon tillaridan turib ingliz tilini o'rganing: 10 daqiqalik Reading, Cambridge Listening, Speaking AI, Writing va Universal Lug'at Jadvali bitta platformada.
+      <p id="heroSubtitle" class="text-xs sm:text-sm text-milk-muted max-w-2xl mx-auto leading-relaxed">
+        Istalgan ona tilidan turib ingliz tilini o'rganing: Universal Lug'at Jadvali, 10 daqiqalik Reading, Cambridge Listening, Speaking AI va Writing bitta joyda.
       </p>
     </header>
 
-    <!-- ASOSIY BO'LIM TUGMALARI (NAV TABS - 6 TA MODUL) -->
-    <!-- Alohida belgilangan aktiv tab to'q rangda (Indigo), noaktivlar sut/oq kartochkada -->
+    <!-- ALOHIDA BELGILANGAN HAR XIL RANGLI BO'LIM TUGMALARI -->
     <div class="grid grid-cols-2 sm:grid-cols-6 gap-2 max-w-5xl mx-auto mb-8">
-      <!-- 1. Reading -->
-      <button onclick="switchSkillTab('reading')" id="btn-reading" class="skill-btn flex items-center justify-center gap-1.5 p-3 rounded-2xl font-bold text-xs sm:text-sm transition-all bg-indigo-600 text-white shadow-md shadow-indigo-600/20 border border-indigo-700">
-        <span>📖</span><span>Reading</span>
+      
+      <!-- 1. Lug'at Jadvali (Aktiv / Boshlang'ich - Royal Indigo) -->
+      <button onclick="switchSkillTab('matrix')" id="btn-matrix" class="skill-tab-btn flex items-center justify-center gap-1.5 p-3 rounded-2xl font-bold text-xs sm:text-sm transition-all bg-indigo-700 text-white shadow-md shadow-indigo-700/20 border border-indigo-800 col-span-2 sm:col-span-1">
+        <span>📊</span><span>Lug'at Jadvali</span>
       </button>
 
-      <!-- 2. Listening -->
-      <button onclick="switchSkillTab('listening')" id="btn-listening" class="skill-btn flex items-center justify-center gap-1.5 p-3 rounded-2xl font-bold text-xs sm:text-sm transition-all bg-white text-milk-darkText hover:bg-[#F4EFE6] border border-[#E5DFD3] shadow-sm">
+      <!-- 2. Reading (Warm Ochre / Amber) -->
+      <button onclick="switchSkillTab('reading')" id="btn-reading" class="skill-tab-btn flex items-center justify-center gap-1.5 p-3 rounded-2xl font-bold text-xs sm:text-sm transition-all bg-white text-milk-dark hover:bg-milk-200 border border-[#E8DEC9] shadow-sm">
+        <span>📖</span><span>Reading (10 min)</span>
+      </button>
+
+      <!-- 3. Listening (Ocean Blue) -->
+      <button onclick="switchSkillTab('listening')" id="btn-listening" class="skill-tab-btn flex items-center justify-center gap-1.5 p-3 rounded-2xl font-bold text-xs sm:text-sm transition-all bg-white text-milk-dark hover:bg-milk-200 border border-[#E8DEC9] shadow-sm">
         <span>🎧</span><span>Listening</span>
       </button>
 
-      <!-- 3. Speaking AI -->
-      <button onclick="switchSkillTab('speaking')" id="btn-speaking" class="skill-btn flex items-center justify-center gap-1.5 p-3 rounded-2xl font-bold text-xs sm:text-sm transition-all bg-white text-milk-darkText hover:bg-[#F4EFE6] border border-[#E5DFD3] shadow-sm">
-        <span>🎙️</span><span>Speaking</span>
+      <!-- 4. Speaking AI (Coral Red) -->
+      <button onclick="switchSkillTab('speaking')" id="btn-speaking" class="skill-tab-btn flex items-center justify-center gap-1.5 p-3 rounded-2xl font-bold text-xs sm:text-sm transition-all bg-white text-milk-dark hover:bg-milk-200 border border-[#E8DEC9] shadow-sm">
+        <span>🎙️</span><span>Speaking AI</span>
       </button>
 
-      <!-- 4. Writing -->
-      <button onclick="switchSkillTab('writing')" id="btn-writing" class="skill-btn flex items-center justify-center gap-1.5 p-3 rounded-2xl font-bold text-xs sm:text-sm transition-all bg-white text-milk-darkText hover:bg-[#F4EFE6] border border-[#E5DFD3] shadow-sm">
+      <!-- 5. Writing (Warm Bronze) -->
+      <button onclick="switchSkillTab('writing')" id="btn-writing" class="skill-tab-btn flex items-center justify-center gap-1.5 p-3 rounded-2xl font-bold text-xs sm:text-sm transition-all bg-white text-milk-dark hover:bg-milk-200 border border-[#E8DEC9] shadow-sm">
         <span>✍️</span><span>Writing</span>
       </button>
 
-      <!-- 5. Picture Quest -->
-      <button onclick="switchSkillTab('picture')" id="btn-picture" class="skill-btn flex items-center justify-center gap-1.5 p-3 rounded-2xl font-bold text-xs sm:text-sm transition-all bg-white text-milk-darkText hover:bg-[#F4EFE6] border border-[#E5DFD3] shadow-sm">
-        <span>🖼️</span><span>Picture</span>
+      <!-- 6. Picture Quest (Forest Green) -->
+      <button onclick="switchSkillTab('picture')" id="btn-picture" class="skill-tab-btn flex items-center justify-center gap-1.5 p-3 rounded-2xl font-bold text-xs sm:text-sm transition-all bg-white text-milk-dark hover:bg-milk-200 border border-[#E8DEC9] shadow-sm col-span-2 sm:col-span-1">
+        <span>🖼️</span><span>Picture Quest</span>
       </button>
 
-      <!-- 6. Universal Lug'at Jadvali (YANGI!) -->
-      <button onclick="switchSkillTab('matrix')" id="btn-matrix" class="skill-btn flex items-center justify-center gap-1.5 p-3 rounded-2xl font-bold text-xs sm:text-sm transition-all bg-white text-milk-darkText hover:bg-[#F4EFE6] border border-[#E5DFD3] shadow-sm col-span-2 sm:col-span-1">
-        <span>📊</span><span>Lug'at Jadvali</span>
-      </button>
     </div>
 
-    <!-- ================= 1. READING SECTION (10 DAQIQA QILINDI!) ================= -->
-    <section id="section-reading" class="skill-content transition-all duration-300">
+    <!-- ================= 1-BO'LIM (BOSHLANG'ICH): UNIVERSAL LUG'AT JADVALI ================= -->
+    <section id="section-matrix" class="skill-content transition-all duration-300">
+      <div class="max-w-5xl mx-auto space-y-6">
+        
+        <div class="p-6 sm:p-8 rounded-3xl bg-white border border-[#E8DEC9] shadow-md">
+          
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-[#F3ECE0]">
+            <div>
+              <span class="text-xs uppercase tracking-widest text-indigo-700 font-extrabold inline-block mb-1">So'z Boyligini Oshirish Uchun Maxsus Tizim</span>
+              <h2 class="text-xl sm:text-2xl font-bold text-milk-dark font-display">Ko'p Tilli Lug'at Boyligi Jadvali</h2>
+              <p class="text-xs text-milk-muted mt-0.5">Inglizcha so'z, uning fonetikasi, talaffuzi va to'g'risida siz tanlagan tildagi aniq ma'nosi.</p>
+            </div>
+
+            <!-- JONLI KO'RSATKICHLAR: SO'ZLAR, TALAFUZ VA O'ZLASHTIRILGANLAR -->
+            <div class="flex flex-wrap items-center gap-2">
+              <div class="px-3 py-1.5 rounded-xl bg-[#FAF6ED] border border-[#E8DEC9] text-xs font-semibold">
+                <span class="text-milk-muted">Jami so'zlar:</span>
+                <strong id="matrixTotalWords" class="text-indigo-800 font-bold ml-1">12 ta</strong>
+              </div>
+              <div class="px-3 py-1.5 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-900 font-semibold">
+                <span>🔊 Talaffuz qilingan:</span>
+                <strong id="matrixListenedCount" class="font-bold ml-1">0 ta</strong>
+              </div>
+              <div class="px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-900 font-semibold">
+                <span>✅ O'rganilgan:</span>
+                <strong id="matrixMasteredCount" class="font-bold ml-1">0 ta</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Qidiruv va Filtr -->
+          <div class="flex flex-col sm:flex-row gap-3 mb-6">
+            <div class="relative flex-grow">
+              <input 
+                type="text" 
+                id="matrixSearchInput" 
+                oninput="renderVocabularyMatrix()" 
+                placeholder="Inglizcha so'z yoki o'z tilingizdagi tarjimasini izlang..." 
+                class="w-full bg-[#FAF6ED] border border-[#E8DEC9] rounded-xl px-4 py-2.5 text-xs sm:text-sm text-milk-dark placeholder-stone-400 focus:outline-none focus:border-indigo-600 shadow-sm"
+              />
+            </div>
+            <select 
+              id="matrixLevelFilter" 
+              onchange="renderVocabularyMatrix()" 
+              class="bg-[#FAF6ED] border border-[#E8DEC9] rounded-xl px-3 py-2 text-xs text-milk-dark font-bold focus:outline-none shadow-sm cursor-pointer"
+            >
+              <option value="ALL">Barcha darajalar (A1-B2)</option>
+              <option value="A1">A1 - Boshlang'ich</option>
+              <option value="A2">A2 - O'rta-quyi</option>
+              <option value="B1">B1 - O'rta</option>
+              <option value="B2">B2 - Ilg'or Academic</option>
+            </select>
+          </div>
+
+          <!-- Asosiy Jadval (Toza Sut Rang Kontrastida) -->
+          <div class="overflow-x-auto rounded-2xl border border-[#E8DEC9] shadow-sm">
+            <table class="w-full text-left text-xs sm:text-sm">
+              <thead class="bg-[#FAF6ED] border-b border-[#E8DEC9] text-milk-muted uppercase text-[10px] sm:text-xs font-bold tracking-wider">
+                <tr>
+                  <th class="p-3 sm:p-4 text-center">Talaffuz (Audio)</th>
+                  <th class="p-3 sm:p-4">Inglizcha So'z</th>
+                  <th class="p-3 sm:p-4">Turi / Daraja</th>
+                  <th class="p-3 sm:p-4 text-indigo-800 font-bold" id="matrixLangColHeader">Tanlangan Tildagi Tarjimasi</th>
+                  <th class="p-3 sm:p-4">Haqiqiy Misol Gap</th>
+                  <th class="p-3 sm:p-4 text-center">Holat</th>
+                </tr>
+              </thead>
+              <tbody id="matrixTableBody" class="divide-y divide-[#F3ECE0] bg-white">
+                <!-- JS orqali to'ldiriladi -->
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= 2-BO'LIM: READING (10 DAQIQALIK TAYMER BILAN) ================= -->
+    <section id="section-reading" class="skill-content hidden transition-all duration-300">
       <div class="max-w-4xl mx-auto space-y-6">
         
-        <div class="flex flex-wrap items-center justify-between gap-3 p-4 rounded-2xl bg-white border border-[#E5DFD3] shadow-sm">
+        <div class="flex flex-wrap items-center justify-between gap-3 p-4 rounded-2xl bg-white border border-[#E8DEC9] shadow-sm">
           <div class="flex items-center gap-2">
-            <span class="text-xs text-milk-mutedText font-bold uppercase tracking-wider">Mavzu:</span>
-            <select id="readingTopicSelect" onchange="loadReadingPassage()" class="bg-[#FAF7F2] border border-[#E5DFD3] rounded-xl px-3 py-1.5 text-xs text-indigo-700 font-semibold focus:outline-none">
+            <span class="text-xs text-milk-muted font-bold uppercase tracking-wider">Mavzu:</span>
+            <select id="readingTopicSelect" onchange="loadReadingPassage()" class="bg-[#FAF6ED] border border-[#E8DEC9] rounded-xl px-3 py-1.5 text-xs text-indigo-800 font-bold focus:outline-none">
               <option value="ai_future">IELTS Reading: The Future of Artificial Intelligence</option>
               <option value="story_adventure">Visual Story: The Mysterious Lighthouse (Hikoya)</option>
               <option value="cambridge_nature">Cambridge Academic: Global Climate Systems</option>
             </select>
           </div>
 
-          <!-- 10 DAQIQALIK TAYMER! -->
+          <!-- AYNAN 10 DAQIQALIK TAYMER! -->
           <div class="flex items-center gap-2">
-            <span class="text-xs text-milk-mutedText font-semibold">⏱️ 10 daqiqalik taymer:</span>
-            <span id="readingTimerDisplay" class="font-mono text-sm font-bold text-amber-700 bg-amber-50 px-3 py-1 rounded-lg border border-amber-200">10:00</span>
-            <button onclick="toggleReadingTimer()" id="readingTimerBtn" class="px-3.5 py-1 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold transition-all shadow-sm">Boshlash</button>
+            <span class="text-xs text-milk-muted font-bold">⏱️ Taymer (10 minut):</span>
+            <span id="readingTimerDisplay" class="font-mono text-sm font-extrabold text-amber-900 bg-amber-100 px-3.5 py-1 rounded-xl border border-amber-300">10:00</span>
+            <button onclick="toggleReadingTimer()" id="readingTimerBtn" class="px-4 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold transition-all shadow-sm">Boshlash</button>
           </div>
         </div>
 
-        <div class="p-6 sm:p-8 rounded-3xl bg-white border border-[#E5DFD3] shadow-md relative">
-          <div class="flex items-center justify-between mb-4 pb-3 border-b border-[#EFE9DF]">
-            <h2 id="readingTitle" class="text-lg sm:text-xl font-bold text-milk-darkText font-display">The Future of Artificial Intelligence</h2>
-            <div class="text-[11px] text-indigo-700 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-200 flex items-center gap-1.5 font-medium">
+        <div class="p-6 sm:p-8 rounded-3xl bg-white border border-[#E8DEC9] shadow-md relative">
+          <div class="flex items-center justify-between mb-4 pb-3 border-b border-[#F3ECE0]">
+            <h2 id="readingTitle" class="text-lg sm:text-xl font-bold text-milk-dark font-display">The Future of Artificial Intelligence</h2>
+            <div class="text-[11px] text-indigo-800 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-200 flex items-center gap-1.5 font-bold">
               <span>💡</span>
-              <span id="readingTipText">So'z ustiga bosing — tanlangan tilingizda tarjima chiqadi!</span>
+              <span id="readingTipText">Istalgan so'z ustiga bosing — tanlangan tilingizda tarjima chiqadi!</span>
             </div>
           </div>
 
-          <div id="readingParagraph" class="text-sm sm:text-base text-milk-darkText leading-relaxed space-y-4"></div>
+          <div id="readingParagraph" class="text-sm sm:text-base text-milk-dark leading-relaxed space-y-4"></div>
 
-          <!-- Click-to-Translate Popover Modal (Sut Rang) -->
-          <div id="wordTranslationModal" class="hidden fixed sm:absolute z-50 p-4 rounded-2xl bg-white border border-indigo-200 shadow-2xl max-w-xs transition-all">
+          <!-- Tarjima Popover Modali -->
+          <div id="wordTranslationModal" class="hidden fixed sm:absolute z-50 p-4 rounded-2xl bg-white border border-indigo-300 shadow-2xl max-w-xs transition-all">
             <div class="flex items-center justify-between gap-3 mb-2">
-              <span id="modalWord" class="text-base font-bold text-milk-darkText uppercase">word</span>
+              <span id="modalWord" class="text-base font-bold text-milk-dark uppercase">word</span>
               <button onclick="playWordAudio(document.getElementById('modalWord').textContent)" class="text-indigo-600 hover:text-indigo-800" title="Talaffuz">
                 <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
               </button>
               <button onclick="closeWordModal()" class="text-slate-400 hover:text-slate-600 text-xs">✕</button>
             </div>
-            <p id="modalPhonetic" class="text-xs text-indigo-600 font-mono mb-1.5">/phonetic/</p>
-            <p class="text-[11px] text-milk-mutedText mb-0.5">Tanlangan tildagi tarjima:</p>
-            <p id="modalTranslation" class="text-sm font-bold text-emerald-700 mb-2">Tarjima</p>
-            <p id="modalExample" class="text-[11px] text-milk-mutedText italic border-t border-[#EFE9DF] pt-2">"Example context sentence."</p>
+            <p id="modalPhonetic" class="text-xs text-indigo-700 font-mono mb-1.5">/phonetic/</p>
+            <p class="text-[11px] text-milk-muted mb-0.5">Tanlangan tildagi tarjima:</p>
+            <p id="modalTranslation" class="text-sm font-bold text-emerald-800 mb-2">Tarjima</p>
+            <p id="modalExample" class="text-[11px] text-milk-muted italic border-t border-[#F3ECE0] pt-2">"Example context sentence."</p>
           </div>
         </div>
 
-        <div class="p-6 rounded-2xl bg-white border border-[#E5DFD3] shadow-sm">
-          <h3 class="text-sm font-bold text-milk-darkText mb-2">Reading Comprehension Test:</h3>
-          <p id="readingQuizQuestion" class="text-xs sm:text-sm text-milk-mutedText mb-4">Savol yuklanmoqda...</p>
+        <div class="p-6 rounded-2xl bg-white border border-[#E8DEC9] shadow-sm">
+          <h3 class="text-sm font-bold text-milk-dark mb-2">Reading Tushunish Testi:</h3>
+          <p id="readingQuizQuestion" class="text-xs sm:text-sm text-milk-muted mb-4">Savol yuklanmoqda...</p>
           <div id="readingQuizOptions" class="space-y-2"></div>
         </div>
 
       </div>
     </section>
 
-    <!-- ================= 2. LISTENING SECTION ================= -->
+    <!-- ================= 3-BO'LIM: LISTENING (OCEAN BLUE) ================= -->
     <section id="section-listening" class="skill-content hidden transition-all duration-300">
       <div class="max-w-3xl mx-auto space-y-6">
         
-        <div class="p-6 sm:p-8 rounded-3xl bg-white border border-[#E5DFD3] shadow-md text-center">
-          <span class="text-xs uppercase tracking-widest text-indigo-600 font-bold mb-2 inline-block">Cambridge English Section 1 • Accommodation Audio</span>
-          <h2 id="listeningTitle" class="text-xl sm:text-2xl font-bold text-milk-darkText mb-4">University Accommodation Registration</h2>
+        <div class="p-6 sm:p-8 rounded-3xl bg-white border border-[#E8DEC9] shadow-md text-center">
+          <span class="text-xs uppercase tracking-widest text-sky-700 font-bold mb-2 inline-block">Cambridge English Section 1 • Audio Comprehension</span>
+          <h2 id="listeningTitle" class="text-xl sm:text-2xl font-bold text-milk-dark mb-4">University Accommodation Registration</h2>
           
-          <div class="p-6 rounded-2xl bg-[#FAF7F2] border border-[#E5DFD3] max-w-md mx-auto mb-6 flex flex-col items-center">
-            <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-indigo-600 to-amber-500 p-[2px] mb-4">
-              <button onclick="toggleListeningAudio()" id="listeningPlayBtn" class="w-full h-full bg-white hover:bg-[#F4EFE6] rounded-full flex items-center justify-center text-milk-darkText text-2xl transition-transform active:scale-95 shadow-sm">
+          <div class="p-6 rounded-2xl bg-[#FAF6ED] border border-[#E8DEC9] max-w-md mx-auto mb-6 flex flex-col items-center">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-sky-600 to-indigo-600 p-[2px] mb-4">
+              <button onclick="toggleListeningAudio()" id="listeningPlayBtn" class="w-full h-full bg-white hover:bg-milk-200 rounded-full flex items-center justify-center text-milk-dark text-2xl transition-transform active:scale-95 shadow-sm">
                 ▶️
               </button>
             </div>
-            <p id="listeningStatusText" class="text-xs text-milk-mutedText font-medium">Audioni tinglash uchun tugmani bosing</p>
+            <p id="listeningStatusText" class="text-xs text-milk-muted font-medium">Audioni tinglash uchun tugmani bosing</p>
             
-            <div class="flex items-center gap-2 mt-4 text-xs text-milk-mutedText">
+            <div class="flex items-center gap-2 mt-4 text-xs text-milk-muted">
               <span>Tezlik:</span>
-              <button onclick="setListeningSpeed(0.8)" class="speed-btn px-2 py-0.5 rounded bg-white border border-[#E5DFD3] text-milk-darkText">0.8x</button>
-              <button onclick="setListeningSpeed(1.0)" class="speed-btn px-2 py-0.5 rounded bg-indigo-600 text-white font-bold">1.0x</button>
-              <button onclick="setListeningSpeed(1.2)" class="speed-btn px-2 py-0.5 rounded bg-white border border-[#E5DFD3] text-milk-darkText">1.2x</button>
+              <button onclick="setListeningSpeed(0.8)" class="speed-btn px-2 py-0.5 rounded bg-white border border-[#E8DEC9] text-milk-dark">0.8x</button>
+              <button onclick="setListeningSpeed(1.0)" class="speed-btn px-2 py-0.5 rounded bg-sky-700 text-white font-bold">1.0x</button>
+              <button onclick="setListeningSpeed(1.2)" class="speed-btn px-2 py-0.5 rounded bg-white border border-[#E8DEC9] text-milk-dark">1.2x</button>
             </div>
           </div>
 
-          <div class="text-left bg-[#FCFAF7] p-5 rounded-2xl border border-[#E5DFD3]">
-            <h3 class="text-sm font-bold text-indigo-700 mb-3">Vazifa: Audio asosida bo'sh kataklarni to'ldiring:</h3>
+          <div class="text-left bg-[#FCFAF7] p-5 rounded-2xl border border-[#E8DEC9]">
+            <h3 class="text-sm font-bold text-sky-800 mb-3">Vazifa: Audio asosida bo'sh kataklarni to'ldiring:</h3>
             <div class="space-y-3 text-xs sm:text-sm">
               <div class="flex flex-wrap items-center gap-2">
                 <span>1. Student's Full Name: Michael</span>
-                <input type="text" id="listenAns1" placeholder="Familiya..." class="bg-white border border-[#E5DFD3] rounded-lg px-2.5 py-1 text-milk-darkText focus:border-indigo-600 outline-none w-36" />
+                <input type="text" id="listenAns1" placeholder="Familiya..." class="bg-white border border-[#E8DEC9] rounded-lg px-2.5 py-1 text-milk-dark focus:border-sky-600 outline-none w-36" />
               </div>
               <div class="flex flex-wrap items-center gap-2">
                 <span>2. Preferred room type:</span>
-                <input type="text" id="listenAns2" placeholder="Xona turi..." class="bg-white border border-[#E5DFD3] rounded-lg px-2.5 py-1 text-milk-darkText focus:border-indigo-600 outline-none w-36" />
+                <input type="text" id="listenAns2" placeholder="Xona turi..." class="bg-white border border-[#E8DEC9] rounded-lg px-2.5 py-1 text-milk-dark focus:border-sky-600 outline-none w-36" />
               </div>
               <div class="flex flex-wrap items-center gap-2">
                 <span>3. Maximum monthly budget: $</span>
-                <input type="text" id="listenAns3" placeholder="Narx..." class="bg-white border border-[#E5DFD3] rounded-lg px-2.5 py-1 text-milk-darkText focus:border-indigo-600 outline-none w-28" />
+                <input type="text" id="listenAns3" placeholder="Narx..." class="bg-white border border-[#E8DEC9] rounded-lg px-2.5 py-1 text-milk-dark focus:border-sky-600 outline-none w-28" />
               </div>
             </div>
             
             <div class="mt-4 flex items-center gap-3">
-              <button onclick="checkListeningAnswers()" class="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition-all shadow-md shadow-emerald-600/20">
+              <button onclick="checkListeningAnswers()" class="px-5 py-2 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs transition-all shadow-md shadow-sky-600/20">
                 Javoblarni tekshirish
               </button>
               <span id="listeningResult" class="text-xs font-bold"></span>
@@ -318,44 +379,44 @@
       </div>
     </section>
 
-    <!-- ================= 3. SPEAKING SECTION ================= -->
+    <!-- ================= 4-BO'LIM: SPEAKING AI (CORAL RED) ================= -->
     <section id="section-speaking" class="skill-content hidden transition-all duration-300">
       <div class="max-w-2xl mx-auto space-y-6">
         
-        <div class="p-6 sm:p-8 rounded-3xl bg-white border border-[#E5DFD3] shadow-md text-center">
-          <span class="text-xs uppercase tracking-widest text-emerald-700 font-bold mb-2 inline-block">IELTS Speaking Part 1 & 2 • Speech Recognition AI</span>
-          <h2 class="text-xl sm:text-2xl font-bold text-milk-darkText mb-2">Nutq va Talaffuzni Baholash</h2>
-          <p class="text-xs text-milk-mutedText mb-6">Mikrofonni bosib, jumlani baland ovozda ayting. AI talaffuzingiz aniqligini foizda hisoblaydi.</p>
+        <div class="p-6 sm:p-8 rounded-3xl bg-white border border-[#E8DEC9] shadow-md text-center">
+          <span class="text-xs uppercase tracking-widest text-rose-600 font-bold mb-2 inline-block">IELTS Speaking Part 1 & 2 • Speech Recognition AI</span>
+          <h2 class="text-xl sm:text-2xl font-bold text-milk-dark mb-2">Nutq va Talaffuzni Baholash</h2>
+          <p class="text-xs text-milk-muted mb-6">Mikrofonni bosib, jumlani baland ovozda ayting. AI talaffuzingiz aniqligini foizda hisoblaydi.</p>
 
-          <div class="p-5 rounded-2xl bg-[#FAF7F2] border border-[#E5DFD3] mb-6">
-            <p class="text-xs text-milk-mutedText mb-1">Aytilishi kerak bo'lgan jumla:</p>
-            <p id="speakingTargetPhrase" class="text-base sm:text-lg font-bold text-indigo-700 mb-3">
+          <div class="p-5 rounded-2xl bg-[#FAF6ED] border border-[#E8DEC9] mb-6">
+            <p class="text-xs text-milk-muted mb-1">Aytilishi kerak bo'lgan jumla:</p>
+            <p id="speakingTargetPhrase" class="text-base sm:text-lg font-bold text-rose-700 mb-3">
               "Consistency and daily dedication are the real secrets to learning any foreign language."
             </p>
             <div class="flex items-center justify-center gap-2">
-              <button onclick="playWordAudio(document.getElementById('speakingTargetPhrase').textContent)" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-[#E5DFD3] text-xs text-milk-darkText hover:bg-[#F4EFE6]">
+              <button onclick="playWordAudio(document.getElementById('speakingTargetPhrase').textContent)" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-[#E8DEC9] text-xs text-milk-dark hover:bg-milk-200">
                 <span>🔊 Namuna talaffuz</span>
               </button>
-              <button onclick="nextSpeakingPhrase()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-50 border border-indigo-200 text-xs text-indigo-700 hover:bg-indigo-100">
+              <button onclick="nextSpeakingPhrase()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-rose-50 border border-rose-200 text-xs text-rose-700 hover:bg-rose-100 font-bold">
                 <span>Keyingi jumla 🔄</span>
               </button>
             </div>
           </div>
 
           <div class="flex flex-col items-center justify-center mb-6">
-            <button id="micButton" onclick="toggleSpeechRecognition()" class="w-20 h-20 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white flex items-center justify-center text-3xl shadow-lg shadow-indigo-600/30 transition-all active:scale-95">
+            <button id="micButton" onclick="toggleSpeechRecognition()" class="w-20 h-20 rounded-full bg-rose-600 hover:bg-rose-700 text-white flex items-center justify-center text-3xl shadow-lg shadow-rose-600/30 transition-all active:scale-95">
               🎙️
             </button>
-            <span id="micStatusText" class="text-xs font-semibold text-milk-mutedText mt-3">Gapirish uchun mikrofonni bosing</span>
+            <span id="micStatusText" class="text-xs font-semibold text-milk-muted mt-3">Gapirish uchun mikrofonni bosing</span>
           </div>
 
-          <div id="speakingResultBox" class="hidden p-4 rounded-2xl bg-[#FAF7F2] border border-[#E5DFD3] text-left">
+          <div id="speakingResultBox" class="hidden p-4 rounded-2xl bg-[#FAF6ED] border border-[#E8DEC9] text-left">
             <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-milk-mutedText">Tizim eshitgan matn:</span>
+              <span class="text-xs font-bold text-milk-muted">Tizim eshitgan matn:</span>
               <span id="speakingScoreBadge" class="text-xs font-extrabold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800">95% Aniq</span>
             </div>
-            <p id="spokenTextDisplay" class="text-sm font-mono text-milk-darkText mb-2">...</p>
-            <p id="speakingFeedbackText" class="text-xs text-milk-mutedText">Ajoyib talaffuz!</p>
+            <p id="spokenTextDisplay" class="text-sm font-mono text-milk-dark mb-2">...</p>
+            <p id="speakingFeedbackText" class="text-xs text-milk-muted">Ajoyib talaffuz!</p>
           </div>
 
         </div>
@@ -363,49 +424,49 @@
       </div>
     </section>
 
-    <!-- ================= 4. WRITING SECTION ================= -->
+    <!-- ================= 5-BO'LIM: WRITING (WARM BRONZE) ================= -->
     <section id="section-writing" class="skill-content hidden transition-all duration-300">
       <div class="max-w-3xl mx-auto space-y-6">
         
-        <div class="p-6 sm:p-8 rounded-3xl bg-white border border-[#E5DFD3] shadow-md">
-          <div class="flex flex-wrap items-center justify-between gap-3 mb-4 pb-3 border-b border-[#EFE9DF]">
+        <div class="p-6 sm:p-8 rounded-3xl bg-white border border-[#E8DEC9] shadow-md">
+          <div class="flex flex-wrap items-center justify-between gap-3 mb-4 pb-3 border-b border-[#F3ECE0]">
             <div>
-              <span class="text-xs uppercase tracking-widest text-amber-600 font-bold">IELTS Academic & General Writing Task 2</span>
-              <h2 class="text-lg sm:text-xl font-bold text-milk-darkText">Essay Writing Practice with 40-Min Timer</h2>
+              <span class="text-xs uppercase tracking-widest text-amber-700 font-bold">IELTS Academic & General Writing Task 2</span>
+              <h2 class="text-lg sm:text-xl font-bold text-milk-dark">Essay Writing Practice with 40-Min Timer</h2>
             </div>
             <div class="flex items-center gap-2">
-              <span id="writingTimerDisplay" class="font-mono text-sm font-bold text-amber-800 bg-amber-50 px-3 py-1.5 rounded-lg border border-amber-200">40:00</span>
-              <button onclick="toggleWritingTimer()" id="writingTimerBtn" class="px-3.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold transition-all shadow-sm">Start ⏱️</button>
+              <span id="writingTimerDisplay" class="font-mono text-sm font-bold text-amber-900 bg-amber-100 px-3 py-1.5 rounded-lg border border-amber-300">40:00</span>
+              <button onclick="toggleWritingTimer()" id="writingTimerBtn" class="px-3.5 py-1.5 rounded-lg bg-amber-700 hover:bg-amber-800 text-white text-xs font-bold transition-all shadow-sm">Start ⏱️</button>
             </div>
           </div>
 
-          <div class="p-4 rounded-2xl bg-[#FAF7F2] border border-[#E5DFD3] mb-4">
-            <p class="text-xs font-bold text-indigo-700 uppercase tracking-wider mb-1">Mavzu (Topic):</p>
-            <p class="text-sm text-milk-darkText leading-relaxed font-medium">
+          <div class="p-4 rounded-2xl bg-[#FAF6ED] border border-[#E8DEC9] mb-4">
+            <p class="text-xs font-bold text-amber-800 uppercase tracking-wider mb-1">Mavzu (Topic):</p>
+            <p class="text-sm text-milk-dark leading-relaxed font-medium">
               "Some people believe that unpaid community service should be a compulsory part of high school programmes. To what extent do you agree or disagree?"
             </p>
           </div>
 
           <div class="relative mb-3">
-            <textarea id="essayTextarea" oninput="handleEssayInput()" rows="9" placeholder="Inshongizni bu yerga yozing (kamida 250 so'z tavsiya etiladi)..." class="w-full bg-[#FAF7F2] border border-[#E5DFD3] rounded-2xl p-4 text-sm text-milk-darkText placeholder-slate-400 focus:outline-none focus:border-indigo-600 leading-relaxed font-sans"></textarea>
+            <textarea id="essayTextarea" oninput="handleEssayInput()" rows="9" placeholder="Inshongizni bu yerga yozing (kamida 250 so'z tavsiya etiladi)..." class="w-full bg-[#FAF6ED] border border-[#E8DEC9] rounded-2xl p-4 text-sm text-milk-dark placeholder-stone-400 focus:outline-none focus:border-amber-700 leading-relaxed font-sans"></textarea>
           </div>
 
           <div class="flex flex-wrap items-center justify-between gap-3 text-xs mb-4">
             <div class="flex items-center gap-3">
-              <span class="text-milk-mutedText">So'zlar: <strong id="wordCountDisplay" class="text-amber-700 font-bold">0</strong> / 250</span>
-              <span class="text-milk-mutedText">Belgilar: <strong id="charCountDisplay" class="text-milk-darkText">0</strong></span>
+              <span class="text-milk-muted">So'zlar: <strong id="wordCountDisplay" class="text-amber-800 font-bold">0</strong> / 250</span>
+              <span class="text-milk-muted">Belgilar: <strong id="charCountDisplay" class="text-milk-dark">0</strong></span>
             </div>
-            <button onclick="analyzeEssay()" class="px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-600 to-emerald-600 hover:from-indigo-700 hover:to-emerald-700 text-white font-bold transition-all shadow-md shadow-indigo-600/20">
+            <button onclick="analyzeEssay()" class="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-700 to-indigo-700 hover:from-amber-800 hover:to-indigo-800 text-white font-bold transition-all shadow-md">
               Inshoni Tahlil Qilish ✨
             </button>
           </div>
 
-          <div id="essayAnalysisBox" class="hidden p-4 rounded-2xl bg-[#FAF7F2] border border-[#E5DFD3] space-y-2">
+          <div id="essayAnalysisBox" class="hidden p-4 rounded-2xl bg-[#FAF6ED] border border-[#E8DEC9] space-y-2">
             <div class="flex items-center justify-between">
-              <span class="text-xs font-bold text-milk-darkText">Tahlil va tavsiyalar:</span>
-              <span id="estimatedBandScore" class="text-xs font-extrabold px-3 py-1 rounded-full bg-indigo-100 text-indigo-800">Taxminiy Band: 6.5</span>
+              <span class="text-xs font-bold text-milk-dark">Tahlil va tavsiyalar:</span>
+              <span id="estimatedBandScore" class="text-xs font-extrabold px-3 py-1 rounded-full bg-amber-100 text-amber-900 border border-amber-300">Taxminiy Band: 6.5</span>
             </div>
-            <p id="essayAdviceText" class="text-xs text-milk-mutedText leading-relaxed">...</p>
+            <p id="essayAdviceText" class="text-xs text-milk-muted leading-relaxed">...</p>
           </div>
 
         </div>
@@ -413,49 +474,49 @@
       </div>
     </section>
 
-    <!-- ================= 5. PICTURE QUEST SECTION ================= -->
+    <!-- ================= 6-BO'LIM: PICTURE QUEST (FOREST GREEN) ================= -->
     <section id="section-picture" class="skill-content hidden transition-all duration-300">
       <div class="max-w-3xl mx-auto space-y-6">
         
-        <div class="p-6 sm:p-8 rounded-3xl bg-white border border-[#E5DFD3] shadow-md">
+        <div class="p-6 sm:p-8 rounded-3xl bg-white border border-[#E8DEC9] shadow-md">
           <div class="text-center mb-6">
-            <span class="text-xs uppercase tracking-widest text-amber-600 font-bold inline-block mb-1">Duolingo & Cambridge Visual Task</span>
-            <h2 class="text-xl sm:text-2xl font-bold text-milk-darkText">Rasmni Tasvirlang (Describe the Photo)</h2>
-            <p class="text-xs text-milk-mutedText mt-1">Rasmni ko'ring, berilgan yordamchi so'zlar yordamida uni yozing yoki mikrofonga gapiring.</p>
+            <span class="text-xs uppercase tracking-widest text-emerald-700 font-bold inline-block mb-1">Duolingo & Cambridge Visual Task</span>
+            <h2 class="text-xl sm:text-2xl font-bold text-milk-dark">Rasmni Tasvirlang (Describe the Photo)</h2>
+            <p class="text-xs text-milk-muted mt-1">Rasmni ko'ring, berilgan yordamchi so'zlar yordamida uni yozing yoki mikrofonga gapiring.</p>
           </div>
 
-          <div class="relative rounded-2xl overflow-hidden mb-6 border border-[#E5DFD3] bg-black max-h-[340px]">
+          <div class="relative rounded-2xl overflow-hidden mb-6 border border-[#E8DEC9] bg-stone-900 max-h-[340px]">
             <img id="questImage" src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80" alt="Students collaborating" class="w-full h-full object-cover max-h-[340px]" />
-            <div class="absolute bottom-3 left-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full border border-white/40 text-[11px] text-milk-darkText font-medium shadow-sm">
+            <div class="absolute bottom-3 left-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full border border-white/40 text-[11px] text-milk-dark font-semibold shadow-sm">
               📍 Topic: University students studying together in a modern library
             </div>
           </div>
 
-          <div class="p-4 rounded-2xl bg-[#FAF7F2] border border-[#E5DFD3] mb-4">
-            <p class="text-xs font-bold text-indigo-700 mb-2">Foydali so'zlar (Yordam):</p>
+          <div class="p-4 rounded-2xl bg-[#FAF6ED] border border-[#E8DEC9] mb-4">
+            <p class="text-xs font-bold text-emerald-800 mb-2">Foydali so'zlar (Yordam):</p>
             <div class="flex flex-wrap gap-2 text-xs">
-              <span class="px-2.5 py-1 rounded-lg bg-white border border-[#E5DFD3] text-indigo-700 font-medium">collaboration</span>
-              <span class="px-2.5 py-1 rounded-lg bg-white border border-[#E5DFD3] text-indigo-700 font-medium">concentrated</span>
-              <span class="px-2.5 py-1 rounded-lg bg-white border border-[#E5DFD3] text-indigo-700 font-medium">digital devices</span>
-              <span class="px-2.5 py-1 rounded-lg bg-white border border-[#E5DFD3] text-indigo-700 font-medium">discussion</span>
-              <span class="px-2.5 py-1 rounded-lg bg-white border border-[#E5DFD3] text-indigo-700 font-medium">cheerful atmosphere</span>
+              <span class="px-2.5 py-1 rounded-lg bg-white border border-[#E8DEC9] text-emerald-800 font-semibold">collaboration</span>
+              <span class="px-2.5 py-1 rounded-lg bg-white border border-[#E8DEC9] text-emerald-800 font-semibold">concentrated</span>
+              <span class="px-2.5 py-1 rounded-lg bg-white border border-[#E8DEC9] text-emerald-800 font-semibold">digital devices</span>
+              <span class="px-2.5 py-1 rounded-lg bg-white border border-[#E8DEC9] text-emerald-800 font-semibold">discussion</span>
+              <span class="px-2.5 py-1 rounded-lg bg-white border border-[#E8DEC9] text-emerald-800 font-semibold">cheerful atmosphere</span>
             </div>
           </div>
 
           <div class="space-y-3">
-            <textarea id="pictureDescriptionText" rows="4" placeholder="Rasmda nimalarni ko'ryapsiz? In English: In this picture, there are several young students..." class="w-full bg-[#FAF7F2] border border-[#E5DFD3] rounded-2xl p-4 text-xs sm:text-sm text-milk-darkText placeholder-slate-400 focus:outline-none focus:border-indigo-600 leading-relaxed font-sans"></textarea>
+            <textarea id="pictureDescriptionText" rows="4" placeholder="Rasmda nimalarni ko'ryapsiz? In English: In this picture, there are several young students..." class="w-full bg-[#FAF6ED] border border-[#E8DEC9] rounded-2xl p-4 text-xs sm:text-sm text-milk-dark placeholder-stone-400 focus:outline-none focus:border-emerald-700 leading-relaxed font-sans"></textarea>
 
             <div class="flex items-center justify-between">
-              <button onclick="togglePictureMic()" id="picMicBtn" class="px-4 py-2 rounded-xl bg-white border border-[#E5DFD3] hover:bg-[#F4EFE6] text-xs font-bold text-milk-darkText transition-all flex items-center gap-1.5 shadow-sm">
+              <button onclick="togglePictureMic()" id="picMicBtn" class="px-4 py-2 rounded-xl bg-white border border-[#E8DEC9] hover:bg-milk-200 text-xs font-bold text-milk-dark transition-all flex items-center gap-1.5 shadow-sm">
                 <span>🎙️ Ovoz orqali aytish</span>
               </button>
-              <button onclick="evaluatePictureDescription()" class="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-xs font-bold text-white transition-all shadow-md shadow-emerald-600/20">
+              <button onclick="evaluatePictureDescription()" class="px-5 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-xs font-bold text-white transition-all shadow-md shadow-emerald-700/20">
                 Tekshirish va Ball Olish ✨
               </button>
             </div>
 
-            <div id="pictureResultBox" class="hidden p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-900">
-              <p class="font-bold mb-1">Ajoyib vizual tasvir! (+20 ball)</p>
+            <div id="pictureResultBox" class="hidden p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-950 font-medium">
+              <p class="font-bold text-emerald-800 mb-1">Ajoyib vizual tasvir! (+20 ball)</p>
               <p>Siz rasmdagi asosiy harakatlarni to'g'ri ifodaladingiz. Bu kabi mashqlar IELTS Speaking va Duolingo testlarida eng yuqori ballni ta'minlaydi.</p>
             </div>
           </div>
@@ -465,174 +526,41 @@
       </div>
     </section>
 
-    <!-- ================= 6. UNIVERSAL LUG'AT JADVALI (VOCABULARY MATRIX) ================= -->
-    <section id="section-matrix" class="skill-content hidden transition-all duration-300">
-      <div class="max-w-5xl mx-auto space-y-6">
-        
-        <div class="p-6 sm:p-8 rounded-3xl bg-white border border-[#E5DFD3] shadow-md">
-          
-          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-[#EFE9DF]">
-            <div>
-              <span class="text-xs uppercase tracking-widest text-indigo-600 font-bold inline-block mb-1">Universal Vocabulary Matrix</span>
-              <h2 class="text-xl sm:text-2xl font-bold text-milk-darkText font-display">Ko'p Tilli Lug'at Boyligi Jadvali</h2>
-              <p class="text-xs text-milk-mutedText mt-0.5">Har bir so'zning o'z tilingizdagi tarjimasi, talaffuzi va real kontekstdagi gaplari.</p>
-            </div>
-
-            <!-- Lug'at statistikasi ko'rsatkichlari (Jami so'zlar, Eshitilganlar, O'zlashtirilganlar) -->
-            <div class="flex flex-wrap items-center gap-2">
-              <div class="px-3 py-1.5 rounded-xl bg-[#FAF7F2] border border-[#E5DFD3] text-xs">
-                <span class="text-milk-mutedText">Jami so'zlar:</span>
-                <strong id="matrixTotalWords" class="text-indigo-700 font-bold ml-1">12 ta</strong>
-              </div>
-              <div class="px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-800">
-                <span>🔊 Eshitilgan:</span>
-                <strong id="matrixListenedCount" class="font-bold ml-1">0 ta</strong>
-              </div>
-              <div class="px-3 py-1.5 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-800">
-                <span>✅ O'rganilgan:</span>
-                <strong id="matrixMasteredCount" class="font-bold ml-1">0 ta</strong>
-              </div>
-            </div>
-          </div>
-
-          <!-- Qidiruv va Daraja Filtri -->
-          <div class="flex flex-col sm:flex-row gap-3 mb-6">
-            <div class="relative flex-grow">
-              <input 
-                type="text" 
-                id="matrixSearchInput" 
-                oninput="renderVocabularyMatrix()" 
-                placeholder="Inglizcha so'z yoki tarjimasini qidirish..." 
-                class="w-full bg-[#FAF7F2] border border-[#E5DFD3] rounded-xl px-4 py-2.5 text-xs sm:text-sm text-milk-darkText placeholder-slate-400 focus:outline-none focus:border-indigo-600 shadow-sm"
-              />
-            </div>
-            <select 
-              id="matrixLevelFilter" 
-              onchange="renderVocabularyMatrix()" 
-              class="bg-[#FAF7F2] border border-[#E5DFD3] rounded-xl px-3 py-2 text-xs text-milk-darkText font-semibold focus:outline-none shadow-sm"
-            >
-              <option value="ALL">Barcha darajalar (A1-B2)</option>
-              <option value="A1">A1 - Boshlang'ich</option>
-              <option value="A2">A2 - O'rta-quyi</option>
-              <option value="B1">B1 - O'rta</option>
-              <option value="B2">B2 - Ilg'or Academic</option>
-            </select>
-          </div>
-
-          <!-- Asosiy Jadval -->
-          <div class="overflow-x-auto rounded-2xl border border-[#E5DFD3]">
-            <table class="w-full text-left text-xs sm:text-sm">
-              <thead class="bg-[#FAF7F2] border-b border-[#E5DFD3] text-milk-mutedText uppercase text-[10px] sm:text-xs tracking-wider">
-                <tr>
-                  <th class="p-3 sm:p-4 text-center">Talaffuz</th>
-                  <th class="p-3 sm:p-4">Inglizcha So'z</th>
-                  <th class="p-3 sm:p-4">Turi / Daraja</th>
-                  <th class="p-3 sm:p-4 text-indigo-700 font-bold" id="matrixLangColHeader">O'zbekcha Tarjima</th>
-                  <th class="p-3 sm:p-4">Kontekstdagi Misol</th>
-                  <th class="p-3 sm:p-4 text-center">Holat</th>
-                </tr>
-              </thead>
-              <tbody id="matrixTableBody" class="divide-y divide-[#EFE9DF] bg-white">
-                <!-- JS orqali to'ldiriladi -->
-              </tbody>
-            </table>
-          </div>
-
-        </div>
-
-      </div>
-    </section>
-
   </main>
 
-  <!-- PWA O'RNATISH QO'LLANMA MODALI (Install Modal) -->
-  <div id="installModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
-    <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full border border-[#E5DFD3] shadow-2xl relative">
-      <button onclick="closeInstallModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-sm">✕</button>
-      <div class="text-center mb-4">
-        <span class="text-3xl">📲</span>
-        <h3 class="text-lg font-bold text-milk-darkText mt-2">Ilovani Qurilmangizga O'rnatish</h3>
-        <p class="text-xs text-milk-mutedText mt-1">Englishscorewithme ilovasini kompyuter yoki telefoningizga alohida dastur qilib o'rnatib oling:</p>
-      </div>
-
-      <div class="space-y-3 text-xs text-milk-darkText mb-6 bg-[#FAF7F2] p-4 rounded-2xl border border-[#E5DFD3]">
-        <div class="flex items-start gap-2">
-          <span>💻</span>
-          <p><strong>Kompyuterda (Chrome/Edge):</strong> Brauzer manzil qatorining o'ng tomonidagi <strong>"O'rnatish" (Install)</strong> belgisini bosing.</p>
-        </div>
-        <div class="flex items-start gap-2">
-          <span>📱</span>
-          <p><strong>iPhone (Safari):</strong> Pastdagi <strong>"Ulashish" (Share)</strong> tugmasini bosing va <strong>"Bosh ekranga qo'shish" (Add to Home Screen)</strong>ni tanlang.</p>
-        </div>
-        <div class="flex items-start gap-2">
-          <span>🤖</span>
-          <p><strong>Android (Chrome):</strong> 3 nuqtali menyuni bosib, <strong>"Ilovani o'rnatish" (Install App)</strong> tugmasini bosing.</p>
-        </div>
-      </div>
-
-      <button id="directInstallBtn" onclick="triggerPWAInstall()" class="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs transition-all shadow-md shadow-indigo-600/20">
-        Hoziroq O'rnatish 🚀
-      </button>
-    </div>
-  </div>
-
-  <!-- Pastki qism: Footer -->
-  <footer class="relative z-10 border-t border-[#E8E2D5] bg-[#FAF7F2]/90 py-6 text-center text-xs text-milk-mutedText">
+  <!-- ================= PASTKI FOOTER ================= -->
+  <footer class="border-t border-[#E8DEC9] bg-[#FAF6ED] py-6 text-center text-xs text-milk-muted">
     <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
       <div class="flex items-center gap-2">
         <span class="text-base">🎯</span>
-        <span class="font-bold text-milk-darkText">Englishscorewithme</span>
+        <span class="font-bold text-milk-dark">Englishscorewithme</span>
         <span>• Universal Global Education Platform.</span>
       </div>
-      <div class="flex items-center gap-4 text-milk-mutedText">
-        <a href="https://github.com/Ramil91-ui/englishscorewithme" target="_blank" class="hover:text-indigo-700 transition-colors">GitHub Repository</a>
-        <a href="https://englishscorewithme.vercel.app" target="_blank" class="hover:text-indigo-700 transition-colors">Live App</a>
+      <div class="flex items-center gap-4 text-milk-muted">
+        <a href="https://github.com/Ramil91-ui/englishscorewithme" target="_blank" class="hover:text-indigo-700 font-bold transition-colors">GitHub Repository</a>
+        <a href="https://englishscorewithme.vercel.app" target="_blank" class="hover:text-indigo-700 font-bold transition-colors">Live Production App</a>
       </div>
     </div>
   </footer>
 
   <!-- ================= JAVASCRIPT GLOBAL LOGIKA ================= -->
   <script>
-    // 1. PWA Service Worker Ro'yxatdan o'tkazish
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch(() => {});
-      });
+    // 1. ILOGANI TO'LIQ STANDALONE OFFLINE HTML QILIB YUKLAB OLISH FUNKSIYASI
+    function downloadStandaloneApp() {
+      const htmlContent = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+      const blob = new Blob([htmlContent], { type: "text/html;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "Englishscorewithme-App.html";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      alert("Ilova fayli (Englishscorewithme-App.html) kompyuteringizga yuklab olindi! Uni internetsiz ham istalgan payt ikki marta bosib to'liq ishlatishingiz mumkin.");
     }
 
-    let deferredPrompt = null;
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      const btn = document.getElementById('installAppBtn');
-      if (btn) btn.classList.remove('hidden');
-    });
-
-    function handleAppInstallClick() {
-      if (deferredPrompt) {
-        deferredPrompt.prompt();
-        deferredPrompt.userChoice.then(() => {
-          deferredPrompt = null;
-        });
-      } else {
-        document.getElementById('installModal').classList.remove('hidden');
-      }
-    }
-
-    function closeInstallModal() {
-      document.getElementById('installModal').classList.add('hidden');
-    }
-
-    function triggerPWAInstall() {
-      if (deferredPrompt) {
-        deferredPrompt.prompt();
-      } else {
-        alert("Brauzeringiz menyusidan 'Bosh ekranga qo'shish' yoki 'O'rnatish' tugmasini bosing.");
-        closeInstallModal();
-      }
-    }
-
-    // 2. KENGAYTIRILGAN 12 TA JAHON TILI LUG'AT BAZASI
+    // 2. 12 TA JAHON TILI LUG'AT BAZASI
     const GLOBAL_DICTIONARY = {
       "artificial": { uz: "Sun'iy", ru: "Искусственный", zh: "人造的", es: "Artificial", tr: "Yapay", ar: "اصطناعي", de: "Künstlich", fr: "Artificiel", hi: "कृत्रिम", ja: "人工の", ko: "인공의", pt: "Artificial", phonetic: "/ˌɑːtɪˈfɪʃl/", level: "A2", type: "Adjective", ex: "Artificial intelligence is advancing rapidly." },
       "intelligence": { uz: "Intellekt, aql", ru: "Интеллект", zh: "智能", es: "Inteligencia", tr: "Zeka", ar: "ذكاء", de: "Intelligenz", fr: "Intelligence", hi: "बुद्धिमत्ता", ja: "知能", ko: "지능", pt: "Inteligência", phonetic: "/ɪnˈtelɪdʒəns/", level: "A2", type: "Noun", ex: "Human intelligence is uniquely creative." },
@@ -659,7 +587,6 @@
       renderVocabularyMatrix();
     });
 
-    // 3. Tilni o'zgartirish
     function changeLanguage() {
       currentLang = document.getElementById('userLangSelect').value;
       const subtitle = document.getElementById('heroSubtitle');
@@ -673,26 +600,15 @@
         ja: "日本語訳", ko: "한국어 번역", pt: "Tradução em Português"
       };
 
-      if (colHeader) colHeader.textContent = langNames[currentLang] || "Tarjima";
-
-      if (currentLang === 'zh') {
-        subtitle.textContent = "无论您来自哪个国家，都可以使用母语进行 10分钟阅读、听力、口语识别、写作及多语言单词矩阵表学习！";
-        tipText.textContent = "点击任何单词，即可查看所选语言的即时翻译！";
-      } else if (currentLang === 'ru') {
-        subtitle.textContent = "Изучайте английский на родном языке: 10-минутное чтение, Cambridge аудирование, Speaking AI, эссе и матрица словаря!";
-        tipText.textContent = "Нажмите на любое слово — появится перевод на вашем языке!";
-      } else {
-        subtitle.textContent = "12+ jahon tillaridan turib ingliz tilini o'rganing: 10 daqiqalik Reading, Cambridge Listening, Speaking AI, Writing va Universal Lug'at Jadvali bitta platformada.";
-        tipText.textContent = "So'z ustiga bosing — tanlangan tilingizda tarjima chiqadi!";
-      }
-
+      if (colHeader) colHeader.textContent = langNames[currentLang] || "Tanlangan Tildagi Tarjimasi";
       renderVocabularyMatrix();
     }
 
+    // BO'LIMLAR O'RTASIDA O'TISH
     function switchSkillTab(skill) {
       document.querySelectorAll('.skill-content').forEach(s => s.classList.add('hidden'));
-      document.querySelectorAll('.skill-btn').forEach(b => {
-        b.className = "skill-btn flex items-center justify-center gap-1.5 p-3 rounded-2xl font-bold text-xs sm:text-sm transition-all bg-white text-milk-darkText hover:bg-[#F4EFE6] border border-[#E5DFD3] shadow-sm";
+      document.querySelectorAll('.skill-tab-btn').forEach(b => {
+        b.className = "skill-tab-btn flex items-center justify-center gap-1.5 p-3 rounded-2xl font-bold text-xs sm:text-sm transition-all bg-white text-milk-dark hover:bg-milk-200 border border-[#E8DEC9] shadow-sm";
       });
 
       const activeSection = document.getElementById(`section-${skill}`);
@@ -700,11 +616,20 @@
 
       if (activeSection && activeBtn) {
         activeSection.classList.remove('hidden');
-        activeBtn.className = "skill-btn flex items-center justify-center gap-1.5 p-3 rounded-2xl font-bold text-xs sm:text-sm transition-all bg-indigo-600 text-white shadow-md shadow-indigo-600/20 border border-indigo-700";
+        // Tanlangan tab o'zining maxsus rangida bo'ladi
+        const colors = {
+          matrix: "bg-indigo-700 text-white shadow-md border-indigo-800",
+          reading: "bg-amber-600 text-white shadow-md border-amber-700",
+          listening: "bg-sky-600 text-white shadow-md border-sky-700",
+          speaking: "bg-rose-600 text-white shadow-md border-rose-700",
+          writing: "bg-amber-800 text-white shadow-md border-amber-900",
+          picture: "bg-emerald-700 text-white shadow-md border-emerald-800"
+        };
+        activeBtn.className = `skill-tab-btn flex items-center justify-center gap-1.5 p-3 rounded-2xl font-bold text-xs sm:text-sm transition-all ${colors[skill]} shadow-md`;
       }
     }
 
-    // ================= 4. UNIVERSAL LUG'AT JADVALI (MATRIX) LOGIKASI =================
+    // ================= LUG'AT JADVALI LOGIKASI =================
     function renderVocabularyMatrix() {
       const tbody = document.getElementById('matrixTableBody');
       const searchQuery = (document.getElementById('matrixSearchInput')?.value || '').toLowerCase().trim();
@@ -713,40 +638,36 @@
       const words = Object.keys(GLOBAL_DICTIONARY);
       tbody.innerHTML = '';
 
-      let displayedCount = 0;
-
       words.forEach(wordKey => {
         const item = GLOBAL_DICTIONARY[wordKey];
         const translation = item[currentLang] || item.uz;
 
-        // Filtr
         const matchesSearch = wordKey.toLowerCase().includes(searchQuery) || translation.toLowerCase().includes(searchQuery);
         const matchesLevel = levelFilter === 'ALL' || item.level === levelFilter;
 
         if (matchesSearch && matchesLevel) {
-          displayedCount++;
           const isMastered = masteredWords.includes(wordKey);
 
           const tr = document.createElement('tr');
-          tr.className = "hover:bg-[#FAF7F2] transition-colors";
+          tr.className = "hover:bg-[#FAF6ED] transition-colors";
           tr.innerHTML = `
             <td class="p-3 sm:p-4 text-center">
-              <button onclick="playMatrixWord('${wordKey}')" class="w-8 h-8 rounded-xl bg-indigo-50 hover:bg-indigo-600 text-indigo-600 hover:text-white flex items-center justify-center mx-auto transition-all shadow-sm active:scale-95" title="Talaffuz">
+              <button onclick="playMatrixWord('${wordKey}')" class="w-8 h-8 rounded-xl bg-amber-100 hover:bg-amber-600 text-amber-900 hover:text-white flex items-center justify-center mx-auto transition-all shadow-sm active:scale-95" title="Talaffuzni tinglash">
                 <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
               </button>
             </td>
-            <td class="p-3 sm:p-4 font-bold text-milk-darkText">
+            <td class="p-3 sm:p-4 font-bold text-milk-dark">
               <span>${wordKey}</span>
-              <span class="block text-[11px] font-mono text-indigo-600">${item.phonetic}</span>
+              <span class="block text-[11px] font-mono text-indigo-700">${item.phonetic}</span>
             </td>
             <td class="p-3 sm:p-4">
-              <span class="text-xs text-milk-mutedText">${item.type}</span>
-              <span class="ml-1 text-[10px] font-extrabold uppercase px-1.5 py-0.5 rounded bg-[#FAF7F2] border border-[#E5DFD3] text-indigo-700">${item.level}</span>
+              <span class="text-xs text-milk-muted font-medium">${item.type}</span>
+              <span class="ml-1 text-[10px] font-extrabold uppercase px-1.5 py-0.5 rounded bg-amber-100 border border-amber-200 text-amber-900">${item.level}</span>
             </td>
             <td class="p-3 sm:p-4 font-bold text-emerald-800">${translation}</td>
-            <td class="p-3 sm:p-4 text-xs text-milk-mutedText italic max-w-xs">"${item.ex}"</td>
+            <td class="p-3 sm:p-4 text-xs text-milk-muted italic max-w-xs">"${item.ex}"</td>
             <td class="p-3 sm:p-4 text-center">
-              <button onclick="toggleMasteredWord('${wordKey}')" class="px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${isMastered ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' : 'bg-slate-100 text-slate-600 hover:bg-emerald-50'}">
+              <button onclick="toggleMasteredWord('${wordKey}')" class="px-3 py-1 rounded-xl text-xs font-bold transition-all ${isMastered ? 'bg-emerald-100 text-emerald-900 border border-emerald-300 shadow-sm' : 'bg-stone-100 text-stone-600 hover:bg-emerald-50'}">
                 ${isMastered ? '✅ O\'rganildi' : '○ Yodlash'}
               </button>
             </td>
@@ -755,7 +676,6 @@
         }
       });
 
-      // Statistika yangilash
       document.getElementById('matrixTotalWords').textContent = `${words.length} ta`;
       document.getElementById('matrixListenedCount').textContent = `${listenedWords.length} ta`;
       document.getElementById('matrixMasteredCount').textContent = `${masteredWords.length} ta`;
@@ -781,7 +701,7 @@
       renderVocabularyMatrix();
     }
 
-    // ================= 5. READING (10 DAQIQA QILINDI) =================
+    // ================= READING (10 DAQIQA - 600s) =================
     const READING_PASSAGES = {
       ai_future: {
         title: "IELTS Reading: The Future of Artificial Intelligence",
@@ -828,7 +748,7 @@
 
       data.options.forEach((opt, idx) => {
         const btn = document.createElement('button');
-        btn.className = "w-full text-left p-3 rounded-xl bg-[#FAF7F2] hover:bg-[#F3EEE5] border border-[#E5DFD3] text-xs sm:text-sm text-milk-darkText transition-all font-medium";
+        btn.className = "w-full text-left p-3 rounded-xl bg-[#FAF6ED] hover:bg-[#F3ECE0] border border-[#E8DEC9] text-xs sm:text-sm text-milk-dark transition-all font-semibold";
         btn.textContent = `${['A', 'B', 'C', 'D'][idx]}) ${opt}`;
         btn.onclick = () => {
           if (idx === data.correctIndex) {
@@ -867,9 +787,9 @@
       document.getElementById('wordTranslationModal').classList.add('hidden');
     }
 
-    // 10 DAQIQALIK READING TAYMERI (600 SONIYA)
+    // AYNAN 10 DAQIQALIK TAYMER (600 SONIYA)
     let readingTimer = null;
-    let readingSeconds = 600; // 10 daqiqa!
+    let readingSeconds = 600;
 
     function toggleReadingTimer() {
       const btn = document.getElementById('readingTimerBtn');
@@ -893,7 +813,7 @@
       }
     }
 
-    // ================= 6. LISTENING =================
+    // ================= LISTENING =================
     let isListeningAudioPlaying = false;
     let listeningSpeed = 1.0;
     const LISTENING_SCRIPT = "Welcome to the University Accommodation Service. My name is Michael Harrison, and I am looking for a single studio room near the campus. My maximum budget is approximately eight hundred and fifty dollars per month.";
@@ -928,8 +848,8 @@
 
     function setListeningSpeed(speed) {
       listeningSpeed = speed;
-      document.querySelectorAll('.speed-btn').forEach(b => b.className = "speed-btn px-2 py-0.5 rounded bg-white border border-[#E5DFD3] text-milk-darkText");
-      event.target.className = "speed-btn px-2 py-0.5 rounded bg-indigo-600 text-white font-bold";
+      document.querySelectorAll('.speed-btn').forEach(b => b.className = "speed-btn px-2 py-0.5 rounded bg-white border border-[#E8DEC9] text-milk-dark");
+      event.target.className = "speed-btn px-2 py-0.5 rounded bg-sky-700 text-white font-bold";
     }
 
     function checkListeningAnswers() {
@@ -944,11 +864,11 @@
 
       const res = document.getElementById('listeningResult');
       res.textContent = `Natija: 3 tadan ${correct} ta to'g'ri! (${Math.round((correct/3)*100)}%)`;
-      res.className = correct >= 2 ? "text-xs font-bold text-emerald-700" : "text-xs font-bold text-amber-700";
+      res.className = correct >= 2 ? "text-xs font-bold text-emerald-800" : "text-xs font-bold text-amber-800";
       if (correct === 3) addScore(15);
     }
 
-    // ================= 7. SPEAKING =================
+    // ================= SPEAKING AI =================
     const SPEAKING_PROMPTS = [
       "Consistency and daily dedication are the real secrets to learning any foreign language.",
       "Artificial intelligence provides incredible opportunities for students across the world.",
@@ -1027,14 +947,14 @@
       
       const badge = document.getElementById('speakingScoreBadge');
       badge.textContent = `${accuracy}% Aniqlik`;
-      badge.className = accuracy >= 80 ? "text-xs font-extrabold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800" : "text-xs font-extrabold px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800";
+      badge.className = accuracy >= 80 ? "text-xs font-extrabold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-900" : "text-xs font-extrabold px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-900";
 
       const fb = document.getElementById('speakingFeedbackText');
       fb.textContent = accuracy >= 80 ? "Mukammal talaffuz! Cambridge Speaking standartiga mos." : "Yaxshi urinish! Qaytadan takrorlab ko'ring.";
       if (accuracy >= 80) addScore(15);
     }
 
-    // ================= 8. WRITING =================
+    // ================= WRITING =================
     let writingTimer = null;
     let writingSeconds = 2400;
 
@@ -1045,7 +965,7 @@
       document.getElementById('charCountDisplay').textContent = text.length;
 
       const display = document.getElementById('wordCountDisplay');
-      display.className = words >= 250 ? "text-emerald-700 font-bold" : "text-amber-700 font-bold";
+      display.className = words >= 250 ? "text-emerald-800 font-bold" : "text-amber-800 font-bold";
     }
 
     function toggleWritingTimer() {
@@ -1088,12 +1008,12 @@
       document.getElementById('estimatedBandScore').textContent = `Taxminiy Band: ${band}`;
       document.getElementById('essayAdviceText').innerHTML = `
         <strong>Leksik boylik:</strong> So'z boyligi mavzuga mos.<br/>
-        <strong>Tavsiya:</strong> Murakkab bog'lovchilardan ko'proq foydalaning va Task Response talabiga e'tibor qarating.
+        <strong>Tavsiya:</strong> Murakkab bog'lovchilardan ko'proq foydalaning va Task Response talabiga qat'iy rioya qiling.
       `;
       addScore(20);
     }
 
-    // ================= 9. PICTURE QUEST =================
+    // ================= PICTURE QUEST =================
     let isPicRecording = false;
     let picRecognition = null;
 
@@ -1122,7 +1042,7 @@
         picRecognition.onend = () => {
           isPicRecording = false;
           btn.innerHTML = "<span>🎙️ Ovoz orqali aytish</span>";
-          btn.className = "px-4 py-2 rounded-xl bg-white border border-[#E5DFD3] hover:bg-[#F4EFE6] text-xs font-bold text-milk-darkText transition-all flex items-center gap-1.5 shadow-sm";
+          btn.className = "px-4 py-2 rounded-xl bg-white border border-[#E8DEC9] text-xs font-bold text-milk-dark transition-all flex items-center gap-1.5 shadow-sm";
         };
         picRecognition.start();
       } else {
@@ -1140,7 +1060,6 @@
       addScore(20);
     }
 
-    // Ovozli tinglash yordamchisi
     function playWordAudio(text) {
       if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
