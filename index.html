@@ -3,27 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ramil | Web Developer & Student</title>
-  <meta name="description" content="Ramil — Turin Politexnika Universiteti talabasi, Web Developer. Barcha ijtimoiy tarmoqlar va havolalar." />
-  <link rel="icon" type="image/jpeg" href="avatar.jpg" />
+  <title>Englishscorewithme | Ingliz tilini noldan o'rganing</title>
+  <meta name="description" content="Englishscorewithme — Interaktiv flesh-kartalar, audio talaffuz, darajalar (A1-B2) va testlar orqali ingliz tilini professional darajada o'rganing." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎯</text></svg>" />
 
-  <!-- Open Graph / Facebook / Telegram -->
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://ramil-linkhub.vercel.app" />
-  <meta property="og:title" content="Ramil | Web Developer & Student" />
-  <meta property="og:description" content="Ramil — Turin Politexnika Universiteti talabasi, Web Developer. Shaxsiy portfolio va havolalar." />
-  <meta property="og:image" content="https://ramil-linkhub.vercel.app/avatar.jpg" />
-
-  <!-- Twitter Meta Tags -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Ramil | Web Developer & Student" />
-  <meta name="twitter:description" content="Ramil — Turin Politexnika Universiteti talabasi, Web Developer. Shaxsiy portfolio va havolalar." />
-  <meta name="twitter:image" content="https://ramil-linkhub.vercel.app/avatar.jpg" />
-
-  <!-- Google Fonts: Plus Jakarta Sans -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -34,27 +21,16 @@
         extend: {
           fontFamily: {
             sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            display: ['"Space Grotesk"', 'sans-serif'],
           },
           colors: {
-            terracotta: {
-              50: '#fdf8f6',
-              100: '#f9eee9',
-              200: '#f4ddd3',
-              300: '#eac2b2',
-              400: '#dc9b83',
-              500: '#d96b43', // Primary Rust
-              600: '#c85a32', // Deep Terracotta
-              700: '#a64424',
-              800: '#873921',
-              900: '#6f321f',
-              950: '#3c170c',
-            },
-            burnt: {
-              clay: '#C86D49',
-              rust: '#B8532F',
-              sand: '#E3B59B',
-              warmdark: '#140f0d',
-              carddark: '#1c1513',
+            brand: {
+              primary: '#6366f1',
+              secondary: '#10b981',
+              accent: '#f59e0b',
+              dark: '#0a0f1d',
+              card: '#111827',
+              border: '#1f2937'
             }
           }
         }
@@ -65,378 +41,792 @@
   <style>
     * {
       -webkit-tap-highlight-color: transparent;
+      box-sizing: border-box;
     }
     body {
-      background-color: #120e0d;
-      color: #f7ede8;
+      background-color: #080c14;
+      color: #f3f4f6;
     }
-    /* Terracotta / Muted Rust ambient nurlari */
-    .ambient-glow-1 {
+    /* 3D Flashcard Flip Style */
+    .perspective-1000 {
+      perspective: 1000px;
+    }
+    .transform-style-3d {
+      transform-style: preserve-3d;
+    }
+    .backface-hidden {
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+    .rotate-y-180 {
+      transform: rotateY(180deg);
+    }
+    /* Ambient Neon Glow */
+    .glow-orb-1 {
       position: absolute;
-      top: -120px;
+      top: 0;
       left: 50%;
       transform: translateX(-50%);
-      width: 460px;
-      height: 460px;
-      background: radial-gradient(circle, rgba(200, 90, 50, 0.28) 0%, rgba(184, 83, 47, 0.14) 45%, transparent 72%);
-      filter: blur(75px);
-      z-index: 0;
-      pointer-events: none;
-    }
-    .ambient-glow-2 {
-      position: absolute;
-      bottom: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 420px;
-      height: 420px;
-      background: radial-gradient(circle, rgba(166, 68, 36, 0.18) 0%, rgba(217, 107, 67, 0.08) 50%, transparent 75%);
+      width: 600px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.18) 0%, rgba(16, 185, 129, 0.08) 50%, transparent 75%);
       filter: blur(80px);
       z-index: 0;
       pointer-events: none;
     }
-    /* Fon naqshi (subtle textured noise) */
-    .bg-texture {
-      background-image: radial-gradient(rgba(217, 107, 67, 0.07) 1px, transparent 1px);
-      background-size: 24px 24px;
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #080c14;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1f2937;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #374151;
     }
   </style>
 </head>
-<body class="min-h-screen relative overflow-x-hidden antialiased bg-texture selection:bg-terracotta-500/30 selection:text-terracotta-200">
+<body class="min-h-screen relative overflow-x-hidden antialiased flex flex-col justify-between selection:bg-indigo-500/30 selection:text-indigo-200">
 
-  <!-- Fon effektlari -->
-  <div class="ambient-glow-1"></div>
-  <div class="ambient-glow-2"></div>
+  <!-- Ambient Glow -->
+  <div class="glow-orb-1"></div>
 
-  <!-- Asosiy Konteyner (max-width: 480px, mobil va desktop uchun mukammal) -->
-  <main class="relative z-10 w-full max-w-[480px] mx-auto min-h-screen px-4 py-8 sm:py-12 flex flex-col justify-between">
-    
-    <div>
-      <!-- Yuqori qism: Share tugmasi -->
-      <div class="flex justify-end mb-4">
-        <button 
-          id="shareBtn"
-          onclick="shareHub()"
-          aria-label="Sahifani ulashish"
-          class="flex items-center gap-2 px-3.5 py-1.5 text-xs font-semibold text-terracotta-200 bg-burnt-carddark/80 hover:bg-terracotta-900/60 active:scale-95 border border-terracotta-600/30 hover:border-terracotta-500/60 rounded-full backdrop-blur-md transition-all duration-300 hover:text-white shadow-sm"
-        >
-          <svg class="w-4 h-4 text-terracotta-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-          </svg>
-          <span>Ulashish</span>
-        </button>
+  <!-- Yuqori Navigatsiya Bari -->
+  <nav class="relative z-20 border-b border-white/[0.08] bg-[#080c14]/80 backdrop-blur-xl sticky top-0">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="#" class="flex items-center gap-2.5 group">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-500 to-emerald-400 p-[2px] flex items-center justify-center shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition-transform">
+          <div class="w-full h-full bg-[#080c14] rounded-[10px] flex items-center justify-center">
+            <span class="text-lg">🎯</span>
+          </div>
+        </div>
+        <div>
+          <span class="font-display font-bold text-lg text-white tracking-tight">English<span class="text-indigo-400">score</span><span class="text-emerald-400">withme</span></span>
+          <span class="hidden sm:inline-block ml-2 text-[10px] font-semibold uppercase px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">v1.0 Pro</span>
+        </div>
+      </a>
+
+      <!-- Statistika ko'rsatkichlari (Score & Streak) -->
+      <div class="flex items-center gap-2 sm:gap-4">
+        <!-- Kundalik Streak -->
+        <div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs font-semibold" title="Kundalik faollik (Streak)">
+          <span>🔥</span>
+          <span id="streakCount">1 kun</span>
+        </div>
+
+        <!-- Yig'ilgan ballar -->
+        <div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-xs font-semibold" title="Yig'ilgan umumiy ballar">
+          <span>⭐</span>
+          <span id="totalScore">0 ball</span>
+        </div>
       </div>
+    </div>
+  </nav>
 
-      <!-- Profil qismi (Naruto Avatari, Ramil, Universitet va Bio) -->
-      <header class="flex flex-col items-center text-center mb-7">
+  <!-- Asosiy Qism -->
+  <main class="relative z-10 flex-grow max-w-5xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-10">
+    
+    <!-- Hero Banner -->
+    <header class="text-center mb-8 sm:mb-12">
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-indigo-500/10 to-emerald-500/10 border border-indigo-500/20 text-xs text-indigo-300 mb-4">
+        <span class="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span>Ingliz tilini noldan o'rganish platformasi</span>
+      </div>
+      <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-3">
+        English Learning <span class="bg-gradient-to-r from-indigo-400 via-sky-400 to-emerald-400 bg-clip-text text-transparent">With Me</span>
+      </h1>
+      <p class="text-sm sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed">
+        Interaktiv flesh-kartalar, jonli audio talaffuz, A1-B2 darajadagi eng zarur so'zlar va testlar orqali tilni tez hamda sifatli o'zlashtiring.
+      </p>
+    </header>
+
+    <!-- Asosiy Menyu Tugmalari (Tabs) -->
+    <div class="flex items-center justify-center gap-2 p-1.5 rounded-2xl bg-slate-900/80 border border-white/10 backdrop-blur-xl mb-8 max-w-lg mx-auto overflow-x-auto">
+      <button 
+        onclick="switchTab('flashcards')" 
+        id="tab-flashcards"
+        class="tab-btn flex-1 min-w-[100px] flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 bg-indigo-600 text-white shadow-lg shadow-indigo-600/30"
+      >
+        <span>🃏</span>
+        <span>Flesh-karta</span>
+      </button>
+      <button 
+        onclick="switchTab('vocabulary')" 
+        id="tab-vocabulary"
+        class="tab-btn flex-1 min-w-[100px] flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 text-slate-400 hover:text-white"
+      >
+        <span>📚</span>
+        <span>Lug'at</span>
+      </button>
+      <button 
+        onclick="switchTab('quiz')" 
+        id="tab-quiz"
+        class="tab-btn flex-1 min-w-[100px] flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 text-slate-400 hover:text-white"
+      >
+        <span>🧠</span>
+        <span>Quiz Test</span>
+      </button>
+      <button 
+        onclick="switchTab('grammar')" 
+        id="tab-grammar"
+        class="tab-btn flex-1 min-w-[100px] flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 text-slate-400 hover:text-white"
+      >
+        <span>💡</span>
+        <span>Qoidalar</span>
+      </button>
+    </div>
+
+    <!-- ================= 1-BO'LIM: FLASHCARDS (FLESH-KARTALAR) ================= -->
+    <section id="section-flashcards" class="tab-content transition-opacity duration-300">
+      <div class="max-w-md mx-auto">
         
-        <!-- Naruto Avatar Wrapper (Muted Rust / Terracotta Glow) -->
-        <div class="relative group mb-4">
-          <!-- Issiq terracotta/alanga nuri -->
-          <div class="absolute -inset-1.5 rounded-full bg-gradient-to-tr from-terracotta-700 via-terracotta-500 to-amber-600 opacity-80 blur-md group-hover:opacity-100 transition duration-500"></div>
+        <!-- Yuqori filter va hisoblagich -->
+        <div class="flex items-center justify-between mb-4 px-1">
+          <div class="flex items-center gap-2">
+            <span class="text-xs text-slate-400 font-medium">Daraja:</span>
+            <select 
+              id="cardLevelFilter" 
+              onchange="changeCardLevel()" 
+              class="text-xs font-semibold bg-slate-900 border border-white/10 rounded-lg px-2.5 py-1 text-indigo-300 focus:outline-none focus:border-indigo-500"
+            >
+              <option value="ALL">Barchasi (All)</option>
+              <option value="A1" selected>A1 - Beginner</option>
+              <option value="A2">A2 - Elementary</option>
+              <option value="B1">B1 - Intermediate</option>
+            </select>
+          </div>
+          <span id="cardCounter" class="text-xs font-bold text-slate-400 bg-white/[0.04] px-2.5 py-1 rounded-full border border-white/5">
+            1 / 10
+          </span>
+        </div>
+
+        <!-- 3D Flashcard Container -->
+        <div class="perspective-1000 w-full h-[320px] sm:h-[360px] cursor-pointer" onclick="flipCard()">
+          <div id="cardInner" class="relative w-full h-full transform-style-3d transition-transform duration-500 shadow-2xl rounded-3xl">
+            
+            <!-- OLD TOMONI (English) -->
+            <div class="absolute inset-0 backface-hidden w-full h-full rounded-3xl p-6 sm:p-8 flex flex-col justify-between bg-gradient-to-b from-slate-900/90 to-slate-950/90 border border-white/15 backdrop-blur-2xl">
+              <div class="flex items-center justify-between">
+                <span id="cardBadge" class="text-[11px] font-extrabold uppercase tracking-wider px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                  A1 • Beginner
+                </span>
+                <!-- Ovoz tugmasi -->
+                <button 
+                  onclick="event.stopPropagation(); playCurrentAudio()" 
+                  class="w-10 h-10 rounded-full bg-white/[0.06] hover:bg-indigo-600 border border-white/10 text-indigo-400 hover:text-white flex items-center justify-center transition-all duration-200 active:scale-95 shadow-md"
+                  title="Talaffuzni tinglash"
+                >
+                  <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                    <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                  </svg>
+                </button>
+              </div>
+
+              <!-- Markaziy so'z -->
+              <div class="text-center my-auto">
+                <h2 id="cardWord" class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-2">
+                  Achievement
+                </h2>
+                <p id="cardPhonetic" class="text-sm font-mono text-indigo-400">
+                  /əˈtʃiːvmənt/
+                </p>
+                <p id="cardPartOfSpeech" class="text-xs uppercase tracking-widest text-slate-400 mt-2 font-semibold">
+                  noun (ot)
+                </p>
+              </div>
+
+              <!-- Pastki maslahat -->
+              <div class="text-center text-xs text-slate-400 flex items-center justify-center gap-1.5">
+                <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+                <span>Tarjimasini ko'rish uchun kartani bosing</span>
+              </div>
+            </div>
+
+            <!-- ORQA TOMONI (Uzbek Translation & Example) -->
+            <div class="absolute inset-0 backface-hidden rotate-y-180 w-full h-full rounded-3xl p-6 sm:p-8 flex flex-col justify-between bg-gradient-to-b from-indigo-950/80 to-slate-950/90 border border-indigo-500/40 backdrop-blur-2xl">
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-extrabold uppercase tracking-wider px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                  O'zbekcha Ma'nosi
+                </span>
+                <span class="text-xs text-slate-400">Englishscorewithme</span>
+              </div>
+
+              <div class="text-center my-auto px-2">
+                <h3 id="cardTranslation" class="text-2xl sm:text-3xl font-extrabold text-emerald-300 mb-3">
+                  Yutuq, muvaffaqiyat
+                </h3>
+                <div class="p-3 rounded-xl bg-white/[0.04] border border-white/5 text-left">
+                  <p class="text-xs font-semibold text-indigo-300 mb-1">Misol gap:</p>
+                  <p id="cardExample" class="text-xs sm:text-sm text-slate-200 italic mb-1">
+                    "Learning English is a great achievement."
+                  </p>
+                  <p id="cardExampleUz" class="text-xs text-slate-400">
+                    "Ingliz tilini o'rganish — bu katta yutuq."
+                  </p>
+                </div>
+              </div>
+
+              <div class="text-center text-xs text-slate-400">
+                <span>Orqaga qaytish uchun bosing</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Boshqaruv tugmalari (Oldingi, Tinglash, Keyingi) -->
+        <div class="flex items-center justify-center gap-3 mt-6">
+          <button 
+            onclick="prevCard()" 
+            class="flex-1 flex items-center justify-center gap-1.5 py-3 rounded-xl bg-white/[0.05] hover:bg-white/[0.1] border border-white/10 text-white font-semibold text-xs sm:text-sm transition-all active:scale-95"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" /></svg>
+            <span>Oldingi</span>
+          </button>
           
-          <!-- Rasm hoshiyasi -->
-          <div class="relative w-28 h-28 rounded-full overflow-hidden p-[2.5px] bg-gradient-to-tr from-terracotta-600 via-amber-600 to-terracotta-400 shadow-2xl">
-            <img 
-              src="avatar.jpg" 
-              alt="Naruto Uzumaki - Ramil Avatar"
-              class="w-full h-full object-cover object-top rounded-full bg-[#181210] transition-transform duration-500 group-hover:scale-108"
+          <button 
+            onclick="playCurrentAudio()" 
+            class="px-5 py-3 rounded-xl bg-emerald-500/20 hover:bg-emerald-500 border border-emerald-500/40 text-emerald-300 hover:text-white font-semibold text-xs sm:text-sm transition-all flex items-center gap-1.5 active:scale-95 shadow-lg shadow-emerald-500/10"
+            title="Talaffuz"
+          >
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+            <span>Tinglash</span>
+          </button>
+
+          <button 
+            onclick="nextCard()" 
+            class="flex-1 flex items-center justify-center gap-1.5 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs sm:text-sm transition-all shadow-lg shadow-indigo-600/30 active:scale-95"
+          >
+            <span>Keyingi</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" /></svg>
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= 2-BO'LIM: VOCABULARY (LUG'AT RO'YXATI) ================= -->
+    <section id="section-vocabulary" class="tab-content hidden transition-opacity duration-300">
+      <div class="max-w-3xl mx-auto">
+        
+        <!-- Qidiruv va Filtr paneli -->
+        <div class="flex flex-col sm:flex-row gap-3 mb-6">
+          <div class="relative flex-grow">
+            <svg class="w-5 h-5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <input 
+              type="text" 
+              id="vocabSearchInput" 
+              oninput="filterVocabulary()" 
+              placeholder="So'z yoki tarjimasini izlash..." 
+              class="w-full bg-slate-900/90 border border-white/10 rounded-xl pl-11 pr-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-colors"
             />
           </div>
 
-          <!-- Chakra / Energetik faollik indikatori -->
-          <span class="absolute bottom-1 right-2 w-4 h-4 rounded-full bg-terracotta-500 border-2 border-[#120e0d] shadow-sm flex items-center justify-center" title="Faol">
-            <span class="w-1.5 h-1.5 rounded-full bg-white animate-ping"></span>
-          </span>
+          <div class="flex gap-2">
+            <select 
+              id="vocabLevelSelect" 
+              onchange="filterVocabulary()" 
+              class="bg-slate-900 border border-white/10 rounded-xl px-3 py-2.5 text-xs sm:text-sm text-slate-300 focus:outline-none focus:border-indigo-500 font-semibold"
+            >
+              <option value="ALL">Barcha darajalar</option>
+              <option value="A1">A1 - Boshlang'ich</option>
+              <option value="A2">A2 - O'rta-quyi</option>
+              <option value="B1">B1 - O'rta</option>
+            </select>
+          </div>
         </div>
 
-        <!-- Ism va Verified Badge -->
-        <div class="flex items-center justify-center gap-1.5 mb-1.5">
-          <h1 class="text-3xl font-extrabold tracking-tight text-white drop-shadow-sm">
-            Ramil
-          </h1>
-          <svg class="w-5 h-5 text-terracotta-400 fill-current" viewBox="0 0 24 24" title="Tasdiqlangan hisob">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-          </svg>
+        <!-- So'zlar ro'yxati -->
+        <div id="vocabListContainer" class="space-y-2.5">
+          <!-- Dinamik ravishda JS orqali to'ldiriladi -->
         </div>
 
-        <!-- Mutaxassislik & Unvoni -->
-        <p class="text-xs uppercase tracking-widest font-bold text-terracotta-400 mb-3.5">
-          Web Developer • Turin Polytechnic University
-        </p>
+      </div>
+    </section>
 
-        <!-- Informatsion belgilar (Pills / Badges) -->
-        <div class="flex flex-wrap items-center justify-center gap-2 mb-4 px-2">
+    <!-- ================= 3-BO'LIM: QUIZ (INTERAKTIV TEST) ================= -->
+    <section id="section-quiz" class="tab-content hidden transition-opacity duration-300">
+      <div class="max-w-lg mx-auto">
+        
+        <!-- Quiz Kartochkasi -->
+        <div class="p-6 sm:p-8 rounded-3xl bg-slate-900/90 border border-white/10 backdrop-blur-xl shadow-2xl">
           
-          <!-- Universitet / Talaba -->
-          <div class="inline-flex items-center gap-1.5 text-xs text-terracotta-200 bg-burnt-carddark/90 px-3 py-1.5 rounded-full border border-terracotta-600/30 shadow-sm">
-            <svg class="w-3.5 h-3.5 text-terracotta-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z" />
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
-            </svg>
-            <span class="font-medium">Turin Polytechnic (Student)</span>
+          <!-- Savol progressi va Ball -->
+          <div class="flex items-center justify-between mb-6">
+            <span id="quizProgressText" class="text-xs font-bold text-indigo-400 bg-indigo-500/10 px-3 py-1 rounded-full border border-indigo-500/20">
+              Savol: 1 / 5
+            </span>
+            <span id="quizScoreText" class="text-xs font-bold text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
+              Natija: 0
+            </span>
           </div>
 
-          <!-- Shahar -->
-          <div class="inline-flex items-center gap-1.5 text-xs text-terracotta-200 bg-burnt-carddark/90 px-3 py-1.5 rounded-full border border-terracotta-600/30 shadow-sm">
-            <svg class="w-3.5 h-3.5 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
-            <span class="font-medium">Toshkent</span>
+          <!-- Savol matni -->
+          <div class="text-center mb-6">
+            <p class="text-xs text-slate-400 font-semibold uppercase tracking-wider mb-2">Quyidagi so'zning to'g'ri tarjimasini toping:</p>
+            <div class="flex items-center justify-center gap-2">
+              <h3 id="quizQuestionWord" class="text-3xl font-extrabold text-white">
+                Confidence
+              </h3>
+              <button onclick="playWordAudio(document.getElementById('quizQuestionWord').textContent)" class="text-indigo-400 hover:text-white p-1 rounded-full" title="Tinglash">
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+              </button>
+            </div>
           </div>
 
-          <!-- Tug'ilgan sana -->
-          <div class="inline-flex items-center gap-1.5 text-xs text-terracotta-200 bg-burnt-carddark/90 px-3 py-1.5 rounded-full border border-terracotta-600/30 shadow-sm">
-            <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
-            <span class="font-medium">17/03/1994</span>
+          <!-- Variantlar -->
+          <div id="quizOptionsContainer" class="space-y-3 mb-6">
+            <!-- Dinamik variantlar -->
           </div>
 
+          <!-- Fikr-mulohaza (Feedback xabari) -->
+          <div id="quizFeedback" class="hidden text-center p-3 rounded-xl mb-4 text-xs font-bold transition-all">
+          </div>
+
+          <!-- Keyingi savol tugmasi -->
+          <button 
+            id="quizNextBtn"
+            onclick="nextQuizQuestion()" 
+            class="hidden w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm transition-all shadow-lg shadow-indigo-600/30"
+          >
+            Keyingi savolga o'tish →
+          </button>
         </div>
 
-        <!-- Qisqacha Bio -->
-        <p class="text-sm text-terracotta-200/90 max-w-sm leading-relaxed px-3">
-          Turin Politexnika Universiteti talabasi, zamonaviy veb-texnologiyalar va estetik foydalanuvchi interfeyslari yaratuvchi Web Developer. 🍃🔥
-        </p>
-      </header>
+      </div>
+    </section>
 
-      <!-- ================= HAVOLALAR RO'YXATI (Terracotta Style) ================= -->
-      <section class="space-y-3.5" aria-label="Foydali havolalar">
+    <!-- ================= 4-BO'LIM: GRAMMATIKA VA MASLAHATLAR ================= -->
+    <section id="section-grammar" class="tab-content hidden transition-opacity duration-300">
+      <div class="max-w-2xl mx-auto space-y-4">
+        
+        <div class="p-5 rounded-2xl bg-slate-900/80 border border-white/10 backdrop-blur-md">
+          <div class="flex items-center gap-3 mb-2">
+            <span class="w-8 h-8 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold text-sm">1</span>
+            <h3 class="text-base font-bold text-white">To be (am / is / are) — Bo'lmoq fe'li</h3>
+          </div>
+          <p class="text-xs text-slate-300 leading-relaxed pl-11 mb-2">
+            Hozirgi zamonda kimdir yoki nimadir haqida xabar berishda ishlatiladi:
+          </p>
+          <div class="pl-11 space-y-1 text-xs">
+            <p class="text-emerald-300 font-mono">• I am a student. (Men talabaman.)</p>
+            <p class="text-emerald-300 font-mono">• She is confident. (U o'ziga ishongan.)</p>
+            <p class="text-emerald-300 font-mono">• We are ready. (Biz tayyormiz.)</p>
+          </div>
+        </div>
 
-        <!-- 1. Telegram -->
-        <a 
-          href="https://t.me/Ramil91_ui" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          class="group relative flex items-center justify-between p-3.5 sm:p-4 rounded-2xl bg-burnt-carddark/60 hover:bg-terracotta-950/70 border border-terracotta-600/25 hover:border-terracotta-500/60 backdrop-blur-xl transition-all duration-300 shadow-lg hover:shadow-terracotta-600/15 hover:-translate-y-0.5 active:scale-[0.99]"
-        >
-          <div class="flex items-center gap-3.5 min-w-0">
-            <div class="w-11 h-11 rounded-xl bg-terracotta-500/15 border border-terracotta-500/30 flex items-center justify-center shrink-0 text-terracotta-400 group-hover:scale-110 group-hover:bg-terracotta-600 group-hover:text-white transition-all duration-300">
-              <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
-              </svg>
-            </div>
-            <div class="text-left truncate">
-              <h2 class="text-sm sm:text-base font-bold text-white group-hover:text-terracotta-300 transition-colors">
-                Telegram Kanal / Profil
-              </h2>
-              <p class="text-xs text-terracotta-300/70 truncate">@Ramil91_ui • Dasturlash va blog</p>
-            </div>
+        <div class="p-5 rounded-2xl bg-slate-900/80 border border-white/10 backdrop-blur-md">
+          <div class="flex items-center gap-3 mb-2">
+            <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-sm">2</span>
+            <h3 class="text-base font-bold text-white">Present Simple — Oddiy hozirgi zamon</h3>
           </div>
-          <div class="shrink-0 text-terracotta-400 group-hover:text-terracotta-300 group-hover:translate-x-1 transition-all duration-300 pl-2">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 5l7 7-7 7" />
-            </svg>
+          <p class="text-xs text-slate-300 leading-relaxed pl-11 mb-2">
+            Doimiy takrorlanuvchi odatlar va umumiy haqiqatlar uchun qo'llaniladi:
+          </p>
+          <div class="pl-11 space-y-1 text-xs">
+            <p class="text-emerald-300 font-mono">• I learn 10 new words every day. (Har kuni 10 ta yangi so'z o'rganaman.)</p>
+            <p class="text-emerald-300 font-mono">• He speaks English fluently. (U inglizcha ravon gapiradi.)</p>
           </div>
-        </a>
+        </div>
 
-        <!-- 2. GitHub (Professional repozitoriylar) -->
-        <a 
-          href="https://github.com/Ramil91-ui" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          class="group relative flex items-center justify-between p-3.5 sm:p-4 rounded-2xl bg-burnt-carddark/60 hover:bg-terracotta-950/70 border border-terracotta-600/25 hover:border-terracotta-500/60 backdrop-blur-xl transition-all duration-300 shadow-lg hover:shadow-terracotta-600/15 hover:-translate-y-0.5 active:scale-[0.99]"
-        >
-          <div class="flex items-center gap-3.5 min-w-0">
-            <div class="w-11 h-11 rounded-xl bg-terracotta-500/15 border border-terracotta-500/30 flex items-center justify-center shrink-0 text-terracotta-300 group-hover:scale-110 group-hover:bg-terracotta-600 group-hover:text-white transition-all duration-300">
-              <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
-              </svg>
-            </div>
-            <div class="text-left truncate">
-              <h2 class="text-sm sm:text-base font-bold text-white group-hover:text-terracotta-300 transition-colors">
-                GitHub Repozitoriylar
-              </h2>
-              <p class="text-xs text-terracotta-300/70 truncate">github.com/Ramil91-ui • Ochiq kodli loyihalar</p>
-            </div>
+        <div class="p-5 rounded-2xl bg-slate-900/80 border border-white/10 backdrop-blur-md">
+          <div class="flex items-center gap-3 mb-2">
+            <span class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold text-sm">3</span>
+            <h3 class="text-base font-bold text-white">Spaced Repetition (Interval takrorlash siri)</h3>
           </div>
-          <div class="shrink-0 text-terracotta-400 group-hover:text-terracotta-300 group-hover:translate-x-1 transition-all duration-300 pl-2">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 5l7 7-7 7" />
-            </svg>
-          </div>
-        </a>
+          <p class="text-xs text-slate-300 leading-relaxed pl-11">
+            Yangi so'zni 1 kundan keyin, 3 kundan keyin va 7 kundan keyin qaytarsangiz, u qisqa muddatli xotiradan uzoq muddatli xotiraga o'tadi va hech qachon unutilmaydi!
+          </p>
+        </div>
 
-        <!-- 3. Portfolio / Veb-sayt (Kuygan g'isht / Terracotta Accent Card) -->
-        <a 
-          href="https://github.com/Ramil91-ui" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          class="group relative flex items-center justify-between p-3.5 sm:p-4 rounded-2xl bg-gradient-to-r from-terracotta-900/60 via-burnt-rust/40 to-terracotta-800/60 hover:from-terracotta-800/70 hover:to-terracotta-700/70 border border-terracotta-500/50 hover:border-terracotta-400 backdrop-blur-xl transition-all duration-300 shadow-xl hover:shadow-terracotta-600/25 hover:-translate-y-0.5 active:scale-[0.99]"
-        >
-          <!-- Tavsiya badge -->
-          <span class="absolute -top-2.5 right-4 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold tracking-wider uppercase bg-gradient-to-r from-terracotta-600 to-amber-600 text-white shadow-md">
-            Portfolio
-          </span>
-          <div class="flex items-center gap-3.5 min-w-0">
-            <div class="w-11 h-11 rounded-xl bg-terracotta-500/30 border border-terracotta-400/40 flex items-center justify-center shrink-0 text-terracotta-200 group-hover:scale-110 group-hover:bg-terracotta-500 group-hover:text-white transition-all duration-300 shadow-inner">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
-              </svg>
-            </div>
-            <div class="text-left truncate">
-              <h2 class="text-sm sm:text-base font-bold text-white group-hover:text-terracotta-200 transition-colors">
-                Web Portfolio & Loyihalar
-              </h2>
-              <p class="text-xs text-terracotta-200/80 truncate">Veb-dasturlash keyslari va loyihalar</p>
-            </div>
-          </div>
-          <div class="shrink-0 text-terracotta-300 group-hover:text-white group-hover:translate-x-1 transition-all duration-300 pl-2">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 5l7 7-7 7" />
-            </svg>
-          </div>
-        </a>
-
-        <!-- 4. YouTube -->
-        <a 
-          href="https://youtube.com" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          class="group relative flex items-center justify-between p-3.5 sm:p-4 rounded-2xl bg-burnt-carddark/60 hover:bg-terracotta-950/70 border border-terracotta-600/25 hover:border-terracotta-500/60 backdrop-blur-xl transition-all duration-300 shadow-lg hover:shadow-terracotta-600/15 hover:-translate-y-0.5 active:scale-[0.99]"
-        >
-          <div class="flex items-center gap-3.5 min-w-0">
-            <div class="w-11 h-11 rounded-xl bg-terracotta-500/15 border border-terracotta-500/30 flex items-center justify-center shrink-0 text-terracotta-400 group-hover:scale-110 group-hover:bg-terracotta-600 group-hover:text-white transition-all duration-300">
-              <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-              </svg>
-            </div>
-            <div class="text-left truncate">
-              <h2 class="text-sm sm:text-base font-bold text-white group-hover:text-terracotta-300 transition-colors">
-                YouTube Kanal
-              </h2>
-              <p class="text-xs text-terracotta-300/70 truncate">Dasturlash va foydali videoroliklar</p>
-            </div>
-          </div>
-          <div class="shrink-0 text-terracotta-400 group-hover:text-terracotta-300 group-hover:translate-x-1 transition-all duration-300 pl-2">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 5l7 7-7 7" />
-            </svg>
-          </div>
-        </a>
-
-        <!-- 5. Instagram -->
-        <a 
-          href="https://instagram.com" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          class="group relative flex items-center justify-between p-3.5 sm:p-4 rounded-2xl bg-burnt-carddark/60 hover:bg-terracotta-950/70 border border-terracotta-600/25 hover:border-terracotta-500/60 backdrop-blur-xl transition-all duration-300 shadow-lg hover:shadow-terracotta-600/15 hover:-translate-y-0.5 active:scale-[0.99]"
-        >
-          <div class="flex items-center gap-3.5 min-w-0">
-            <div class="w-11 h-11 rounded-xl bg-terracotta-500/15 border border-terracotta-500/30 flex items-center justify-center shrink-0 text-terracotta-400 group-hover:scale-110 group-hover:bg-terracotta-600 group-hover:text-white transition-all duration-300">
-              <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-              </svg>
-            </div>
-            <div class="text-left truncate">
-              <h2 class="text-sm sm:text-base font-bold text-white group-hover:text-terracotta-300 transition-colors">
-                Instagram Sahifa
-              </h2>
-              <p class="text-xs text-terracotta-300/70 truncate">Hayotiy lahzalar va dizayn</p>
-            </div>
-          </div>
-          <div class="shrink-0 text-terracotta-400 group-hover:text-terracotta-300 group-hover:translate-x-1 transition-all duration-300 pl-2">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 5l7 7-7 7" />
-            </svg>
-          </div>
-        </a>
-
-        <!-- 6. Bog'lanish / Hamkorlik (Email) -->
-        <a 
-          href="mailto:ramilroberts91@gmail.com" 
-          class="group relative flex items-center justify-between p-3.5 sm:p-4 rounded-2xl bg-burnt-carddark/60 hover:bg-terracotta-950/70 border border-terracotta-600/25 hover:border-terracotta-500/60 backdrop-blur-xl transition-all duration-300 shadow-lg hover:shadow-terracotta-600/15 hover:-translate-y-0.5 active:scale-[0.99]"
-        >
-          <div class="flex items-center gap-3.5 min-w-0">
-            <div class="w-11 h-11 rounded-xl bg-terracotta-500/15 border border-terracotta-500/30 flex items-center justify-center shrink-0 text-terracotta-400 group-hover:scale-110 group-hover:bg-terracotta-600 group-hover:text-white transition-all duration-300">
-              <svg class="w-5 h-5 fill-none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-              </svg>
-            </div>
-            <div class="text-left truncate">
-              <h2 class="text-sm sm:text-base font-bold text-white group-hover:text-terracotta-300 transition-colors">
-                Bog'lanish / Hamkorlik
-              </h2>
-              <p class="text-xs text-terracotta-300/70 truncate">ramilroberts91@gmail.com</p>
-            </div>
-          </div>
-          <div class="shrink-0 text-terracotta-400 group-hover:text-terracotta-300 group-hover:translate-x-1 transition-all duration-300 pl-2">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 5l7 7-7 7" />
-            </svg>
-          </div>
-        </a>
-
-      </section>
-      <!-- ================= HAVOLALAR TUGADI ================= -->
-    </div>
-
-    <!-- Pastki qism: Footer -->
-    <footer class="mt-12 text-center text-xs text-terracotta-400/60 space-y-2.5">
-      <!-- Havolani nusxalash -->
-      <button 
-        onclick="copyLink()" 
-        class="inline-flex items-center gap-1.5 px-3 py-1 text-terracotta-300/80 hover:text-white transition-colors"
-      >
-        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-        </svg>
-        <span>Havolani nusxalash</span>
-      </button>
-
-      <p>© <span id="year"></span> Ramil • Turin Polytechnic University. Barcha huquqlar himoyalangan.</p>
-    </footer>
+      </div>
+    </section>
 
   </main>
 
-  <!-- Toast xabarnoma -->
-  <div 
-    id="toast" 
-    class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 translate-y-3 transition-all duration-300 flex items-center gap-2 bg-burnt-carddark text-white border border-terracotta-500/40 backdrop-blur-md px-4 py-2 rounded-full shadow-2xl text-xs font-semibold"
-  >
-    <svg class="w-4 h-4 text-terracotta-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-    </svg>
-    <span id="toastMessage">Havola nusxalandi!</span>
-  </div>
+  <!-- Pastki qism: Footer -->
+  <footer class="relative z-10 border-t border-white/[0.08] bg-[#080c14]/90 py-6 text-center text-xs text-slate-400">
+    <div class="max-w-5xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div class="flex items-center gap-2">
+        <span class="text-base">🎯</span>
+        <span class="font-bold text-white">Englishscorewithme</span>
+        <span>• Barcha huquqlar himoyalangan.</span>
+      </div>
+      <div class="flex items-center gap-4 text-slate-400">
+        <a href="https://t.me/your_telegram" target="_blank" class="hover:text-white transition-colors">Telegram Kanal</a>
+        <a href="https://instagram.com/your_username" target="_blank" class="hover:text-white transition-colors">Instagram</a>
+        <a href="https://github.com/Ramil91-ui/englishscorewithme" target="_blank" class="hover:text-white transition-colors">GitHub</a>
+      </div>
+    </div>
+  </footer>
 
-  <!-- JavaScript Funksiyalari -->
+  <!-- ================= JAVASCRIPT LOGIKASI ================= -->
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    function showToast(message) {
-      const toast = document.getElementById('toast');
-      const toastMessage = document.getElementById('toastMessage');
-      toastMessage.textContent = message;
-      toast.classList.remove('opacity-0', 'translate-y-3');
-      toast.classList.add('opacity-100', 'translate-y-0');
-
-      setTimeout(() => {
-        toast.classList.remove('opacity-100', 'translate-y-0');
-        toast.classList.add('opacity-0', 'translate-y-3');
-      }, 2500);
-    }
-
-    function copyLink() {
-      navigator.clipboard.writeText(window.location.href)
-        .then(() => showToast("Havola buferga nusxalandi!"))
-        .catch(() => showToast("Nusxalashda xatolik yuz berdi"));
-    }
-
-    async function shareHub() {
-      if (navigator.share) {
-        try {
-          await navigator.share({
-            title: "Ramil | Web Developer & Student",
-            text: "Ramil — Turin Politexnika Universiteti talabasi, Web Developer shaxsiy sahifasi:",
-            url: window.location.href,
-          });
-        } catch (err) {}
-      } else {
-        copyLink();
+    // Ma'lumotlar bazasi (Boshlang'ich sifatli so'zlar to'plami)
+    const VOCABULARY = [
+      {
+        word: "Achievement",
+        phonetic: "/əˈtʃiːvmənt/",
+        partOfSpeech: "noun",
+        level: "A2",
+        uz: "Yutuq, muvaffaqiyat",
+        example: "Learning English is a great achievement.",
+        exampleUz: "Ingliz tilini o'rganish — bu katta yutuq."
+      },
+      {
+        word: "Confidence",
+        phonetic: "/ˈkɒnfɪdəns/",
+        partOfSpeech: "noun",
+        level: "A1",
+        uz: "O'ziga ishonch",
+        example: "Speak English with confidence.",
+        exampleUz: "Inglizcha o'zingizga ishonch bilan gapiring."
+      },
+      {
+        word: "Opportunity",
+        phonetic: "/ˌɒpəˈtjuːnɪti/",
+        partOfSpeech: "noun",
+        level: "A2",
+        uz: "Imkoniyat, qulay vaziyat",
+        example: "Every mistake is an opportunity to learn.",
+        exampleUz: "Har bir xato — o'rganish uchun imkoniyatdir."
+      },
+      {
+        word: "Improve",
+        phonetic: "/ɪmˈpruːv/",
+        partOfSpeech: "verb",
+        level: "A1",
+        uz: "Yaxshilamoq, rivojlantirmoq",
+        example: "Practice every day to improve your skills.",
+        exampleUz: "Ko'nikmalaringizni rivojlantirish uchun har kuni mashq qiling."
+      },
+      {
+        word: "Fluently",
+        phonetic: "/ˈfluːəntli/",
+        partOfSpeech: "adverb",
+        level: "B1",
+        uz: "Ravon, to'xtovsiz",
+        example: "She wants to speak English fluently.",
+        exampleUz: "U ingliz tilida ravon gapirishni xohlaydi."
+      },
+      {
+        word: "Determination",
+        phonetic: "/dɪˌtɜːmɪˈneɪʃn/",
+        partOfSpeech: "noun",
+        level: "B1",
+        uz: "Qat'iyat, sabot",
+        example: "Success requires passion and determination.",
+        exampleUz: "Muvaffaqiyat ishtiyoq va qat'iyatni talab qiladi."
+      },
+      {
+        word: "Knowledge",
+        phonetic: "/ˈnɒlɪdʒ/",
+        partOfSpeech: "noun",
+        level: "A1",
+        uz: "Bilim, ma'lumot",
+        example: "Knowledge is power in the modern world.",
+        exampleUz: "Zamonaviy dunyoda bilim — bu kuch."
+      },
+      {
+        word: "Goal",
+        phonetic: "/ɡəʊl/",
+        partOfSpeech: "noun",
+        level: "A1",
+        uz: "Maqsad, niyat",
+        example: "My goal is to score 7.5 in IELTS.",
+        exampleUz: "Mening maqsadim — IELTS dan 7.5 olish."
+      },
+      {
+        word: "Consistency",
+        phonetic: "/kənˈsɪstənsi/",
+        partOfSpeech: "noun",
+        level: "B1",
+        uz: "Muntazamlik, bardavomlik",
+        example: "Consistency beats talent every time.",
+        exampleUz: "Muntazamlik har doim iqtidordan ustun keladi."
+      },
+      {
+        word: "Challenge",
+        phonetic: "/ˈtʃælɪndʒ/",
+        partOfSpeech: "noun/verb",
+        level: "A2",
+        uz: "Sinov, chaqiriq",
+        example: "Accept the challenge and win.",
+        exampleUz: "Sinovni qabul qiling va g'alaba qozoning."
       }
+    ];
+
+    // Dastur holati (State)
+    let currentCardIndex = 0;
+    let isFlipped = false;
+    let filteredCards = [...VOCABULARY];
+    let totalScore = parseInt(localStorage.getItem('es_score') || '0');
+    let currentQuizIndex = 0;
+    let quizScore = 0;
+
+    // Boshlang'ich ishga tushirish
+    window.addEventListener('DOMContentLoaded', () => {
+      updateScoreUI();
+      renderCurrentCard();
+      renderVocabularyList(VOCABULARY);
+      initQuiz();
+    });
+
+    // 1. Audio Talaffuz Funksiyasi (Web Speech API)
+    function playWordAudio(text) {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.85;
+        window.speechSynthesis.speak(utterance);
+      }
+    }
+
+    function playCurrentAudio() {
+      const current = filteredCards[currentCardIndex];
+      if (current) {
+        playWordAudio(current.word);
+      }
+    }
+
+    // 2. Tablarni almashtirish
+    function switchTab(tabName) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('bg-indigo-600', 'text-white', 'shadow-lg', 'shadow-indigo-600/30');
+        btn.classList.add('text-slate-400');
+      });
+
+      const activeSection = document.getElementById(`section-${tabName}`);
+      const activeBtn = document.getElementById(`tab-${tabName}`);
+
+      if (activeSection && activeBtn) {
+        activeSection.classList.remove('hidden');
+        activeBtn.classList.remove('text-slate-400');
+        activeBtn.classList.add('bg-indigo-600', 'text-white', 'shadow-lg', 'shadow-indigo-600/30');
+      }
+    }
+
+    // 3. Flesh-kartalar logikasi
+    function renderCurrentCard() {
+      const item = filteredCards[currentCardIndex];
+      if (!item) return;
+
+      if (isFlipped) {
+        flipCard();
+      }
+
+      document.getElementById('cardBadge').textContent = `${item.level} • ${item.partOfSpeech}`;
+      document.getElementById('cardWord').textContent = item.word;
+      document.getElementById('cardPhonetic').textContent = item.phonetic;
+      document.getElementById('cardPartOfSpeech').textContent = item.partOfSpeech;
+      document.getElementById('cardTranslation').textContent = item.uz;
+      document.getElementById('cardExample').textContent = `"${item.example}"`;
+      document.getElementById('cardExampleUz').textContent = `"${item.exampleUz}"`;
+
+      document.getElementById('cardCounter').textContent = `${currentCardIndex + 1} / ${filteredCards.length}`;
+    }
+
+    function flipCard() {
+      const cardInner = document.getElementById('cardInner');
+      isFlipped = !isFlipped;
+      if (isFlipped) {
+        cardInner.classList.add('rotate-y-180');
+      } else {
+        cardInner.classList.remove('rotate-y-180');
+      }
+    }
+
+    function nextCard() {
+      if (currentCardIndex < filteredCards.length - 1) {
+        currentCardIndex++;
+      } else {
+        currentCardIndex = 0;
+      }
+      renderCurrentCard();
+      addScore(2);
+    }
+
+    function prevCard() {
+      if (currentCardIndex > 0) {
+        currentCardIndex--;
+      } else {
+        currentCardIndex = filteredCards.length - 1;
+      }
+      renderCurrentCard();
+    }
+
+    function changeCardLevel() {
+      const level = document.getElementById('cardLevelFilter').value;
+      if (level === 'ALL') {
+        filteredCards = [...VOCABULARY];
+      } else {
+        filteredCards = VOCABULARY.filter(item => item.level === level);
+      }
+      currentCardIndex = 0;
+      renderCurrentCard();
+    }
+
+    // 4. Lug'at Ro'yxati renderi va Qidiruv
+    function renderVocabularyList(items) {
+      const container = document.getElementById('vocabListContainer');
+      container.innerHTML = '';
+
+      if (items.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-12 text-slate-500 text-sm">
+            Hech qanday so'z topilmadi.
+          </div>
+        `;
+        return;
+      }
+
+      items.forEach(item => {
+        const div = document.createElement('div');
+        div.className = "flex items-center justify-between p-3.5 sm:p-4 rounded-2xl bg-slate-900/80 border border-white/5 hover:border-indigo-500/30 transition-all";
+        div.innerHTML = `
+          <div class="flex items-center gap-3 min-w-0">
+            <button onclick="playWordAudio('${item.word}')" class="w-9 h-9 rounded-xl bg-indigo-500/10 text-indigo-400 hover:bg-indigo-600 hover:text-white flex items-center justify-center shrink-0 transition-all" title="Talaffuz">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+            </button>
+            <div class="truncate">
+              <div class="flex items-center gap-2">
+                <span class="text-sm sm:text-base font-bold text-white">${item.word}</span>
+                <span class="text-[10px] font-mono text-indigo-400/90">${item.phonetic}</span>
+                <span class="text-[10px] font-extrabold uppercase px-1.5 py-0.5 rounded bg-white/5 text-slate-400">${item.level}</span>
+              </div>
+              <p class="text-xs text-slate-300 truncate">${item.uz}</p>
+            </div>
+          </div>
+          <span class="text-[11px] font-medium text-slate-500 shrink-0 pl-2">${item.partOfSpeech}</span>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function filterVocabulary() {
+      const query = document.getElementById('vocabSearchInput').value.toLowerCase().trim();
+      const level = document.getElementById('vocabLevelSelect').value;
+
+      const filtered = VOCABULARY.filter(item => {
+        const matchQuery = item.word.toLowerCase().includes(query) || item.uz.toLowerCase().includes(query);
+        const matchLevel = level === 'ALL' || item.level === level;
+        return matchQuery && matchLevel;
+      });
+
+      renderVocabularyList(filtered);
+    }
+
+    // 5. Quiz (Interaktiv Test) Logikasi
+    let quizQuestions = [];
+
+    function initQuiz() {
+      const shuffled = [...VOCABULARY].sort(() => 0.5 - Math.random());
+      quizQuestions = shuffled.slice(0, 5);
+      currentQuizIndex = 0;
+      quizScore = 0;
+      renderQuizQuestion();
+    }
+
+    function renderQuizQuestion() {
+      const q = quizQuestions[currentQuizIndex];
+      if (!q) {
+        showQuizResults();
+        return;
+      }
+
+      document.getElementById('quizProgressText').textContent = `Savol: ${currentQuizIndex + 1} / ${quizQuestions.length}`;
+      document.getElementById('quizScoreText').textContent = `Natija: ${quizScore}`;
+      document.getElementById('quizQuestionWord').textContent = q.word;
+
+      const feedback = document.getElementById('quizFeedback');
+      feedback.classList.add('hidden');
+      document.getElementById('quizNextBtn').classList.add('hidden');
+
+      const wrongOptions = VOCABULARY.filter(item => item.word !== q.word)
+                                    .sort(() => 0.5 - Math.random())
+                                    .slice(0, 3)
+                                    .map(i => i.uz);
+      
+      const options = [q.uz, ...wrongOptions].sort(() => 0.5 - Math.random());
+
+      const container = document.getElementById('quizOptionsContainer');
+      container.innerHTML = '';
+
+      options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = "quiz-opt-btn w-full text-left p-3.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 text-sm font-semibold text-slate-200 transition-all flex items-center justify-between";
+        btn.innerHTML = `<span>${opt}</span><span class="w-5 h-5 rounded-full border border-white/20 flex items-center justify-center text-xs text-slate-400">?</span>`;
+        btn.onclick = () => selectQuizAnswer(btn, opt, q.uz);
+        container.appendChild(btn);
+      });
+    }
+
+    function selectQuizAnswer(selectedBtn, chosen, correct) {
+      const buttons = document.querySelectorAll('.quiz-opt-btn');
+      buttons.forEach(b => b.disabled = true);
+
+      const feedback = document.getElementById('quizFeedback');
+      feedback.classList.remove('hidden');
+
+      if (chosen === correct) {
+        selectedBtn.classList.add('bg-emerald-500/20', 'border-emerald-500', 'text-emerald-300');
+        feedback.className = "p-3 rounded-xl mb-4 text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30";
+        feedback.textContent = "To'g'ri javob! Barakkalla! 🎉 (+10 ball)";
+        quizScore += 10;
+        addScore(10);
+      } else {
+        selectedBtn.classList.add('bg-rose-500/20', 'border-rose-500', 'text-rose-300');
+        feedback.className = "p-3 rounded-xl mb-4 text-xs font-bold bg-rose-500/20 text-rose-300 border border-rose-500/30";
+        feedback.textContent = `Noto'g'ri. To'g'ri javob: "${correct}"`;
+      }
+
+      document.getElementById('quizScoreText').textContent = `Natija: ${quizScore}`;
+      document.getElementById('quizNextBtn').classList.remove('hidden');
+    }
+
+    function nextQuizQuestion() {
+      currentQuizIndex++;
+      renderQuizQuestion();
+    }
+
+    function showQuizResults() {
+      const container = document.getElementById('quizOptionsContainer');
+      document.getElementById('quizQuestionWord').textContent = "Test Yakunlandi!";
+      container.innerHTML = `
+        <div class="text-center py-6">
+          <p class="text-3xl mb-2">🏆</p>
+          <p class="text-lg font-bold text-white mb-1">Umumiy to'plangan ball: ${quizScore} / 50</p>
+          <p class="text-xs text-slate-400 mb-6">Ajoyib natija! Kundalik mashg'ulotlar orqali darajangizni oshiring.</p>
+          <button onclick="initQuiz()" class="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs">
+            Qaytadan topshirish 🔄
+          </button>
+        </div>
+      `;
+      document.getElementById('quizNextBtn').classList.add('hidden');
+      document.getElementById('quizFeedback').classList.add('hidden');
+    }
+
+    // 6. Ballar tizimi
+    function addScore(pts) {
+      totalScore += pts;
+      localStorage.setItem('es_score', totalScore);
+      updateScoreUI();
+    }
+
+    function updateScoreUI() {
+      document.getElementById('totalScore').textContent = `${totalScore} ball`;
     }
   </script>
 </body>

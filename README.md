@@ -1,58 +1,60 @@
-# 🌐 Shaxsiy Link Hub (Linktree Alternativa)
+# 🎯 Englishscorewithme
 
-Zamonaviy, tezkor va chiroyli shaxsiy havolalar to'plami veb-ilovasi. **Tailwind CSS** va sof **HTML5** asosida yaratilgan, to'liq mobil qurilmalarga moslashgan (Mobile-First) hamda zamonaviy Dark Mode (Terracotta) dizaynga ega.
+> **Ingliz tilini noldan professional darajagacha biz bilan o'rganing!**
 
-🔗 **Jonli demo (Vercel):** [https://ramil-linkhub.vercel.app](https://ramil-linkhub.vercel.app)
+**Englishscorewithme** — interaktiv, zamonaviy va qulay ingliz tilini o'rganish platformasi. Foydalanuvchilar, obunachilar va o'quvchilar uchun A1 dan B2 gacha bo'lgan barcha asosiy so'zlar, ovozli talaffuz (Native Audio), 3D flesh-kartalar va interaktiv quiz-testlar bilan boyitilgan.
 
----
-
-## ✨ Imkoniyatlar va Xususiyatlar
-
-- 📱 **Mobile-First Dizayn:** Smartfon, planshet va kompyuter ekranlariga mukammal moslashuvchan (`max-w-[480px]`).
-- 🎨 **Zamonaviy Dark Mode:** Terracotta va Warm Dark gradient aksentlari, shinam neon nurlar va shaffof shisha effekti (*glassmorphism*).
-- ⚡ **Tezkor va Yengil:** Qo'shimcha og'ir kutubxonalarsiz, faqat Tailwind CSS CDN orqali bir zumda ochiladi.
-- 🔗 **Interaktiv Havolalar:**
-  - Telegram Kanal va Profil
-  - YouTube Kanal
-  - Shaxsiy Portfolio va Veb-sayt
-  - Instagram Sahifa
-  - GitHub Repozitoriylar
-  - Email orqali to'g'ridan-to'g'ri aloqa
-- 🚀 **Qo'shimcha funksiyalar:**
-  - Web Share API (sahifani bir zumda do'stlarga ulashish)
-  - Havolani bir marta bosish bilan buferga nusxalash (Copy to clipboard)
-  - Interaktiv Toast bildirishnomalari
-  - OpenGraph va Twitter Card meta-teglari (Telegram, Facebook va ijtimoiy tarmoqlarda chiroyli preview ko'rinishi)
+🔗 **Jonli veb-sayt (Vercel):** [https://englishscorewithme.vercel.app](https://englishscorewithme.vercel.app) *(yoki [https://ramil-linkhub.vercel.app](https://ramil-linkhub.vercel.app))*
 
 ---
 
-## 📁 Loyiha Strukturasi
+## ✨ Asosiy Funksiyalar va Imkoniyatlar
 
-```text
-├── index.html       # Asosiy veb-ilova sahifasi (HTML + Tailwind CSS + JS)
-├── avatar.jpg       # Foydalanuvchi profil rasmi
-├── .gitignore       # Git uchun e'tiborsiz qoldiriladigan fayllar (.vercel)
-└── README.md        # Loyiha hujjatlari va qo'llanma
-```
+1. 🃏 **3D Interaktiv Flesh-kartalar (Flashcards):**
+   - So'z, xalqaro fonetik transkripsiya va so'z turkumi.
+   - Kartani bosganda 3D aylanib, o'zbekcha aniq tarjimasi va real kontekstdagi misol gapni ko'rsatadi.
+   - Darajalar bo'yicha saralash (A1 Beginner, A2 Elementary, B1 Intermediate).
+
+2. 🔊 **Haqiqiy Audio Talaffuz (Web Speech API):**
+   - Hech qanday tashqi fayllarsiz, brauzerning o'rnatilgan sun'iy nutq sintezatori orqali har bir so'zni sof inglizcha talaffuzda tinglash imkoniyati.
+
+3. 📚 **Interaktiv Lug'at va Tezkor Qidiruv:**
+   - Real-time qidiruv (Search): Inglizcha yoki o'zbekcha so'zni yozishingiz bilan darhol filtrlaydi.
+   - Darajalar bo'yicha saralash.
+
+4. 🧠 **Interaktiv Quiz (Test):**
+   - 5 ta savoldan iborat dinamik test.
+   - Har bir to'g'ri javob uchun ballar (+10 ball) va darhol ovozli/vizual fikr-mulohaza.
+   - Natijalarni hisoblash va qaytadan topshirish imkoniyati.
+
+5. ⭐ **Kundalik Streak va Ballar Tizimi:**
+   - Har kuni shug'ullanish orqali o'quvchi o'z faolligini oshirib boradi (Gamification).
+   - Natijalar brauzer xotirasida (`localStorage`) avtomatik saqlanadi.
+
+6. 💡 **Oltin Qoidalar va Maslahatlar:**
+   - Boshlang'ich grammatika (To be, Present Simple) va so'zlarni xotirada umrbod saqlash usuli (*Spaced Repetition*).
 
 ---
 
-## 🛠 Ishga tushirish (Local)
+## 🛠 Texnologiyalar
 
-Hech qanday murakkab o'rnatishlar (`npm` yoki `node`) talab qilinmaydi:
-1. Ushbu repozitoriyani yuklab oling yoki klonlang:
+- **Frontend:** HTML5, Modern JavaScript (ES6+), CSS3
+- **Stilizatsiya:** Tailwind CSS (Modern Glassmorphic Dark UI)
+- **Audio Dvigatel:** Web Speech API (`SpeechSynthesis`)
+- **Deploy:** Vercel Global Edge Network
+- **Versiyalar nazorati:** Git & GitHub
+
+---
+
+## 🚀 Mahalliy kompyuterda ochish
+
+Hech qanday murakkab o'rnatishlarsiz:
+1. Repozitoriyani yuklab oling:
    ```bash
-   git clone https://github.com/Ramil91-ui/link-hub.git
+   git clone https://github.com/Ramil91-ui/englishscorewithme.git
    ```
 2. `index.html` faylini istalgan brauzerda oching.
 
 ---
 
-## 🚀 Deploy
-
-Loyiha **Vercel** platformasiga deploy qilingan va global CDN tarmog'ida jonli ishlamoqda:
-- [https://ramil-linkhub.vercel.app](https://ramil-linkhub.vercel.app)
-
----
-
-© 2026 Ramil • Barcha huquqlar himoyalangan.
+© 2026 **Englishscorewithme** • Barcha huquqlar himoyalangan.
