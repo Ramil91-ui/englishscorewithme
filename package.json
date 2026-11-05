@@ -1,0 +1,13 @@
+{
+  "name": "english-score-telegram-bot",
+  "version": "1.0.0",
+  "description": "Autonomous English Channel Scheduler Bot",
+  "main": "bot_engine.js",
+  "scripts": {
+    "start": "node bot_engine.js"
+  },
+  "dependencies": {},
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
