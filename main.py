@@ -36,6 +36,8 @@ BOT_TOKEN = os.getenv("BOT_TOKEN", "8676027227:AAGm8-ear126qmAWz-i5BZkhaeL7n45_K
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
 WEBAPP_URL = os.getenv("WEBAPP_URL", "https://your-mini-app-domain.com")
 
+MODEL_NAME = os.getenv("MODEL_NAME", "gemini-3.8-flash")
+
 gemini_client = genai.Client(api_key=GEMINI_API_KEY) if GEMINI_API_KEY else None
 
 SPEAKING_IELTS_PROMPT = """
@@ -112,7 +114,7 @@ def analyze_speaking_with_gemini(audio_bytes: bytes, mime_type: str = "audio/ogg
     if not gemini_client:
         raise ValueError("GEMINI_API_KEY sozlanmagan! Iltimos, .env faylida GEMINI_API_KEY ni ko'rsating.")
     response = gemini_client.models.generate_content(
-        model="gemini-2.5-flash",
+        model=MODEL_NAME,
         contents=[
             genai_types.Part.from_bytes(data=audio_bytes, mime_type=mime_type),
             SPEAKING_IELTS_PROMPT,
@@ -131,7 +133,7 @@ def analyze_writing_with_gemini(topic: str, essay: str) -> dict:
         raise ValueError("GEMINI_API_KEY sozlanmagan! Iltimos, .env faylida GEMINI_API_KEY ni ko'rsating.")
     prompt = f"{WRITING_IELTS_PROMPT}\n\nTopic: {topic}\n\nStudent Essay:\n{essay}"
     response = gemini_client.models.generate_content(
-        model="gemini-2.5-flash",
+        model=MODEL_NAME,
         contents=prompt,
         config=genai_types.GenerateContentConfig(
             response_mime_type="application/json",
