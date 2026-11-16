@@ -33,7 +33,7 @@ load_dotenv()
 
 BOT_TOKEN = os.getenv("BOT_TOKEN", "8676027227:AAGm8-ear126qmAWz-i5BZkhaeL7n45_KvQ")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
-WEBAPP_URL = os.getenv("WEBAPP_URL", "")
+WEBAPP_URL = os.getenv("WEBAPP_URL", "https://englishscorewithme.onrender.com")
 
 MODEL_NAME = os.getenv("MODEL_NAME", "gemini-3.8-flash")
 
