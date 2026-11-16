@@ -287,30 +287,42 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/", response_class=HTMLResponse)
+@app.api_route("/", methods=["GET", "HEAD"], response_class=HTMLResponse)
 async def serve_mini_app():
     index_path = find_file("index.html")
     if index_path.exists():
         return HTMLResponse(content=index_path.read_text(encoding="utf-8"), media_type="text/html; charset=utf-8")
-    return HTMLResponse(content="<h1>English 4-Skills Mini App</h1>", media_type="text/html")
+    return HTMLResponse(content="<h1>English 4-Skills Mini App</h1>", media_type="text/html; charset=utf-8")
 
-@app.get("/manifest.json")
+@app.api_route("/manifest.json", methods=["GET", "HEAD"])
 async def get_manifest():
     return FileResponse(find_file("manifest.json"), media_type="application/manifest+json")
 
-@app.get("/sw.js")
+@app.api_route("/sw.js", methods=["GET", "HEAD"])
 async def get_sw():
-    return FileResponse(find_file("sw.js"), media_type="application/javascript")
+    return FileResponse(
+        find_file("sw.js"),
+        media_type="application/javascript",
+        headers={"Cache-Control": "no-cache, no-store, must-revalidate"}
+    )
 
-@app.get("/icon-192.png")
+@app.api_route("/icon-192.png", methods=["GET", "HEAD"])
 async def get_icon_192():
     return FileResponse(find_file("icon-192.png"), media_type="image/png")
 
-@app.get("/icon-512.png")
+@app.api_route("/icon-512.png", methods=["GET", "HEAD"])
 async def get_icon_512():
     return FileResponse(find_file("icon-512.png"), media_type="image/png")
 
-@app.get("/vocabulary_data.js")
+@app.api_route("/screenshot-mobile.png", methods=["GET", "HEAD"])
+async def get_screenshot_mobile():
+    return FileResponse(find_file("screenshot-mobile.png"), media_type="image/png")
+
+@app.api_route("/screenshot-desktop.png", methods=["GET", "HEAD"])
+async def get_screenshot_desktop():
+    return FileResponse(find_file("screenshot-desktop.png"), media_type="image/png")
+
+@app.api_route("/vocabulary_data.js", methods=["GET", "HEAD"])
 async def get_vocabulary_data():
     return FileResponse(find_file("vocabulary_data.js"), media_type="application/javascript")
 

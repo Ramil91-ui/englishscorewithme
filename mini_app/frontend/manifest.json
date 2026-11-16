@@ -1,25 +1,98 @@
 {
-  "name": "EnglishScore With Me",
+  "name": "EnglishScore & IELTS AI - GoPrep Platform",
   "short_name": "EnglishScore",
-  "description": "IELTS and EnglishScore 4-Skills preparation platform with Gemini AI evaluation",
+  "description": "IELTS and EnglishScore 4-Skills preparation platform with Gemini AI evaluation, offline vocabulary, listening, reading and speaking partner.",
   "start_url": "/",
   "scope": "/",
+  "id": "/?source=pwa",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#f8fafc",
+  "background_color": "#0f172a",
   "theme_color": "#2563eb",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": [
+    "education",
+    "productivity"
+  ],
   "icons": [
     {
       "src": "/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
     },
     {
       "src": "/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Vocabulary Builder",
+      "short_name": "Vocabulary",
+      "description": "Learn 50,000+ IELTS words with CEFR levels and audio",
+      "url": "/#vocab",
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "AI Speaking Partner",
+      "short_name": "Speaking",
+      "description": "Practice IELTS speaking with Alex AI coach",
+      "url": "/#partner",
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Listening Practice",
+      "short_name": "Listening",
+      "description": "Multi-accent listening test (UK, US, AU)",
+      "url": "/#listening",
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot-mobile.png",
+      "sizes": "540x960",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "EnglishScore & IELTS AI Mobile Practice"
+    },
+    {
+      "src": "/screenshot-desktop.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "EnglishScore & IELTS AI Desktop Dashboard"
     }
   ]
 }
