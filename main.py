@@ -4,8 +4,9 @@ Features:
 1. Serves the Telegram Mini App Frontend (HTML/JS) directly at "/"
 2. Telegram Bot with Mini App button and Direct Voice Message IELTS Evaluator
 3. Gemini 3.8 Flash 4-Criteria IELTS Speaking & Writing Evaluation APIs
-4. Telegram initData HMAC-SHA256 Security Validation
-5. PWA Manifest, Service Worker, and Icon Routes for standalone App / PWABuilder
+4. Gemini 3.8 Flash 50,000+ Vocabulary AI Lookup API (CEFR, IELTS Band, Uzbek Meaning, Accents)
+5. Telegram initData HMAC-SHA256 Security Validation
+6. PWA Manifest, Service Worker, and Icon Routes for standalone App / PWABuilder
 """
 
 import asyncio
@@ -106,6 +107,34 @@ Return ONLY valid JSON with these exact keys:
 }
 """
 
+VOCABULARY_LOOKUP_PROMPT = """
+You are an expert lexicographer and IELTS examiner.
+Analyze the requested English word, idiom, or phrasal verb.
+Return ONLY valid JSON matching this exact structure:
+{
+  "word": "word or phrase",
+  "ipa_uk": "/.../",
+  "ipa_us": "/.../",
+  "pos": "noun / verb / adjective / adverb / idiom / phrasal verb",
+  "cefr_level": "A1 / A2 / B1 / B2 / C1 / C2",
+  "ielts_band": "6.0 - 9.0",
+  "uzbek_meaning": "aniq o'zbekcha tarjimasi va tushuntirishi",
+  "english_definition": "Clear concise English definition",
+  "example_sentences": [
+    "Academic IELTS context example sentence 1",
+    "Everyday conversational example sentence 2"
+  ],
+  "collocations": [
+    "strong collocation 1",
+    "strong collocation 2"
+  ],
+  "synonyms": [
+    "synonym 1",
+    "synonym 2"
+  ]
+}
+"""
+
 def analyze_speaking_with_gemini(audio_bytes: bytes, mime_type: str = "audio/ogg") -> dict:
     if not gemini_client:
         raise ValueError("GEMINI_API_KEY sozlanmagan! Iltimos, .env faylida GEMINI_API_KEY ni ko'rsating.")
@@ -178,7 +207,7 @@ def find_file(filename: str) -> Path:
 # ---------------------------------------------------------
 # FastAPI App
 # ---------------------------------------------------------
-app = FastAPI(title="English 4-Skills & IELTS AI Platform", version="1.0.0")
+app = FastAPI(title="English 4-Skills & IELTS AI Platform", version="2.0.0")
 
 app.add_middleware(
     CORSMiddleware,
@@ -212,9 +241,13 @@ async def get_icon_192():
 async def get_icon_512():
     return FileResponse(find_file("icon-512.png"), media_type="image/png")
 
+@app.get("/vocabulary_data.js")
+async def get_vocabulary_data():
+    return FileResponse(find_file("vocabulary_data.js"), media_type="application/javascript")
+
 @app.get("/api/health")
 async def health_check():
-    return {"status": "ok", "app": "EnglishScore & IELTS AI Platform"}
+    return {"status": "ok", "app": "EnglishScore & IELTS AI Platform", "version": "2.0.0"}
 
 @app.get("/api/me")
 async def get_current_user(x_telegram_init_data: str = Header(...)):
@@ -223,13 +256,20 @@ async def get_current_user(x_telegram_init_data: str = Header(...)):
         "telegram_id": user.get("id"),
         "first_name": user.get("first_name"),
         "username": user.get("username"),
-        "xp": 120,
-        "streak_days": 3,
+        "xp": 180,
+        "streak_days": 4,
     }
 
 class SpeakingTextAnalyzeRequest(BaseModel):
     topic: str
     transcript: str
+
+class WritingAnalyzeRequest(BaseModel):
+    topic: str
+    essay: str
+
+class VocabularyLookupRequest(BaseModel):
+    word: str
 
 @app.post("/api/speaking/analyze_text")
 async def analyze_speaking_text_endpoint(
@@ -237,7 +277,7 @@ async def analyze_speaking_text_endpoint(
     x_telegram_init_data: str = Header(default=""),
 ):
     if not gemini_client:
-        raise ValueError("GEMINI_API_KEY sozlanmagan!")
+        raise HTTPException(status_code=500, detail="GEMINI_API_KEY sozlanmagan!")
     prompt = f"{SPEAKING_IELTS_PROMPT}\n\nTopic: {payload.topic}\n\nSpeaker Answer:\n{payload.transcript}"
     response = gemini_client.models.generate_content(
         model=MODEL_NAME,
@@ -248,18 +288,6 @@ async def analyze_speaking_text_endpoint(
         ),
     )
     return json.loads(response.text)
-
-@app.get("/api/leaderboard")
-async def get_leaderboard():
-    return {
-        "leaderboard": [
-            {"rank": 1, "name": "Azizbek R.", "xp": 1450, "badge": "🔥 IELTS 8.0"},
-            {"rank": 2, "name": "Madina K.", "xp": 1320, "badge": "💎 C1 Advanced"},
-            {"rank": 3, "name": "Jasur T.", "xp": 1180, "badge": "⚡️ Band 7.5"},
-            {"rank": 4, "name": "Shahzoda M.", "xp": 960, "badge": "🎯 EnglishScore 450"},
-            {"rank": 5, "name": "Dilshod B.", "xp": 820, "badge": "🌟 B2 Upper"},
-        ]
-    }
 
 @app.post("/api/writing/analyze")
 async def analyze_writing_endpoint(
@@ -287,6 +315,37 @@ async def analyze_speaking_endpoint(
     mime_type = audio.content_type or "audio/webm"
     return analyze_speaking_with_gemini(audio_bytes, mime_type=mime_type)
 
+@app.post("/api/vocabulary/ai_lookup")
+async def lookup_vocabulary_endpoint(payload: VocabularyLookupRequest):
+    """50,000+ so'zli ingliz tili lug'atini Gemini 3.8 Flash orqali real-time tahlil qilish."""
+    if not gemini_client:
+        raise HTTPException(status_code=500, detail="GEMINI_API_KEY sozlanmagan")
+    prompt = f"{VOCABULARY_LOOKUP_PROMPT}\n\nTarget Word or Idiom: {payload.word.strip()}"
+    try:
+        response = gemini_client.models.generate_content(
+            model=MODEL_NAME,
+            contents=prompt,
+            config=genai_types.GenerateContentConfig(
+                response_mime_type="application/json",
+                temperature=0.2,
+            ),
+        )
+        return json.loads(response.text)
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=str(exc))
+
+@app.get("/api/leaderboard")
+async def get_leaderboard():
+    return {
+        "leaderboard": [
+            {"rank": 1, "name": "Azizbek R.", "xp": 1450, "badge": "🔥 IELTS 8.0"},
+            {"rank": 2, "name": "Madina K.", "xp": 1320, "badge": "💎 C1 Advanced"},
+            {"rank": 3, "name": "Jasur T.", "xp": 1180, "badge": "⚡️ Band 7.5"},
+            {"rank": 4, "name": "Shahzoda M.", "xp": 960, "badge": "🎯 EnglishScore 450"},
+            {"rank": 5, "name": "Dilshod B.", "xp": 820, "badge": "🌟 B2 Upper"},
+        ]
+    }
+
 
 # ---------------------------------------------------------
 # Telegram Bot (aiogram 3.x)
@@ -301,7 +360,7 @@ async def cmd_start(message: types.Message):
         inline_keyboard=[
             [
                 InlineKeyboardButton(
-                    text="🚀 English 4-Skills Mini-Ilova",
+                    text="🚀 IELTS & 4-Skills GoPrep Platform",
                     web_app=WebAppInfo(url=app_url),
                 )
             ]
@@ -309,10 +368,13 @@ async def cmd_start(message: types.Message):
     )
     await message.answer(
         "👋 <b>Xush kelibsiz!</b>\n\n"
-        "Bu bot va Mini-Ilova orqali siz:\n"
-        "• 🎧 <b>Listening</b> va 📖 <b>Reading</b> mashqlarini bajarishingiz;\n"
-        "• ✍️ <b>Writing</b> va 🎙 <b>Speaking</b> bo'yicha Gemini AI yordamida IELTSning 4 ta mezoni bo'yicha aniq Band ball olishingiz mumkin!\n\n"
-        "🎙 <i>Menga istalgan inglizcha ovozli xabar (voice message) yuboring — men uni darhol tahlil qilib beraman!</i>",
+        "GoPrep IELTS darajasidagi bepul va universal o'quv platformasi:\n"
+        "• 🎧 <b>Listening:</b> 4 ta Part, 3 xil aksent (🇬🇧 Britaniya, 🇺🇸 AQSH, 🇦🇺 Avstraliya)\n"
+        "• 📖 <b>Reading:</b> 0 dan Band 9 gacha akademik matnlar va interaktiv lug'at\n"
+        "• ✍️ <b>Writing:</b> Task 1 & 2 esse tahlili (Gemini AI 3.8 Flash)\n"
+        "• 🎙 <b>Speaking:</b> Part 1, 2 (taymerli Cue Card), 3 ovozli AI imtihon\n"
+        "• 📚 <b>Vocabulary:</b> 50,000+ so'zli multi-aksentli audio lug'at va Flashcardlar!\n\n"
+        "🎙 <i>Menga istalgan inglizcha ovozli xabar (voice message) yuboring — darhol 4 mezon bo'yicha tahlil qilib beraman!</i>",
         reply_markup=keyboard,
         parse_mode="HTML",
     )
