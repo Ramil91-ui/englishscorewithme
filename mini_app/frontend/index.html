@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>English 4-Skills Telegram Mini App</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: var(--tg-theme-bg-color, #f8fafc);
+      color: var(--tg-theme-text-color, #0f172a);
+      -webkit-tap-highlight-color: transparent;
+    }
+    .tg-card {
+      background-color: var(--tg-theme-secondary-bg-color, #ffffff);
+    }
+    .tg-btn {
+      background-color: var(--tg-theme-button-color, #2563eb);
+      color: var(--tg-theme-button-text-color, #ffffff);
+    }
+    .pulse-ring {
+      animation: pulseRing 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+    }
+    @keyframes pulseRing {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6); }
+      70% { transform: scale(1); box-shadow: 0 0 0 14px rgba(239, 68, 68, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+    }
+  </style>
+</head>
+<body class="min-h-screen pb-24">
+  <div class="max-w-md mx-auto px-4 pt-4">
+    <!-- Top Header: Profile, XP, Streak & UI Language -->
+    <header class="tg-card rounded-2xl p-4 shadow-sm border border-slate-200/70 mb-4">
+      <div class="flex items-center justify-between gap-2">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-base" id="avatarInitial">R</div>
+          <div>
+            <div class="font-bold text-sm leading-tight" id="userName">Salom, O'quvchi</div>
+            <div class="text-xs text-slate-500 mt-0.5" id="dailyGoalText">Kunlik maqsad: 4 ko'nikma</div>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <select id="uiLangSelect" aria-label="Interfeys tili" class="text-xs font-semibold bg-slate-100 text-slate-700 rounded-lg px-2 py-1.5 border border-slate-200 focus:outline-none">
+            <option value="uz">UZ</option>
+            <option value="en">EN</option>
+            <option value="ru">RU</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-3 gap-2 mt-3 pt-3 border-t border-slate-100">
+        <div class="bg-amber-50 rounded-xl px-3 py-2 text-center">
+          <div class="text-[11px] font-medium text-amber-700" data-i18n="streakLabel">Streak</div>
+          <div class="text-sm font-extrabold text-amber-900" id="streakValue">3 kun</div>
+        </div>
+        <div class="bg-blue-50 rounded-xl px-3 py-2 text-center">
+          <div class="text-[11px] font-medium text-blue-700" data-i18n="xpLabel">Jami XP</div>
+          <div class="text-sm font-extrabold text-blue-900" id="xpValue">120 XP</div>
+        </div>
+        <div class="bg-emerald-50 rounded-xl px-3 py-2 text-center">
+          <div class="text-[11px] font-medium text-emerald-700" data-i18n="doneLabel">Bajarildi</div>
+          <div class="text-sm font-extrabold text-emerald-900" id="completedValue">0 / 4</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- 4-Skill Navigation Tabs -->
+    <nav class="grid grid-cols-4 gap-1.5 bg-slate-200/70 p-1 rounded-2xl mb-4" aria-label="Ko'nikmalar">
+      <button type="button" data-tab="listening" class="skill-tab py-2 px-1 rounded-xl text-xs font-semibold transition-all bg-white text-blue-600 shadow-sm">
+        Listening
+      </button>
+      <button type="button" data-tab="reading" class="skill-tab py-2 px-1 rounded-xl text-xs font-semibold transition-all text-slate-600 hover:text-slate-900">
+        Reading
+      </button>
+      <button type="button" data-tab="writing" class="skill-tab py-2 px-1 rounded-xl text-xs font-semibold transition-all text-slate-600 hover:text-slate-900">
+        Writing
+      </button>
+      <button type="button" data-tab="speaking" class="skill-tab py-2 px-1 rounded-xl text-xs font-semibold transition-all text-slate-600 hover:text-slate-900">
+        Speaking
+      </button>
+    </nav>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="hidden fixed bottom-5 left-1/2 -translate-x-1/2 z-50 bg-slate-900 text-white text-xs font-semibold px-4 py-2.5 rounded-full shadow-lg"></div>
+
+    <!-- 1. LISTENING PANEL -->
+    <section id="panel-listening" class="skill-panel space-y-4">
+      <div class="tg-card rounded-2xl p-4 shadow-sm border border-slate-200/70">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700">Listening • B1</span>
+          <span class="text-xs font-semibold text-emerald-600">+25 XP</span>
+        </div>
+        <h2 class="text-base font-bold mb-1" id="listeningTitle">Airport Announcement & Coffee Shop</h2>
+        <p class="text-xs text-slate-500 mb-4" data-i18n="listeningDesc">Audioni tinglang va quyidagi 3 ta savolga javob bering.</p>
+
+        <!-- Audio Player Controls -->
+        <div class="bg-slate-50 rounded-xl p-3 border border-slate-200/70">
+          <div class="flex items-center justify-between gap-2">
+            <button type="button" id="playAudioBtn" class="tg-btn flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold shadow-sm active:scale-95 transition">
+              <span id="playAudioIcon">▶</span>
+              <span id="playAudioText">Tinglash</span>
+            </button>
+            <div class="flex items-center gap-1.5">
+              <button type="button" id="speedSlowBtn" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-700">0.8x</button>
+              <button type="button" id="speedNormalBtn" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-blue-600 text-white border border-blue-600">1.0x</button>
+              <button type="button" id="toggleTranscriptBtn" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-700">Matn</button>
+            </div>
+          </div>
+          <div id="audioStatus" class="text-[11px] text-slate-500 mt-2">Tayyor: tinglash uchun tugmani bosing</div>
+          <div id="listeningTranscript" class="hidden mt-3 pt-3 border-t border-slate-200 text-xs text-slate-700 leading-relaxed">
+            "Good morning, passengers on Flight TK402 to Istanbul. Due to light morning fog, boarding will begin at Gate B12 twenty minutes later than scheduled, at 9:40 AM. Meanwhile, complimentary coffee and pastries are available at the Sky Lounge near Gate B10."
+          </div>
+        </div>
+      </div>
+
+      <div id="listeningQuestions" class="space-y-3"></div>
+      <button type="button" id="submitListeningBtn" class="tg-btn w-full py-3 rounded-xl text-sm font-bold shadow-sm active:scale-[0.99] transition">
+        Javoblarni tekshirish
+      </button>
+      <div id="listeningResult" class="hidden rounded-xl p-3 text-xs font-semibold"></div>
+    </section>
+
+    <!-- 2. READING PANEL -->
+    <section id="panel-reading" class="skill-panel hidden space-y-4">
+      <div class="tg-card rounded-2xl p-4 shadow-sm border border-slate-200/70">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700">Reading • B1-B2</span>
+          <span class="text-xs font-semibold text-emerald-600">+25 XP</span>
+        </div>
+        <h2 class="text-base font-bold mb-2">Why Micro-Learning Works Better</h2>
+        <p class="text-[11px] text-slate-500 mb-3">Ajratilgan so'zlarni ustiga bosib tarjimasini ko'ring:</p>
+        <div class="text-sm leading-relaxed text-slate-700 bg-slate-50 p-3.5 rounded-xl border border-slate-200/70 space-y-2">
+          <p>
+            Research in cognitive psychology shows that studying for 10 to 15 minutes every day is far more
+            <button type="button" class="vocab-word underline decoration-dotted decoration-blue-500 font-semibold text-blue-700" data-meaning="effective — samarali">effective</button>
+            than cramming for three hours once a week.
+          </p>
+          <p>
+            When you space out your practice, your brain has time to
+            <button type="button" class="vocab-word underline decoration-dotted decoration-blue-500 font-semibold text-blue-700" data-meaning="consolidate — mustahkamlamoq">consolidate</button>
+            new vocabulary into long-term memory. Even short daily sessions build lasting
+            <button type="button" class="vocab-word underline decoration-dotted decoration-blue-500 font-semibold text-blue-700" data-meaning="fluency — ravonlik">fluency</button>.
+          </p>
+        </div>
+        <div id="vocabBox" class="hidden mt-3 px-3 py-2 rounded-xl bg-blue-50 text-blue-900 text-xs font-medium"></div>
+      </div>
+
+      <div id="readingQuestions" class="space-y-3"></div>
+      <button type="button" id="submitReadingBtn" class="tg-btn w-full py-3 rounded-xl text-sm font-bold shadow-sm active:scale-[0.99] transition">
+        Reading natijasini tekshirish
+      </button>
+      <div id="readingResult" class="hidden rounded-xl p-3 text-xs font-semibold"></div>
+    </section>
+
+    <!-- 3. WRITING PANEL -->
+    <section id="panel-writing" class="skill-panel hidden space-y-4">
+      <div class="tg-card rounded-2xl p-4 shadow-sm border border-slate-200/70">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-amber-50 text-amber-700">Writing • Task</span>
+          <span class="text-xs font-semibold text-emerald-600">+30 XP</span>
+        </div>
+        <h2 class="text-base font-bold mb-1">Mini Essay (30–80 words)</h2>
+        <p class="text-xs text-slate-600 mb-3">
+          <strong>Mavzu:</strong> "Do you prefer learning English with an app or in a traditional classroom? Why?"
+        </p>
+
+        <div class="flex flex-wrap gap-1.5 mb-3">
+          <span class="text-[11px] px-2 py-1 rounded-md bg-slate-100 text-slate-700 font-medium">In my opinion</span>
+          <span class="text-[11px] px-2 py-1 rounded-md bg-slate-100 text-slate-700 font-medium">However</span>
+          <span class="text-[11px] px-2 py-1 rounded-md bg-slate-100 text-slate-700 font-medium">For example</span>
+          <span class="text-[11px] px-2 py-1 rounded-md bg-slate-100 text-slate-700 font-medium">Because</span>
+        </div>
+
+        <textarea id="writingInput" rows="5" placeholder="Ingliz tilida javobingizni yozing..." class="w-full rounded-xl border border-slate-300 p-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-slate-900"></textarea>
+
+        <div class="flex items-center justify-between text-xs text-slate-500 mt-2">
+          <span id="wordCount">0 so'z (maqsad: 30+)</span>
+          <button type="button" id="showModelWritingBtn" class="text-blue-600 font-semibold hover:underline">Namuna javob</button>
+        </div>
+
+        <div id="modelWritingBox" class="hidden mt-3 p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700 leading-relaxed">
+          <strong>Model Answer:</strong> In my opinion, learning English with a mobile app is more convenient because I can practice every day for 10 minutes. However, a classroom is also helpful for group discussions. For example, apps are great for vocabulary, while teachers give instant speaking feedback.
+        </div>
+      </div>
+
+      <button type="button" id="submitWritingBtn" class="tg-btn w-full py-3 rounded-xl text-sm font-bold shadow-sm active:scale-[0.99] transition">
+        Matnni tahlil qilish va topshirish
+      </button>
+      <div id="writingFeedback" class="hidden rounded-xl p-3.5 text-xs space-y-1.5"></div>
+    </section>
+
+    <!-- 4. SPEAKING PANEL -->
+    <section id="panel-speaking" class="skill-panel hidden space-y-4">
+      <div class="tg-card rounded-2xl p-4 shadow-sm border border-slate-200/70">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-rose-50 text-rose-700">Speaking • Part 1</span>
+          <span class="text-xs font-semibold text-emerald-600">+30 XP</span>
+        </div>
+        <h2 class="text-base font-bold mb-1">Describe Your Daily Routine</h2>
+        <p class="text-xs text-slate-600 mb-3">
+          Quyidagi savolga 20–45 soniya davomida ingliz tilida javob bering:
+        </p>
+        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/70 text-sm font-semibold text-slate-800 mb-4">
+          "What do you usually do in the morning to stay productive?"
+        </div>
+
+        <div class="text-xs text-slate-500 mb-3">
+          <strong>Foydali iboralar:</strong> <em>First of all... / After that... / It helps me focus...</em>
+        </div>
+
+        <div class="flex flex-col items-center py-3">
+          <button type="button" id="recordBtn" class="w-16 h-16 rounded-full bg-rose-500 text-white flex items-center justify-center shadow-md active:scale-95 transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8" />
+            </svg>
+          </button>
+          <div id="recordStatus" class="text-xs font-semibold text-slate-600 mt-3">Gapirish uchun mikrofonni bosing</div>
+          <div id="speakingTimer" class="text-xs font-mono text-slate-400 mt-1">00:00</div>
+        </div>
+
+        <div class="mt-3">
+          <label for="speakingTranscript" class="block text-[11px] font-semibold text-slate-500 mb-1">Sizning nutqingiz (yoki matn ko'rinishida kiriting):</label>
+          <textarea id="speakingTranscript" rows="3" placeholder="Mikrofon ishlamasa, javobingizni shu yerga yozib tekshirishingiz mumkin..." class="w-full rounded-xl border border-slate-300 p-2.5 text-xs bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-rose-400"></textarea>
+        </div>
+      </div>
+
+      <button type="button" id="submitSpeakingBtn" class="tg-btn w-full py-3 rounded-xl text-sm font-bold shadow-sm active:scale-[0.99] transition">
+        Speaking javobini baholash
+      </button>
+      <div id="speakingFeedback" class="hidden rounded-xl p-3.5 text-xs space-y-1"></div>
+    </section>
+  </div>
+
+  <script>
+    (function () {
+      const tg = window.Telegram && window.Telegram.WebApp;
+      if (tg) {
+        tg.ready();
+        tg.expand();
+        const user = tg.initDataUnsafe && tg.initDataUnsafe.user;
+        if (user && user.first_name) {
+          document.getElementById("userName").textContent = "Salom, " + user.first_name;
+          document.getElementById("avatarInitial").textContent = user.first_name.charAt(0).toUpperCase();
+        }
+      }
+
+      // App State
+      let xp = 120;
+      const completedSkills = new Set();
+
+      const i18n = {
+        uz: {
+          streakLabel: "Streak",
+          xpLabel: "Jami XP",
+          doneLabel: "Bajarildi",
+          dailyGoalText: "Kunlik maqsad: 4 ko'nikma",
+          listeningDesc: "Audioni tinglang va quyidagi 3 ta savolga javob bering."
+        },
+        en: {
+          streakLabel: "Streak",
+          xpLabel: "Total XP",
+          doneLabel: "Completed",
+          dailyGoalText: "Daily goal: 4 skills",
+          listeningDesc: "Listen to the audio and answer the 3 questions below."
+        },
+        ru: {
+          streakLabel: "Серия",
+          xpLabel: "Всего XP",
+          doneLabel: "Выполнено",
+          dailyGoalText: "Цель дня: 4 навыка",
+          listeningDesc: "Прослушайте аудио и ответьте на 3 вопроса ниже."
+        }
+      };
+
+      function showToast(msg) {
+        const toast = document.getElementById("toast");
+        toast.textContent = msg;
+        toast.classList.remove("hidden");
+        setTimeout(() => toast.classList.add("hidden"), 2500);
+      }
+
+      function addSkillXP(skillKey, amount) {
+        if (!completedSkills.has(skillKey)) {
+          completedSkills.add(skillKey);
+          xp += amount;
+          document.getElementById("xpValue").textContent = xp + " XP";
+          document.getElementById("completedValue").textContent = completedSkills.size + " / 4";
+          showToast("+" + amount + " XP qo'shildi!");
+        }
+      }
+
+      // Language Switcher
+      document.getElementById("uiLangSelect").addEventListener("change", (e) => {
+        const lang = e.target.value;
+        const dict = i18n[lang] || i18n.uz;
+        document.querySelectorAll("[data-i18n]").forEach((el) => {
+          const key = el.getAttribute("data-i18n");
+          if (dict[key]) el.textContent = dict[key];
+        });
+        document.getElementById("dailyGoalText").textContent = dict.dailyGoalText;
+      });
+
+      // Tabs
+      const tabs = document.querySelectorAll(".skill-tab");
+      const panels = document.querySelectorAll(".skill-panel");
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          const target = tab.getAttribute("data-tab");
+          tabs.forEach((t) => {
+            t.classList.remove("bg-white", "text-blue-600", "shadow-sm");
+            t.classList.add("text-slate-600");
+          });
+          tab.classList.add("bg-white", "text-blue-600", "shadow-sm");
+          tab.classList.remove("text-slate-600");
+
+          panels.forEach((p) => p.classList.add("hidden"));
+          document.getElementById("panel-" + target).classList.remove("hidden");
+        });
+      });
+
+      // 1. LISTENING LOGIC
+      const listeningQuiz = [
+        {
+          id: "l1",
+          q: "1. Where is Flight TK402 heading?",
+          options: ["London", "Istanbul", "Dubai"],
+          answer: 1
+        },
+        {
+          id: "l2",
+          q: "2. Why is boarding delayed?",
+          options: ["Technical issue", "Light morning fog", "Late crew"],
+          answer: 1
+        },
+        {
+          id: "l3",
+          q: "3. What time will boarding begin?",
+          options: ["9:20 AM", "9:40 AM", "10:00 AM"],
+          answer: 1
+        }
+      ];
+
+      function renderQuiz(containerId, items, prefix) {
+        const container = document.getElementById(containerId);
+        container.innerHTML = items.map((item) => `
+          <div class="tg-card rounded-2xl p-3.5 shadow-sm border border-slate-200/70">
+            <div class="text-xs font-bold mb-2.5">${item.q}</div>
+            <div class="space-y-1.5">
+              ${item.options.map((opt, idx) => `
+                <label class="flex items-center gap-2.5 p-2 rounded-xl border border-slate-200/80 text-xs cursor-pointer hover:bg-slate-50">
+                  <input type="radio" name="${prefix}-${item.id}" value="${idx}" class="accent-blue-600" />
+                  <span>${opt}</span>
+                </label>
+              `).join("")}
+            </div>
+          </div>
+        `).join("");
+      }
+
+      renderQuiz("listeningQuestions", listeningQuiz, "list");
+
+      let speechRate = 1.0;
+      const listeningScript = "Good morning, passengers on Flight TK402 to Istanbul. Due to light morning fog, boarding will begin at Gate B12 twenty minutes later than scheduled, at 9:40 AM. Meanwhile, complimentary coffee and pastries are available at the Sky Lounge near Gate B10.";
+
+      document.getElementById("speedSlowBtn").addEventListener("click", () => {
+        speechRate = 0.8;
+        document.getElementById("speedSlowBtn").className = "px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-blue-600 text-white border border-blue-600";
+        document.getElementById("speedNormalBtn").className = "px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-700";
+      });
+
+      document.getElementById("speedNormalBtn").addEventListener("click", () => {
+        speechRate = 1.0;
+        document.getElementById("speedNormalBtn").className = "px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-blue-600 text-white border border-blue-600";
+        document.getElementById("speedSlowBtn").className = "px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-700";
+      });
+
+      document.getElementById("toggleTranscriptBtn").addEventListener("click", () => {
+        document.getElementById("listeningTranscript").classList.toggle("hidden");
+      });
+
+      document.getElementById("playAudioBtn").addEventListener("click", () => {
+        if (!("speechSynthesis" in window)) {
+          document.getElementById("audioStatus").textContent = "Brauzer ovoz chiqarishni qo'llamaydi — 'Matn' tugmasini bosing.";
+          return;
+        }
+        window.speechSynthesis.cancel();
+        const utter = new SpeechSynthesisUtterance(listeningScript);
+        utter.lang = "en-US";
+        utter.rate = speechRate;
+        utter.onstart = () => {
+          document.getElementById("audioStatus").textContent = "Ijro etilmoqda (" + speechRate + "x)...";
+          document.getElementById("playAudioText").textContent = "Qayta tinglash";
+        };
+        utter.onend = () => {
+          document.getElementById("audioStatus").textContent = "Audio tugadi. Savollarga javob bering.";
+        };
+        window.speechSynthesis.speak(utter);
+      });
+
+      document.getElementById("submitListeningBtn").addEventListener("click", () => {
+        let score = 0;
+        listeningQuiz.forEach((item) => {
+          const checked = document.querySelector(`input[name="list-${item.id}"]:checked`);
+          if (checked && Number(checked.value) === item.answer) score++;
+        });
+        const box = document.getElementById("listeningResult");
+        box.classList.remove("hidden");
+        if (score >= 2) {
+          box.className = "rounded-xl p-3 text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200";
+          box.textContent = `Ajoyib! ${score}/3 to'g'ri javob.`;
+          addSkillXP("listening", 25);
+        } else {
+          box.className = "rounded-xl p-3 text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200";
+          box.textContent = `Natija: ${score}/3. Audioni 0.8x tezlikda qayta tinglab ko'ring.`;
+        }
+      });
+
+      // 2. READING LOGIC
+      const readingQuiz = [
+        {
+          id: "r1",
+          q: "1. According to the text, how long should daily practice be?",
+          options: ["3 hours once a week", "10–15 minutes daily", "60 minutes daily"],
+          answer: 1
+        },
+        {
+          id: "r2",
+          q: "2. What does spacing out practice help your brain do?",
+          options: ["Forget old words", "Consolidate vocabulary", "Sleep faster"],
+          answer: 1
+        }
+      ];
+
+      renderQuiz("readingQuestions", readingQuiz, "read");
+
+      document.querySelectorAll(".vocab-word").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const box = document.getElementById("vocabBox");
+          box.textContent = "Lug'at: " + btn.getAttribute("data-meaning");
+          box.classList.remove("hidden");
+        });
+      });
+
+      document.getElementById("submitReadingBtn").addEventListener("click", () => {
+        let score = 0;
+        readingQuiz.forEach((item) => {
+          const checked = document.querySelector(`input[name="read-${item.id}"]:checked`);
+          if (checked && Number(checked.value) === item.answer) score++;
+        });
+        const box = document.getElementById("readingResult");
+        box.classList.remove("hidden");
+        if (score === 2) {
+          box.className = "rounded-xl p-3 text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200";
+          box.textContent = "To'g'ri! Barcha Reading savollariga aniq javob berdingiz (2/2).";
+          addSkillXP("reading", 25);
+        } else {
+          box.className = "rounded-xl p-3 text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200";
+          box.textContent = `Natija: ${score}/2. Matnni qayta o'qib urinib ko'ring.`;
+        }
+      });
+
+      // 3. WRITING LOGIC
+      const writingInput = document.getElementById("writingInput");
+      writingInput.addEventListener("input", () => {
+        const words = writingInput.value.trim().split(/\s+/).filter(Boolean);
+        document.getElementById("wordCount").textContent = `${words.length} so'z (maqsad: 30+)`;
+      });
+
+      document.getElementById("showModelWritingBtn").addEventListener("click", () => {
+        document.getElementById("modelWritingBox").classList.toggle("hidden");
+      });
+
+      document.getElementById("submitWritingBtn").addEventListener("click", () => {
+        const text = writingInput.value.trim();
+        const words = text.split(/\s+/).filter(Boolean);
+        const box = document.getElementById("writingFeedback");
+        box.classList.remove("hidden");
+
+        if (words.length < 15) {
+          box.className = "rounded-xl p-3.5 text-xs bg-rose-50 text-rose-800 border border-rose-200";
+          box.innerHTML = "<strong>Kamida 15–30 ta so'z yozing.</strong> Hozircha: " + words.length + " so'z.";
+          return;
+        }
+
+        const connectors = ["because", "however", "for example", "opinion", "also", "first"];
+        const used = connectors.filter((c) => text.toLowerCase().includes(c));
+        box.className = "rounded-xl p-3.5 text-xs bg-emerald-50 text-emerald-900 border border-emerald-200 space-y-1";
+        box.innerHTML = `
+          <div><strong>Tahlil yakunlandi (${words.length} so'z):</strong></div>
+          <div>• Bog'lovchi so'zlar ishlatilishi: ${used.length > 0 ? used.join(", ") : "Keyingi safar 'However' yoki 'Because' qo'shib ko'ring"}</div>
+          <div>• Tavsiya: Fikringizni bitta aniq misol bilan boyitsangiz, javob yanada kuchliroq chiqadi.</div>
+        `;
+        addSkillXP("writing", 30);
+      });
+
+      // 4. SPEAKING LOGIC
+      let isRecording = false;
+      let timerInterval = null;
+      let seconds = 0;
+      let recognition = null;
+
+      const recordBtn = document.getElementById("recordBtn");
+      const recordStatus = document.getElementById("recordStatus");
+      const speakingTimer = document.getElementById("speakingTimer");
+      const speakingTranscript = document.getElementById("speakingTranscript");
+
+      recordBtn.addEventListener("click", () => {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+        if (!isRecording) {
+          isRecording = true;
+          seconds = 0;
+          recordBtn.classList.add("pulse-ring");
+          recordStatus.textContent = "Yozib olinmoqda... To'xtatish uchun yana bosing";
+          timerInterval = setInterval(() => {
+            seconds++;
+            const mm = String(Math.floor(seconds / 60)).padStart(2, "0");
+            const ss = String(seconds % 60).padStart(2, "0");
+            speakingTimer.textContent = `${mm}:${ss}`;
+          }, 1000);
+
+          if (SpeechRecognition) {
+            recognition = new SpeechRecognition();
+            recognition.lang = "en-US";
+            recognition.continuous = true;
+            recognition.interimResults = true;
+            recognition.onresult = (event) => {
+              let transcript = "";
+              for (let i = 0; i < event.results.length; i++) {
+                transcript += event.results[i][0].transcript + " ";
+              }
+              speakingTranscript.value = transcript.trim();
+            };
+            recognition.onerror = () => {
+              recordStatus.textContent = "Mikrofon ruxsati yo'q — matnni qo'lda kiriting";
+            };
+            try {
+              recognition.start();
+            } catch {
+              // Ignore if already started
+            }
+          } else {
+            recordStatus.textContent = "Ovoz aniqlash qo'llanmadi — pastdagi maydonga yozing";
+          }
+        } else {
+          isRecording = false;
+          clearInterval(timerInterval);
+          recordBtn.classList.remove("pulse-ring");
+          recordStatus.textContent = "Yozuv to'xtatildi. Baholash tugmasini bosing.";
+          if (recognition) {
+            try {
+              recognition.stop();
+            } catch {
+              // Ignore
+            }
+          }
+        }
+      });
+
+      document.getElementById("submitSpeakingBtn").addEventListener("click", () => {
+        const spoken = speakingTranscript.value.trim();
+        const words = spoken.split(/\s+/).filter(Boolean);
+        const box = document.getElementById("speakingFeedback");
+        box.classList.remove("hidden");
+
+        if (words.length < 8) {
+          box.className = "rounded-xl p-3.5 text-xs bg-amber-50 text-amber-800 border border-amber-200";
+          box.textContent = "Kamida 2–3 ta to'liq gap ayting yoki yozing (kamida 8 so'z).";
+          return;
+        }
+
+        box.className = "rounded-xl p-3.5 text-xs bg-emerald-50 text-emerald-900 border border-emerald-200 space-y-1";
+        box.innerHTML = `
+          <div><strong>Speaking bahosi:</strong> Yaxshi natija (${words.length} so'z, ${seconds}s)</div>
+          <div>• Ravonlik: Fikr izchil bayon qilingan.</div>
+          <div>• Maslahat: 'First of all' va 'After that' kabi kirish so'zlaridan foydalaning.</div>
+        `;
+        addSkillXP("speaking", 30);
+      });
+    })();
+  </script>
+</body>
+</html>
