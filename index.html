@@ -143,7 +143,7 @@
 
     <!-- 6-Tabs Navigation (GoPrep / Duolingo Tier) -->
     <nav class="grid grid-cols-6 gap-1 bg-slate-200/80 p-1 rounded-2xl mb-3 shadow-inner" aria-label="Navigation">
-      <button type="button" data-tab="listening" class="skill-tab py-2 px-0.5 rounded-xl text-xs font-bold transition-all bg-white text-blue-600 shadow-sm flex flex-col items-center">
+      <button type="button" data-tab="listening" class="skill-tab py-2 px-0.5 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900 flex flex-col items-center">
         <span class="text-sm">🎧</span>
         <span class="text-[9px] mt-0.5 font-bold">Listen</span>
       </button>
@@ -155,9 +155,9 @@
         <span class="text-sm">✍️</span>
         <span class="text-[9px] mt-0.5 font-bold">Write</span>
       </button>
-      <button type="button" data-tab="speaking" class="skill-tab py-2 px-0.5 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900 flex flex-col items-center">
+      <button type="button" data-tab="speaking" class="skill-tab py-2 px-0.5 rounded-xl text-xs font-bold transition-all bg-white text-rose-600 shadow-sm flex flex-col items-center">
         <span class="text-sm">🎙</span>
-        <span class="text-[9px] mt-0.5 font-bold">Speak</span>
+        <span class="text-[9px] mt-0.5 font-bold">Partner</span>
       </button>
       <button type="button" data-tab="vocabulary" class="skill-tab py-2 px-0.5 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900 flex flex-col items-center">
         <span class="text-sm">📚</span>
@@ -172,7 +172,7 @@
     <!-- ========================================================= -->
     <!-- 1. LISTENING PANEL (4 Parts + Multi-Accent UK/US/AU)      -->
     <!-- ========================================================= -->
-    <section id="panel-listening" class="skill-panel space-y-3">
+    <section id="panel-listening" class="skill-panel hidden space-y-3">
       <!-- Listening Part Selector Chips -->
       <div class="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
         <button type="button" class="listen-part-btn active px-3 py-1.5 rounded-xl text-xs font-bold bg-blue-600 text-white whitespace-nowrap shadow-sm" data-part="1">
@@ -356,79 +356,182 @@
     </section>
 
     <!-- ========================================================= -->
-    <!-- 4. SPEAKING PANEL (Part 1, 2 Cue Card Timer, Part 3)       -->
+    <!-- 4. SPEAKING & AI PARTNER PANEL (Voice-to-Voice & Exam)    -->
     <!-- ========================================================= -->
-    <section id="panel-speaking" class="skill-panel hidden space-y-3">
-      <!-- Speaking Part Selector -->
-      <div class="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
-        <button type="button" class="speak-part-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-700 border border-slate-200 whitespace-nowrap" data-spart="1">
-          Part 1: Interview
+    <section id="panel-speaking" class="skill-panel space-y-3">
+
+      <!-- Mode Selector Switch: AI Speaking Partner vs IELTS Mock Exam -->
+      <div class="flex items-center gap-1 bg-slate-200/80 p-1 rounded-2xl">
+        <button type="button" id="speakModePartnerBtn" class="flex-1 py-2 rounded-xl text-xs font-black bg-white text-rose-600 shadow-sm flex items-center justify-center gap-1.5 transition">
+          <span>🗣</span> AI Speaking Partner
         </button>
-        <button type="button" class="speak-part-btn active px-3 py-1.5 rounded-xl text-xs font-bold bg-rose-600 text-white whitespace-nowrap shadow-sm" data-spart="2">
-          Part 2: Cue Card (Taymer bilan)
-        </button>
-        <button type="button" class="speak-part-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-700 border border-slate-200 whitespace-nowrap" data-spart="3">
-          Part 3: Deep Debate
+        <button type="button" id="speakModeExamBtn" class="flex-1 py-2 rounded-xl text-xs font-bold text-slate-600 hover:text-slate-950 flex items-center justify-center gap-1.5 transition">
+          <span>📋</span> IELTS Mock Exam
         </button>
       </div>
 
-      <div class="tg-card rounded-2xl p-4 shadow-sm border border-slate-200/80">
-        <div class="flex items-center justify-between mb-2">
-          <span id="speakingBadge" class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-rose-50 text-rose-700">
-            Speaking Part 2 • Cue Card & Timer
-          </span>
-          <span class="text-xs font-extrabold text-emerald-600">+35 XP</span>
-        </div>
-        <h2 id="speakingTitle" class="text-base font-extrabold mb-1">Describe a Useful Skill You Learned</h2>
-        <div id="speakingPrompt" class="text-xs text-slate-700 bg-rose-50/50 p-3 rounded-xl border border-rose-100 mb-3 space-y-1">
-          <p class="font-bold">You should say:</p>
-          <ul class="list-disc list-inside space-y-0.5 text-[11px] text-slate-600">
-            <li>What skill it is and when you learned it</li>
-            <li>How you learned it and who helped you</li>
-            <li>Why it is useful in your daily or academic life</li>
-            <li>And explain how you felt when you mastered it</li>
-          </ul>
-        </div>
-
-        <!-- Cue Card Preparation Timer (1 min) & Speaking Timer (2 min) -->
-        <div id="cueCardTimerBox" class="bg-slate-50 p-3 rounded-xl border border-slate-200 mb-3 flex items-center justify-between">
-          <div>
-            <div class="text-[10px] font-bold text-slate-500 uppercase">Tayyorgarlik taymeri</div>
-            <div id="prepTimerDisplay" class="text-base font-black text-slate-800">01:00</div>
+      <!-- ================= MODE 1: AI SPEAKING PARTNER & COACH ================= -->
+      <div id="speakingPartnerContainer" class="space-y-3">
+        <!-- Partner Header & Accent Selector -->
+        <div class="tg-card rounded-2xl p-3.5 border border-slate-200/80 shadow-xs flex items-center justify-between">
+          <div class="flex items-center gap-2.5">
+            <div class="relative">
+              <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-rose-500 to-amber-500 text-white font-black flex items-center justify-center text-lg shadow-sm">
+                A
+              </div>
+              <span class="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 border-2 border-white rounded-full"></span>
+            </div>
+            <div>
+              <div class="text-xs font-extrabold text-slate-900 flex items-center gap-1.5">
+                <span>Alex (AI Speaking Coach)</span>
+                <span class="text-[9px] bg-emerald-100 text-emerald-800 px-1.5 py-0.2 rounded-full font-bold">Online</span>
+              </div>
+              <div class="text-[10px] text-slate-500 mt-0.5">Ovozli suhbat, gap to'g'irlash & aksent tahlili</div>
+            </div>
           </div>
-          <button type="button" id="startPrepTimerBtn" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-blue-600 text-white active:scale-95 transition">
-            1 daqiqa tayyorlanish
+          <!-- Partner Voice Accent Selector -->
+          <div class="flex items-center gap-1 bg-slate-100 p-0.5 rounded-xl border border-slate-200">
+            <button type="button" class="sp-accent-btn px-2 py-0.5 rounded-lg text-[10px] font-bold bg-rose-600 text-white shadow-xs" data-spaccent="en-GB">🇬🇧 UK</button>
+            <button type="button" class="sp-accent-btn px-2 py-0.5 rounded-lg text-[10px] font-bold text-slate-600 hover:text-slate-900" data-spaccent="en-US">🇺🇸 US</button>
+            <button type="button" class="sp-accent-btn px-2 py-0.5 rounded-lg text-[10px] font-bold text-slate-600 hover:text-slate-900" data-spaccent="en-AU">🇦🇺 AU</button>
+          </div>
+        </div>
+
+        <!-- Quick Topic Suggestions Chips -->
+        <div class="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
+          <button type="button" class="sp-topic-btn px-2.5 py-1 rounded-xl text-[11px] font-bold bg-white text-slate-700 border border-slate-200 hover:bg-rose-50 whitespace-nowrap shadow-xs" data-topic="Daily Life & Free Time">
+            ☕️ Kundalik Hayot
+          </button>
+          <button type="button" class="sp-topic-btn px-2.5 py-1 rounded-xl text-[11px] font-bold bg-white text-slate-700 border border-slate-200 hover:bg-rose-50 whitespace-nowrap shadow-xs" data-topic="Travel & World Cultures">
+            ✈️ Sayohat & Madaniyat
+          </button>
+          <button type="button" class="sp-topic-btn px-2.5 py-1 rounded-xl text-[11px] font-bold bg-white text-slate-700 border border-slate-200 hover:bg-rose-50 whitespace-nowrap shadow-xs" data-topic="Artificial Intelligence & Future Career">
+            💻 Sun'iy Intellekt
+          </button>
+          <button type="button" class="sp-topic-btn px-2.5 py-1 rounded-xl text-[11px] font-bold bg-white text-slate-700 border border-slate-200 hover:bg-rose-50 whitespace-nowrap shadow-xs" data-topic="IELTS Speaking Part 1 / 2 Preparation">
+            🎯 IELTS Mashqi
           </button>
         </div>
 
-        <!-- Record Button & Audio Player -->
-        <div class="flex flex-col items-center py-4 bg-slate-50 rounded-2xl border border-slate-200/70">
-          <button type="button" id="recordBtn" class="w-16 h-16 rounded-full bg-rose-600 text-white flex items-center justify-center shadow-lg active:scale-95 transition">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z" />
-              <path stroke-linecap="round" stroke-linejoin="round" d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8" />
-            </svg>
-          </button>
-          <div id="recordStatus" class="text-xs font-bold text-slate-700 mt-2.5">Ovoz yozish uchun mikrofonni bosing</div>
-          <div id="speakingTimer" class="text-xs font-mono text-slate-500 mt-0.5 font-bold">00:00</div>
-          <audio id="recordedAudioPlayer" controls class="hidden mt-3 max-w-[260px] h-8"></audio>
+        <!-- Live Dialogue Feed Container -->
+        <div id="partnerChatFeed" class="space-y-3 min-h-[180px] max-h-[380px] overflow-y-auto pr-1">
+          <!-- Initial Welcome Message from Alex -->
+          <div class="tg-card rounded-2xl p-3.5 border border-slate-200/80 shadow-xs space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-rose-600">Alex • AI Speaking Partner</span>
+              <button type="button" class="sp-play-reply-btn text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-lg active:scale-95" data-text="Hello! I am Alex, your IELTS speaking partner. Tap the microphone and speak to me in English about anything! I will transcribe your words, correct your sentences into Band 8, translate them into Uzbek, and coach your accent!">
+                🔊 Eshitish
+              </button>
+            </div>
+            <p class="text-xs text-slate-800 font-medium leading-relaxed">
+              "Hello! I am Alex, your IELTS speaking partner. Tap the microphone below and speak to me in English about anything! I will transcribe your voice, restructure your sentence into Band 8.0+, translate it to Uzbek, check your level, and coach your accent."
+            </p>
+            <div class="text-[11px] text-slate-500 italic bg-slate-50 p-2 rounded-xl border border-slate-100">
+              🇺🇿 <i>"Salom! Men sizning IELTS speaking suhbatdoshingizman. Pastdagi mikrofonni bosing va ingliz tilida gapiring — men nutqingizni matnga o'girib, to'g'ri jumlalar tuzib, o'zbekchaga tarjima qilib beraman va talaffuzingizni to'g'irlayman."</i>
+            </div>
+          </div>
         </div>
 
-        <div class="mt-3">
-          <label for="speakingTranscript" class="block text-[11px] font-bold text-slate-500 mb-1">
-            Yoki nutqingizni matn ko'rinishida yozib tekshiring:
-          </label>
-          <textarea id="speakingTranscript" rows="3" placeholder="I acquired valuable public speaking techniques..." class="w-full rounded-xl border border-slate-300 p-2.5 text-xs bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-rose-400"></textarea>
+        <!-- Voice & Audio Command Input Box -->
+        <div class="tg-card rounded-2xl p-3.5 border border-slate-200 shadow-md space-y-3">
+          <!-- Big Interactive Microphone Button -->
+          <div class="flex flex-col items-center py-2">
+            <button type="button" id="partnerRecordBtn" class="w-16 h-16 rounded-full bg-gradient-to-tr from-rose-600 to-amber-600 text-white flex items-center justify-center shadow-lg active:scale-95 transition">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8" />
+              </svg>
+            </button>
+            <div id="partnerRecordStatus" class="text-xs font-bold text-slate-800 mt-2 text-center">
+              Gapirish uchun mikrofonni bosing
+            </div>
+            <div id="partnerTimer" class="text-[11px] font-mono text-slate-400 font-bold mt-0.5">00:00</div>
+          </div>
+
+          <!-- Text Fallback Input -->
+          <div class="flex items-center gap-1.5 pt-1 border-t border-slate-100">
+            <input type="text" id="partnerTextInput" placeholder="Yoki yozma tarzda gap yuboring..." class="flex-1 px-3 py-2 rounded-xl border border-slate-300 text-xs bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-rose-400" />
+            <button type="button" id="partnerSendTextBtn" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-rose-600 text-white shadow-sm active:scale-95 transition">
+              Yuborish
+            </button>
+          </div>
         </div>
       </div>
 
-      <button type="button" id="submitSpeakingBtn" class="tg-btn-primary w-full py-3.5 rounded-xl text-sm font-bold shadow-md active:scale-[0.99] transition flex items-center justify-center gap-2">
-        <span id="speakingBtnSpinner" class="hidden animate-spin">⏳</span>
-        <span id="speakingBtnText">Gemini 3.8 Flash AI orqali baholash (4 Mezon)</span>
-      </button>
+      <!-- ================= MODE 2: IELTS MOCK EXAM MODE ================= -->
+      <div id="speakingExamContainer" class="hidden space-y-3">
+        <!-- Speaking Part Selector -->
+        <div class="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
+          <button type="button" class="speak-part-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-700 border border-slate-200 whitespace-nowrap" data-spart="1">
+            Part 1: Interview
+          </button>
+          <button type="button" class="speak-part-btn active px-3 py-1.5 rounded-xl text-xs font-bold bg-rose-600 text-white whitespace-nowrap shadow-sm" data-spart="2">
+            Part 2: Cue Card (Taymer bilan)
+          </button>
+          <button type="button" class="speak-part-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-700 border border-slate-200 whitespace-nowrap" data-spart="3">
+            Part 3: Deep Debate
+          </button>
+        </div>
 
-      <!-- Gemini AI Speaking Results Card -->
-      <div id="speakingFeedback" class="hidden tg-card rounded-2xl p-4 border border-rose-200/80 shadow space-y-3"></div>
+        <div class="tg-card rounded-2xl p-4 shadow-sm border border-slate-200/80">
+          <div class="flex items-center justify-between mb-2">
+            <span id="speakingBadge" class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-rose-50 text-rose-700">
+              Speaking Part 2 • Cue Card & Timer
+            </span>
+            <span class="text-xs font-extrabold text-emerald-600">+35 XP</span>
+          </div>
+          <h2 id="speakingTitle" class="text-base font-extrabold mb-1">Describe a Useful Skill You Learned</h2>
+          <div id="speakingPrompt" class="text-xs text-slate-700 bg-rose-50/50 p-3 rounded-xl border border-rose-100 mb-3 space-y-1">
+            <p class="font-bold">You should say:</p>
+            <ul class="list-disc list-inside space-y-0.5 text-[11px] text-slate-600">
+              <li>What skill it is and when you learned it</li>
+              <li>How you learned it and who helped you</li>
+              <li>Why it is useful in your daily or academic life</li>
+              <li>And explain how you felt when you mastered it</li>
+            </ul>
+          </div>
+
+          <!-- Cue Card Preparation Timer (1 min) & Speaking Timer (2 min) -->
+          <div id="cueCardTimerBox" class="bg-slate-50 p-3 rounded-xl border border-slate-200 mb-3 flex items-center justify-between">
+            <div>
+              <div class="text-[10px] font-bold text-slate-500 uppercase">Tayyorgarlik taymeri</div>
+              <div id="prepTimerDisplay" class="text-base font-black text-slate-800">01:00</div>
+            </div>
+            <button type="button" id="startPrepTimerBtn" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-blue-600 text-white active:scale-95 transition">
+              1 daqiqa tayyorlanish
+            </button>
+          </div>
+
+          <!-- Record Button & Audio Player -->
+          <div class="flex flex-col items-center py-4 bg-slate-50 rounded-2xl border border-slate-200/70">
+            <button type="button" id="recordBtn" class="w-16 h-16 rounded-full bg-rose-600 text-white flex items-center justify-center shadow-lg active:scale-95 transition">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8" />
+              </svg>
+            </button>
+            <div id="recordStatus" class="text-xs font-bold text-slate-700 mt-2.5">Ovoz yozish uchun mikrofonni bosing</div>
+            <div id="speakingTimer" class="text-xs font-mono text-slate-500 mt-0.5 font-bold">00:00</div>
+            <audio id="recordedAudioPlayer" controls class="hidden mt-3 max-w-[260px] h-8"></audio>
+          </div>
+
+          <div class="mt-3">
+            <label for="speakingTranscript" class="block text-[11px] font-bold text-slate-500 mb-1">
+              Yoki nutqingizni matn ko'rinishida yozib tekshiring:
+            </label>
+            <textarea id="speakingTranscript" rows="3" placeholder="I acquired valuable public speaking techniques..." class="w-full rounded-xl border border-slate-300 p-2.5 text-xs bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-rose-400"></textarea>
+          </div>
+        </div>
+
+        <button type="button" id="submitSpeakingBtn" class="tg-btn-primary w-full py-3.5 rounded-xl text-sm font-bold shadow-md active:scale-[0.99] transition flex items-center justify-center gap-2">
+          <span id="speakingBtnSpinner" class="hidden animate-spin">⏳</span>
+          <span id="speakingBtnText">Gemini 3.8 Flash AI orqali baholash (4 Mezon)</span>
+        </button>
+
+        <!-- Gemini AI Speaking Results Card -->
+        <div id="speakingFeedback" class="hidden tg-card rounded-2xl p-4 border border-rose-200/80 shadow space-y-3"></div>
+      </div>
+
     </section>
 
     <!-- ========================================================= -->
@@ -634,6 +737,7 @@
       let xp = parseInt(localStorage.getItem('es_xp') || '180', 10);
       let streak = parseInt(localStorage.getItem('es_streak') || '4', 10);
       let currentAccent = 'en-GB';
+      let partnerAccent = 'en-GB';
       let currentRate = 0.95;
 
       function updateStats(addedXp) {
@@ -675,10 +779,8 @@
         utterance.rate = rate;
         utterance.pitch = 1.0;
 
-        // Choose the highest quality natural voice matching the language code
         if (synthVoices.length > 0) {
           const matchingVoices = synthVoices.filter(v => v.lang.toLowerCase().replace('_', '-').startsWith(lang.toLowerCase().slice(0, 5)));
-          // Prefer 'Natural' or 'Google' or 'Online' voices
           const preferredVoice = matchingVoices.find(v => /natural|google|premium|samantha|karen|libby|george/i.test(v.name)) || matchingVoices[0];
           if (preferredVoice) utterance.voice = preferredVoice;
         }
@@ -702,7 +804,7 @@
           tabs.forEach((t) => {
             t.className = 'skill-tab py-2 px-0.5 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900 flex flex-col items-center';
           });
-          tab.className = 'skill-tab py-2 px-0.5 rounded-xl text-xs font-bold transition-all bg-white text-blue-600 shadow-sm flex flex-col items-center';
+          tab.className = 'skill-tab py-2 px-0.5 rounded-xl text-xs font-bold transition-all bg-white text-rose-600 shadow-sm flex flex-col items-center';
 
           panels.forEach((p) => p.classList.add('hidden'));
           const pTarget = document.getElementById('panel-' + target);
@@ -780,7 +882,7 @@
 
         const optContainer = document.getElementById('listeningOptionsContainer');
         optContainer.innerHTML = '';
-        d.options.forEach((opt, idx) => {
+        d.options.forEach((opt) => {
           const lbl = document.createElement('label');
           lbl.className = 'flex items-center gap-2.5 p-3 rounded-xl border border-slate-200 bg-slate-50 hover:bg-blue-50 cursor-pointer transition';
           lbl.innerHTML = `
@@ -805,7 +907,6 @@
         });
       });
 
-      // Accent Switcher for Listening
       document.querySelectorAll('.accent-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           haptic('impact');
@@ -817,12 +918,10 @@
         });
       });
 
-      // Speed Buttons
       document.getElementById('speedSlowBtn').addEventListener('click', () => { currentRate = 0.8; haptic('impact'); });
       document.getElementById('speedNormalBtn').addEventListener('click', () => { currentRate = 1.0; haptic('impact'); });
       document.getElementById('speedFastBtn').addEventListener('click', () => { currentRate = 1.2; haptic('impact'); });
 
-      // Play Audio Button
       let isListeningAudioPlaying = false;
       const playAudioBtn = document.getElementById('playAudioBtn');
       playAudioBtn.addEventListener('click', () => {
@@ -933,7 +1032,6 @@
           optContainer.appendChild(lbl);
         });
 
-        // Attach word click listeners
         document.querySelectorAll('.vocab-word').forEach(el => {
           el.addEventListener('click', () => {
             haptic('impact');
@@ -1112,8 +1210,262 @@
       });
 
       // -------------------------------------------------------------
-      // 4. SPEAKING WITH CUE CARD PREP TIMER & GEMINI 3.8 FLASH
+      // 4. SPEAKING & AI SPEAKING PARTNER WITH ACCENT COACH
       // -------------------------------------------------------------
+      // Mode Switcher: Partner vs Exam
+      const speakModePartnerBtn = document.getElementById('speakModePartnerBtn');
+      const speakModeExamBtn = document.getElementById('speakModeExamBtn');
+      const partnerContainer = document.getElementById('speakingPartnerContainer');
+      const examContainer = document.getElementById('speakingExamContainer');
+
+      speakModePartnerBtn.addEventListener('click', () => {
+        haptic('impact');
+        speakModePartnerBtn.className = 'flex-1 py-2 rounded-xl text-xs font-black bg-white text-rose-600 shadow-sm flex items-center justify-center gap-1.5 transition';
+        speakModeExamBtn.className = 'flex-1 py-2 rounded-xl text-xs font-bold text-slate-600 hover:text-slate-950 flex items-center justify-center gap-1.5 transition';
+        partnerContainer.classList.remove('hidden');
+        examContainer.classList.add('hidden');
+      });
+
+      speakModeExamBtn.addEventListener('click', () => {
+        haptic('impact');
+        speakModeExamBtn.className = 'flex-1 py-2 rounded-xl text-xs font-black bg-white text-rose-600 shadow-sm flex items-center justify-center gap-1.5 transition';
+        speakModePartnerBtn.className = 'flex-1 py-2 rounded-xl text-xs font-bold text-slate-600 hover:text-slate-950 flex items-center justify-center gap-1.5 transition';
+        examContainer.classList.remove('hidden');
+        partnerContainer.classList.add('hidden');
+      });
+
+      // Partner Accent Switcher
+      document.querySelectorAll('.sp-accent-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          haptic('impact');
+          document.querySelectorAll('.sp-accent-btn').forEach(b => {
+            b.className = 'sp-accent-btn px-2 py-0.5 rounded-lg text-[10px] font-bold text-slate-600 hover:text-slate-900';
+          });
+          btn.className = 'sp-accent-btn px-2 py-0.5 rounded-lg text-[10px] font-bold bg-rose-600 text-white shadow-xs';
+          partnerAccent = btn.getAttribute('data-spaccent');
+        });
+      });
+
+      let currentPartnerTopic = "General Daily Conversation";
+      document.querySelectorAll('.sp-topic-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          haptic('impact');
+          document.querySelectorAll('.sp-topic-btn').forEach(b => {
+            b.className = 'sp-topic-btn px-2.5 py-1 rounded-xl text-[11px] font-bold bg-white text-slate-700 border border-slate-200 hover:bg-rose-50 whitespace-nowrap shadow-xs';
+          });
+          btn.className = 'sp-topic-btn px-2.5 py-1 rounded-xl text-[11px] font-bold bg-rose-600 text-white border border-rose-600 whitespace-nowrap shadow-xs';
+          currentPartnerTopic = btn.getAttribute('data-topic');
+          appendPartnerSystemMessage(`Mavzu tanlandi: <b>${currentPartnerTopic}</b>. Mikrofonni bosing va fikringizni ayting!`);
+        });
+      });
+
+      function appendPartnerSystemMessage(msgHtml) {
+        const feed = document.getElementById('partnerChatFeed');
+        const d = document.createElement('div');
+        d.className = 'text-center text-[10px] text-slate-500 bg-slate-100 py-1 px-3 rounded-full mx-auto w-fit font-medium';
+        d.innerHTML = msgHtml;
+        feed.appendChild(d);
+        feed.scrollTop = feed.scrollHeight;
+      }
+
+      function appendPartnerTurnResult(data) {
+        const feed = document.getElementById('partnerChatFeed');
+
+        // User speech card with correction, translation, level and accent diagnosis
+        const userCard = document.createElement('div');
+        userCard.className = 'tg-card rounded-2xl p-3.5 border border-blue-200 bg-gradient-to-br from-white to-blue-50/40 shadow-xs space-y-2';
+
+        const words = (data.accent_coach && data.accent_coach.target_words) || [];
+        let accentTipsHtml = '';
+        if (words.length > 0) {
+          accentTipsHtml = words.map(w => `
+            <div class="text-[11px] bg-rose-50 p-2 rounded-lg border border-rose-100 text-rose-900 mt-1">
+              • <b>${w.word}</b> <span class="font-mono text-[10px]">${w.ipa_correct || ''}</span>: ${w.tip_uz || ''}
+            </div>
+          `).join('');
+        }
+
+        userCard.innerHTML = `
+          <div class="flex items-center justify-between pb-1 border-b border-slate-100">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-blue-700 flex items-center gap-1">
+              <span>🎙</span> Siz aytgan jumla
+            </span>
+            <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
+              🎖 ${data.speaking_level || 'B2 • IELTS 6.5'}
+            </span>
+          </div>
+
+          <div class="text-xs font-medium text-slate-800 italic">
+            "${data.user_transcript || ''}"
+          </div>
+
+          <div class="text-[11px] text-slate-600 bg-slate-50 p-2 rounded-xl border border-slate-100">
+            🇺🇿 <b>Tarjimasi:</b> ${data.uzbek_translation_user || ''}
+          </div>
+
+          <div class="text-xs text-emerald-900 bg-emerald-50/80 p-2.5 rounded-xl border border-emerald-200">
+            ✨ <b>Band 7.5+ To'g'ri ifoda:</b><br />
+            <span class="font-bold">${data.corrected_sentence || ''}</span>
+          </div>
+
+          <div class="text-[11px] text-slate-600">
+            🔍 <b>Grammatika izohi:</b> ${data.grammar_analysis_uz || 'Gap tuzilishi yaxshi.'}
+          </div>
+
+          ${accentTipsHtml ? `
+            <div class="pt-1">
+              <span class="text-[10px] font-bold text-rose-700 uppercase tracking-wider">🎯 Aksent & Talaffuz tuzatishi:</span>
+              ${accentTipsHtml}
+              <div class="text-[10px] text-slate-500 mt-1 italic">${(data.accent_coach && data.accent_coach.intonation_tip_uz) || ''}</div>
+            </div>
+          ` : ''}
+        `;
+        feed.appendChild(userCard);
+
+        // Alex (Partner) Response Card
+        const aiCard = document.createElement('div');
+        aiCard.className = 'tg-card rounded-2xl p-3.5 border border-rose-200 bg-gradient-to-br from-white to-rose-50/30 shadow-xs space-y-2';
+
+        aiCard.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-rose-700">Alex • Speaking Partner</span>
+            <button type="button" class="sp-dynamic-play-btn text-xs font-bold text-rose-700 bg-rose-100 px-2 py-0.5 rounded-lg active:scale-95 shadow-xs flex items-center gap-1">
+              <span>🔊</span> Eshitish
+            </button>
+          </div>
+          <div class="text-xs font-bold text-slate-900 leading-relaxed">
+            "${data.partner_reply_en || ''}"
+          </div>
+          <div class="text-[11px] text-slate-600 italic bg-white p-2 rounded-xl border border-rose-100">
+            🇺🇿 <i>"${data.partner_reply_uz || ''}"</i>
+          </div>
+        `;
+        feed.appendChild(aiCard);
+        feed.scrollTop = feed.scrollHeight;
+
+        // Auto speak partner reply out loud in chosen accent
+        if (data.partner_reply_en) {
+          speakText(data.partner_reply_en, partnerAccent);
+        }
+
+        aiCard.querySelector('.sp-dynamic-play-btn').onclick = () => {
+          haptic('impact');
+          speakText(data.partner_reply_en, partnerAccent);
+        };
+
+        updateStats(30);
+      }
+
+      // Initial welcome message audio button
+      document.querySelectorAll('.sp-play-reply-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          haptic('impact');
+          speakText(btn.getAttribute('data-text'), partnerAccent);
+        });
+      });
+
+      // Partner MediaRecorder
+      let partnerRecorder = null;
+      let partnerChunks = [];
+      let isPartnerRecording = false;
+      let partnerSeconds = 0;
+      let partnerTimerInterval = null;
+
+      const pRecordBtn = document.getElementById('partnerRecordBtn');
+      const pRecordStatus = document.getElementById('partnerRecordStatus');
+      const pTimer = document.getElementById('partnerTimer');
+
+      pRecordBtn.addEventListener('click', async () => {
+        haptic('impact');
+        if (!isPartnerRecording) {
+          try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            partnerRecorder = new MediaRecorder(stream);
+            partnerChunks = [];
+
+            partnerRecorder.ondataavailable = (e) => {
+              if (e.data.size > 0) partnerChunks.push(e.data);
+            };
+
+            partnerRecorder.onstop = async () => {
+              const audioBlob = new Blob(partnerChunks, { type: 'audio/webm' });
+              pRecordStatus.textContent = "AI tahlil qilmoqda va javob tayyorlamoqda...";
+
+              const formData = new FormData();
+              formData.append('audio', audioBlob, 'speaking_turn.webm');
+              formData.append('topic', currentPartnerTopic);
+
+              try {
+                const res = await fetch('/api/speaking/partner_audio', {
+                  method: 'POST',
+                  headers: { 'x-telegram-init-data': (tg && tg.initData) || '' },
+                  body: formData
+                });
+                const data = await res.json();
+                pRecordStatus.textContent = "Gapirish uchun mikrofonni bosing";
+                appendPartnerTurnResult(data);
+                haptic('success');
+              } catch (err) {
+                pRecordStatus.textContent = "Xatolik: Tahlil qilib bo'lmadi.";
+                haptic('error');
+              }
+            };
+
+            partnerRecorder.start();
+            isPartnerRecording = true;
+            partnerSeconds = 0;
+            pRecordBtn.classList.add('pulse-ring');
+            pRecordStatus.textContent = "Eshityapman... Fikringizni ayting";
+
+            partnerTimerInterval = setInterval(() => {
+              partnerSeconds++;
+              const mm = String(Math.floor(partnerSeconds / 60)).padStart(2, '0');
+              const ss = String(partnerSeconds % 60).padStart(2, '0');
+              pTimer.textContent = `${mm}:${ss}`;
+            }, 1000);
+
+          } catch (e) {
+            pRecordStatus.textContent = "Mikrofon ruxsati berilmadi. Matn orqali yozing.";
+          }
+        } else {
+          isPartnerRecording = false;
+          clearInterval(partnerTimerInterval);
+          pRecordBtn.classList.remove('pulse-ring');
+          if (partnerRecorder && partnerRecorder.state !== 'inactive') {
+            partnerRecorder.stop();
+          }
+        }
+      });
+
+      // Text Input send button
+      document.getElementById('partnerSendTextBtn').addEventListener('click', async () => {
+        const input = document.getElementById('partnerTextInput');
+        const text = input.value.trim();
+        if (!text) return;
+        haptic('impact');
+        input.value = '';
+        pRecordStatus.textContent = "AI tahlil qilmoqda...";
+
+        try {
+          const res = await fetch('/api/speaking/partner_text', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              user_text: text,
+              topic: currentPartnerTopic
+            })
+          });
+          const data = await res.json();
+          pRecordStatus.textContent = "Gapirish uchun mikrofonni bosing";
+          appendPartnerTurnResult(data);
+          haptic('success');
+        } catch (err) {
+          pRecordStatus.textContent = "Xatolik yuz berdi.";
+          haptic('error');
+        }
+      });
+
+      // Mode 2 (Exam Mode) Logic
       let prepSeconds = 60;
       let prepTimerInterval = null;
       document.getElementById('startPrepTimerBtn').addEventListener('click', () => {
@@ -1346,7 +1698,6 @@
               <div class="text-[11px] text-slate-500 italic bg-slate-50 p-2 rounded-lg border border-slate-100">
                 "${item.ex}"
               </div>
-              <!-- 3 Accents Audio Controls -->
               <div class="flex items-center justify-between pt-1 border-t border-slate-100">
                 <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Aksentlar:</span>
                 <div class="flex items-center gap-1.5">
@@ -1359,7 +1710,6 @@
             container.appendChild(card);
           });
 
-          // Attach Accent buttons
           container.querySelectorAll('.vocab-acc-btn').forEach(b => {
             b.addEventListener('click', () => {
               haptic('impact');
@@ -1371,7 +1721,6 @@
         }
       }
 
-      // Search Input
       const searchInput = document.getElementById('vocabSearchInput');
       const clearSearchBtn = document.getElementById('vocabClearSearch');
 
@@ -1392,7 +1741,6 @@
         renderVocabList();
       });
 
-      // Filter Chips
       document.querySelectorAll('.vfilter-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           haptic('impact');
@@ -1405,7 +1753,6 @@
         });
       });
 
-      // Gemini AI 50,000+ Word Lookup Trigger
       document.getElementById('triggerAiVocabSearchBtn').addEventListener('click', async () => {
         haptic('impact');
         const word = activeVocabSearch;
@@ -1483,7 +1830,6 @@
         loadFlashcard(fcIndex + 1);
       });
 
-      // Mode Switcher Buttons
       document.getElementById('vocabModeListBtn').addEventListener('click', () => {
         haptic('impact');
         document.getElementById('vocabModeListBtn').className = 'px-2.5 py-1 rounded-lg text-xs font-bold bg-white text-blue-600 shadow-xs';
@@ -1501,7 +1847,6 @@
         loadFlashcard(0);
       });
 
-      // Initial Render
       renderVocabList();
 
     })();

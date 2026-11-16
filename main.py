@@ -2,11 +2,12 @@
 English 4-Skills Telegram Mini App & AI IELTS Backend
 Features:
 1. Serves the Telegram Mini App Frontend (HTML/JS) directly at "/"
-2. Telegram Bot with Mini App button and Direct Voice Message IELTS Evaluator
-3. Gemini 3.8 Flash 4-Criteria IELTS Speaking & Writing Evaluation APIs
-4. Gemini 3.8 Flash 50,000+ Vocabulary AI Lookup API (CEFR, IELTS Band, Uzbek Meaning, Accents)
-5. Telegram initData HMAC-SHA256 Security Validation
-6. PWA Manifest, Service Worker, and Icon Routes for standalone App / PWABuilder
+2. AI Speaking Partner & Accent Coach (Voice-to-Voice, Grammar Fixer, Translation, Level Diagnosis)
+3. Telegram Bot with Mini App button and Direct Voice Message AI Speaking Partner
+4. Gemini 3.8 Flash 4-Criteria IELTS Speaking & Writing Evaluation APIs
+5. Gemini 3.8 Flash 50,000+ Vocabulary AI Lookup API (CEFR, IELTS Band, Uzbek Meaning, Accents)
+6. Telegram initData HMAC-SHA256 Security Validation
+7. PWA Manifest, Service Worker, and Icon Routes for standalone App / PWABuilder
 """
 
 import asyncio
@@ -39,6 +40,9 @@ MODEL_NAME = os.getenv("MODEL_NAME", "gemini-3.8-flash")
 
 gemini_client = genai.Client(api_key=GEMINI_API_KEY) if GEMINI_API_KEY else None
 
+# -------------------------------------------------------------
+# IELTS Prompts
+# -------------------------------------------------------------
 SPEAKING_IELTS_PROMPT = """
 You are a certified IELTS Speaking examiner coaching an Uzbek learner.
 Listen carefully to the English audio and evaluate it strictly across the 4 official IELTS Speaking criteria.
@@ -72,6 +76,43 @@ Return ONLY valid JSON with these exact keys:
   ],
   "corrected_version": "Natural, Band 7.5+ grammatically accurate English version of the speaker's answer",
   "actionable_tip_uz": "Keyingi urinishda ballni +0.5 ga oshirish uchun 1 ta aniq tavsiya (o'zbek tilida)"
+}
+"""
+
+SPEAKING_PARTNER_PROMPT = """
+You are "Alex", an elite IELTS Speaking Coach and friendly native English speaking partner talking with an Uzbek English learner.
+Your missions:
+1. Listen to or read what the user said in English (even if imperfect or beginner).
+2. Transcribe accurately what the user said in English ("user_transcript").
+3. Restructure and correct their sentence into a grammatically flawless, natural, Band 7.5-8.5 English sentence ("corrected_sentence").
+4. Translate what the user said into Uzbek ("uzbek_translation_user").
+5. Explain grammar/structure errors in Uzbek clearly ("grammar_analysis_uz").
+6. Assess their current Speaking level: CEFR (A1, A2, B1, B2, C1, C2) and estimated IELTS Band (e.g. "B2 • IELTS 6.5") ("speaking_level").
+7. Accent & Pronunciation Coach ("accent_coach"):
+   - Identify words the learner likely mispronounces, giving their correct IPA transcription and practical phonetic tip in Uzbek.
+   - Give 1 actionable intonation/rhythm tip in Uzbek.
+8. Respond naturally in friendly English (2-3 sentences) to sustain an engaging two-way conversation, ending with a compelling question ("partner_reply_en").
+9. Translate your conversational reply into Uzbek ("partner_reply_uz").
+
+Return ONLY valid JSON with this exact structure:
+{
+  "user_transcript": "Transcribed English words",
+  "corrected_sentence": "Natural, grammatically polished Band 7.5+ version",
+  "uzbek_translation_user": "Foydalanuvchi aytgan gapning aniq o'zbekcha tarjimasi",
+  "grammar_analysis_uz": "Tuzilishdagi xatoliklar va to'g'irlash tushuntirishi",
+  "speaking_level": "B2 • IELTS 6.5",
+  "accent_coach": {
+    "target_words": [
+      {
+        "word": "comfortable",
+        "ipa_correct": "/ˈkʌm.fə.tə.bəl/",
+        "tip_uz": "Odatda 'kom-for-teybl' deb xato aytiladi; to'g'ri talaffuzi 3 bo'g'in: 'KUMF-tuh-bul'."
+      }
+    ],
+    "intonation_tip_uz": "Savol berganda gap oxirida ohangni ko'taring, xotirjam va erkin nafas oling."
+  },
+  "partner_reply_en": "That sounds fascinating! Have you always enjoyed that, or did you start recently?",
+  "partner_reply_uz": "Bu juda qiziq! Bu mashg'ulotni doim yoqtirganmisiz yoki yaqinda boshladingizmi?"
 }
 """
 
@@ -137,7 +178,7 @@ Return ONLY valid JSON matching this exact structure:
 
 def analyze_speaking_with_gemini(audio_bytes: bytes, mime_type: str = "audio/ogg") -> dict:
     if not gemini_client:
-        raise ValueError("GEMINI_API_KEY sozlanmagan! Iltimos, .env faylida GEMINI_API_KEY ni ko'rsating.")
+        raise ValueError("GEMINI_API_KEY sozlanmagan!")
     response = gemini_client.models.generate_content(
         model=MODEL_NAME,
         contents=[
@@ -151,9 +192,32 @@ def analyze_speaking_with_gemini(audio_bytes: bytes, mime_type: str = "audio/ogg
     )
     return json.loads(response.text)
 
+def run_speaking_partner_turn(audio_bytes: bytes = None, user_text: str = None, mime_type: str = "audio/webm", context: str = "") -> dict:
+    if not gemini_client:
+        raise ValueError("GEMINI_API_KEY sozlanmagan!")
+
+    system_instruction = f"{SPEAKING_PARTNER_PROMPT}\nConversation Topic/Context: {context or 'General English / IELTS Speaking Practice'}"
+
+    contents = []
+    if audio_bytes:
+        contents.append(genai_types.Part.from_bytes(data=audio_bytes, mime_type=mime_type))
+        contents.append(system_instruction)
+    else:
+        contents.append(f"{system_instruction}\nUser English Input:\n{user_text}")
+
+    response = gemini_client.models.generate_content(
+        model=MODEL_NAME,
+        contents=contents,
+        config=genai_types.GenerateContentConfig(
+            response_mime_type="application/json",
+            temperature=0.3,
+        ),
+    )
+    return json.loads(response.text)
+
 def analyze_writing_with_gemini(topic: str, essay: str) -> dict:
     if not gemini_client:
-        raise ValueError("GEMINI_API_KEY sozlanmagan! Iltimos, .env faylida GEMINI_API_KEY ni ko'rsating.")
+        raise ValueError("GEMINI_API_KEY sozlanmagan!")
     prompt = f"{WRITING_IELTS_PROMPT}\n\nTopic: {topic}\n\nStudent Essay:\n{essay}"
     response = gemini_client.models.generate_content(
         model=MODEL_NAME,
@@ -207,7 +271,7 @@ def find_file(filename: str) -> Path:
 # ---------------------------------------------------------
 # FastAPI App
 # ---------------------------------------------------------
-app = FastAPI(title="English 4-Skills & IELTS AI Platform", version="2.0.0")
+app = FastAPI(title="English 4-Skills & IELTS AI Platform", version="2.1.0")
 
 app.add_middleware(
     CORSMiddleware,
@@ -219,7 +283,6 @@ app.add_middleware(
 
 @app.get("/", response_class=HTMLResponse)
 async def serve_mini_app():
-    """Telegram Mini App Frontendini (PWA) to'g'ridan-to'g'ri taqdim etadi."""
     index_path = find_file("index.html")
     if index_path.exists():
         return HTMLResponse(content=index_path.read_text(encoding="utf-8"), media_type="text/html; charset=utf-8")
@@ -247,7 +310,7 @@ async def get_vocabulary_data():
 
 @app.get("/api/health")
 async def health_check():
-    return {"status": "ok", "app": "EnglishScore & IELTS AI Platform", "version": "2.0.0"}
+    return {"status": "ok", "app": "EnglishScore & IELTS AI Platform", "version": "2.1.0"}
 
 @app.get("/api/me")
 async def get_current_user(x_telegram_init_data: str = Header(...)):
@@ -270,6 +333,33 @@ class WritingAnalyzeRequest(BaseModel):
 
 class VocabularyLookupRequest(BaseModel):
     word: str
+
+class SpeakingPartnerTextRequest(BaseModel):
+    user_text: str
+    topic: str = "General Conversation"
+
+# AI Speaking Partner Endpoints
+@app.post("/api/speaking/partner_audio")
+async def speaking_partner_audio_endpoint(
+    audio: UploadFile = File(...),
+    topic: str = "General Conversation",
+    x_telegram_init_data: str = Header(default=""),
+):
+    """Audio orqali AI Speaking Partner bilan muloqot: transkript, gap tuzish, tarjima, daraja va aksent tahlili."""
+    audio_bytes = await audio.read()
+    mime_type = audio.content_type or "audio/webm"
+    try:
+        return run_speaking_partner_turn(audio_bytes=audio_bytes, mime_type=mime_type, context=topic)
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=str(exc))
+
+@app.post("/api/speaking/partner_text")
+async def speaking_partner_text_endpoint(payload: SpeakingPartnerTextRequest):
+    """Matn orqali AI Speaking Partner bilan muloqot."""
+    try:
+        return run_speaking_partner_turn(user_text=payload.user_text, context=payload.topic)
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=str(exc))
 
 @app.post("/api/speaking/analyze_text")
 async def analyze_speaking_text_endpoint(
@@ -317,7 +407,6 @@ async def analyze_speaking_endpoint(
 
 @app.post("/api/vocabulary/ai_lookup")
 async def lookup_vocabulary_endpoint(payload: VocabularyLookupRequest):
-    """50,000+ so'zli ingliz tili lug'atini Gemini 3.8 Flash orqali real-time tahlil qilish."""
     if not gemini_client:
         raise HTTPException(status_code=500, detail="GEMINI_API_KEY sozlanmagan")
     prompt = f"{VOCABULARY_LOOKUP_PROMPT}\n\nTarget Word or Idiom: {payload.word.strip()}"
@@ -348,7 +437,7 @@ async def get_leaderboard():
 
 
 # ---------------------------------------------------------
-# Telegram Bot (aiogram 3.x)
+# Telegram Bot (aiogram 3.x) with AI Speaking Partner Voice Bot
 # ---------------------------------------------------------
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()
@@ -360,7 +449,7 @@ async def cmd_start(message: types.Message):
         inline_keyboard=[
             [
                 InlineKeyboardButton(
-                    text="🚀 IELTS & 4-Skills GoPrep Platform",
+                    text="🚀 IELTS GoPrep & AI Speaking Partner",
                     web_app=WebAppInfo(url=app_url),
                 )
             ]
@@ -368,58 +457,53 @@ async def cmd_start(message: types.Message):
     )
     await message.answer(
         "👋 <b>Xush kelibsiz!</b>\n\n"
-        "GoPrep IELTS darajasidagi bepul va universal o'quv platformasi:\n"
-        "• 🎧 <b>Listening:</b> 4 ta Part, 3 xil aksent (🇬🇧 Britaniya, 🇺🇸 AQSH, 🇦🇺 Avstraliya)\n"
-        "• 📖 <b>Reading:</b> 0 dan Band 9 gacha akademik matnlar va interaktiv lug'at\n"
-        "• ✍️ <b>Writing:</b> Task 1 & 2 esse tahlili (Gemini AI 3.8 Flash)\n"
-        "• 🎙 <b>Speaking:</b> Part 1, 2 (taymerli Cue Card), 3 ovozli AI imtihon\n"
-        "• 📚 <b>Vocabulary:</b> 50,000+ so'zli multi-aksentli audio lug'at va Flashcardlar!\n\n"
-        "🎙 <i>Menga istalgan inglizcha ovozli xabar (voice message) yuboring — darhol 4 mezon bo'yicha tahlil qilib beraman!</i>",
+        "Men sizning shaxsiy <b>AI Speaking Partner & Coach</b>ingizman!\n\n"
+        "🎙 <b>Qanday ishlayman?</b>\n"
+        "Menga istalgan mavzuda inglizcha ovozli xabar (voice message) yuboring:\n"
+        "1. 📝 Nutqingizni matnga o'girib beraman (Transkript);\n"
+        "2. ✨ Gaplaringizni to'g'ri va Band 7.5+ darajada tuzib beraman;\n"
+        "3. 🇺🇿 O'zbek tiliga aniq tarjima qilib beraman;\n"
+        "4. 📊 Speaking darajangizni aniqlayman (A1..C2 / Band 5.0..9.0);\n"
+        "5. 🎯 Aksent va talaffuz xatolarini tushuntirib to'g'rilayman;\n"
+        "6. 🗣 Sizga do'stona javob qaytarib, jonli suhbatni davom ettiraman!\n\n"
+        "<i>Tugmani bosib to'liq Mini Appni ochishingiz ham mumkin:</i>",
         reply_markup=keyboard,
         parse_mode="HTML",
     )
 
 @dp.message(F.voice)
 async def handle_voice_message(message: types.Message):
-    wait_msg = await message.answer("⏳ Audiongiz IELTS mezonlari bo'yicha tahlil qilinmoqda...")
+    wait_msg = await message.answer("⏳ <i>Ovozingiz tinglanmoqda va AI Speaking Partner tomonidan tahlil qilinmoqda...</i>", parse_mode="HTML")
 
     buffer = io.BytesIO()
     await bot.download(message.voice, destination=buffer)
     audio_bytes = buffer.getvalue()
 
     try:
-        result = analyze_speaking_with_gemini(audio_bytes, mime_type="audio/ogg")
+        result = run_speaking_partner_turn(audio_bytes=audio_bytes, mime_type="audio/ogg")
     except Exception as exc:
         await wait_msg.edit_text(f"Tahlil qilishda xatolik yuz berdi: {exc}")
         return
 
-    c = result.get("criteria", {})
-    fc = c.get("fluency_and_coherence", {})
-    lr = c.get("lexical_resource", {})
-    gr = c.get("grammatical_range_and_accuracy", {})
-    pr = c.get("pronunciation", {})
-
-    mistakes = result.get("mistakes") or []
-    mistakes_text = "\n".join(f"• {m}" for m in mistakes) if mistakes else "• Jiddiy grammatik xato topilmadi!"
-
-    upgrades = result.get("upgraded_vocabulary") or []
-    upgrades_text = "\n".join(f"• {u}" for u in upgrades) if upgrades else "• Lug'at darajasi yaxshi."
+    accent_coach = result.get("accent_coach") or {}
+    target_words = accent_coach.get("target_words") or []
+    words_tips = ""
+    for tw in target_words:
+        words_tips += f"\n  • <b>{tw.get('word', '')}</b> <code>{tw.get('ipa_correct', '')}</code>: {tw.get('tip_uz', '')}"
 
     reply_text = (
-        f"🎯 <b>Taxminiy IELTS Band:</b> {result.get('estimated_overall_band', '—')}\n\n"
-        f"📊 <b>4 ta mezon bo'yicha ballar:</b>\n"
-        f"• Fluency & Coherence: <b>{fc.get('band', '—')}</b> — {fc.get('comment_uz', '')}\n"
-        f"• Lexical Resource: <b>{lr.get('band', '—')}</b> — {lr.get('comment_uz', '')}\n"
-        f"• Grammar: <b>{gr.get('band', '—')}</b> — {gr.get('comment_uz', '')}\n"
-        f"• Pronunciation: <b>{pr.get('band', '—')}</b> — {pr.get('comment_uz', '')}\n\n"
-        f"🎙 <b>Siz aytgan matn:</b>\n<i>\"{result.get('transcript', '')}\"</i>\n\n"
-        f"🔍 <b>Xatolar:</b>\n{mistakes_text}\n\n"
-        f"✨ <b>So'zlarni kuchaytirish (Band 7.5+):</b>\n{upgrades_text}\n\n"
-        f"✅ <b>To'g'ri va tabiiy versiya:</b>\n{result.get('corrected_version', '')}\n\n"
-        f"💡 <b>Tavsiya:</b> <i>{result.get('actionable_tip_uz', '')}</i>"
+        f"🎙 <b>Siz aytgan matn:</b>\n<i>\"{result.get('user_transcript', '')}\"</i>\n\n"
+        f"🇺🇿 <b>O'zbekcha tarjimasi:</b>\n{result.get('uzbek_translation_user', '')}\n\n"
+        f"✨ <b>Tuzatilgan mukammal jumla (Band 7.5+):</b>\n<b>{result.get('corrected_sentence', '')}</b>\n\n"
+        f"📊 <b>Aniqlangan Speaking darajasi:</b> 🎖 <b>{result.get('speaking_level', 'B2')}</b>\n\n"
+        f"🔍 <b>Grammatik tahlil:</b>\n{result.get('grammar_analysis_uz', 'Gap tuzilishi yaxshi.')}\n\n"
+        f"🎯 <b>Aksent va Talaffuz tavsiyasi:</b>{words_tips}\n"
+        f"💡 <i>{accent_coach.get('intonation_tip_uz', 'Ritm va intonatsiya me\'yorda.')}</i>\n\n"
+        f"────────────────────\n"
+        f"🤖 <b>AI Suhbatdosh javobi:</b>\n\"{result.get('partner_reply_en', '')}\"\n\n"
+        f"🇺🇿 <i>\"{result.get('partner_reply_uz', '')}\"</i>"
     )
     await wait_msg.edit_text(reply_text, parse_mode="HTML")
-
 
 async def run_bot():
     await dp.start_polling(bot)
