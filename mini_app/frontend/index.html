@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>English 4-Skills Telegram Mini App</title>
+  <title>EnglishScore With Me - 4-Skills & AI IELTS</title>
   <link rel="manifest" href="/manifest.json" />
   <meta name="theme-color" content="#2563eb" />
   <link rel="apple-touch-icon" href="/icon-192.png" />
@@ -11,10 +11,10 @@
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     body {
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
       background-color: var(--tg-theme-bg-color, #f8fafc);
       color: var(--tg-theme-text-color, #0f172a);
       -webkit-tap-highlight-color: transparent;
@@ -23,222 +23,344 @@
       background-color: var(--tg-theme-secondary-bg-color, #ffffff);
     }
     .tg-btn {
-      background-color: var(--tg-theme-button-color, #2563eb);
-      color: var(--tg-theme-button-text-color, #ffffff);
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      color: #ffffff;
     }
     .pulse-ring {
       animation: pulseRing 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
     }
     @keyframes pulseRing {
       0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6); }
-      70% { transform: scale(1); box-shadow: 0 0 0 14px rgba(239, 68, 68, 0); }
+      70% { transform: scale(1.05); box-shadow: 0 0 0 16px rgba(239, 68, 68, 0); }
       100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+    }
+    .xp-float {
+      animation: floatUp 1.2s ease-out forwards;
+    }
+    @keyframes floatUp {
+      0% { opacity: 0; transform: translateY(10px); }
+      30% { opacity: 1; transform: translateY(-5px); }
+      100% { opacity: 0; transform: translateY(-25px); }
+    }
+    .score-badge {
+      background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
     }
   </style>
 </head>
-<body class="min-h-screen pb-24">
-  <div class="max-w-md mx-auto px-4 pt-4">
-    <!-- Top Header: Profile, XP, Streak & UI Language -->
-    <header class="tg-card rounded-2xl p-4 shadow-sm border border-slate-200/70 mb-4">
+<body class="min-h-screen pb-24 select-none">
+  <div class="max-w-md mx-auto px-4 pt-3">
+
+    <!-- Top Header: Profile, Level, XP, Streak -->
+    <header class="tg-card rounded-2xl p-4 shadow-sm border border-slate-200/80 mb-3">
       <div class="flex items-center justify-between gap-2">
         <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-base" id="avatarInitial">R</div>
+          <div class="w-11 h-11 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 text-white font-extrabold flex items-center justify-center text-lg shadow-sm" id="avatarInitial">
+            E
+          </div>
           <div>
-            <div class="font-bold text-sm leading-tight" id="userName">Salom, O'quvchi</div>
-            <div class="text-xs text-slate-500 mt-0.5" id="dailyGoalText">Kunlik maqsad: 4 ko'nikma</div>
+            <div class="font-bold text-sm leading-tight flex items-center gap-1.5" id="userName">
+              <span>O'quvchi</span>
+              <span class="text-[10px] bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full font-bold">B2 Goal</span>
+            </div>
+            <div class="text-[11px] text-slate-500 mt-0.5" id="userSubtitle">EnglishScore & IELTS Preparation</div>
           </div>
         </div>
         <div class="flex items-center gap-2">
-          <select id="uiLangSelect" aria-label="Interfeys tili" class="text-xs font-semibold bg-slate-100 text-slate-700 rounded-lg px-2 py-1.5 border border-slate-200 focus:outline-none">
-            <option value="uz">UZ</option>
-            <option value="en">EN</option>
-            <option value="ru">RU</option>
+          <select id="uiLangSelect" aria-label="Til" class="text-xs font-bold bg-slate-100 text-slate-700 rounded-lg px-2.5 py-1.5 border border-slate-200 focus:outline-none">
+            <option value="uz">🇺🇿 UZ</option>
+            <option value="en">🇬🇧 EN</option>
+            <option value="ru">🇷🇺 RU</option>
           </select>
         </div>
       </div>
 
+      <!-- Stats Grid -->
       <div class="grid grid-cols-3 gap-2 mt-3 pt-3 border-t border-slate-100">
-        <div class="bg-amber-50 rounded-xl px-3 py-2 text-center">
-          <div class="text-[11px] font-medium text-amber-700" data-i18n="streakLabel">Streak</div>
-          <div class="text-sm font-extrabold text-amber-900" id="streakValue">3 kun</div>
+        <div class="bg-amber-50/80 rounded-xl px-2.5 py-2 text-center border border-amber-100">
+          <div class="text-[11px] font-semibold text-amber-700 flex items-center justify-center gap-1">
+            <span>🔥</span> Streak
+          </div>
+          <div class="text-sm font-extrabold text-amber-900" id="streakValue">4 kun</div>
         </div>
-        <div class="bg-blue-50 rounded-xl px-3 py-2 text-center">
-          <div class="text-[11px] font-medium text-blue-700" data-i18n="xpLabel">Jami XP</div>
-          <div class="text-sm font-extrabold text-blue-900" id="xpValue">120 XP</div>
+        <div class="bg-blue-50/80 rounded-xl px-2.5 py-2 text-center border border-blue-100 relative">
+          <div class="text-[11px] font-semibold text-blue-700 flex items-center justify-center gap-1">
+            <span>⚡️</span> Jami XP
+          </div>
+          <div class="text-sm font-extrabold text-blue-900" id="xpValue">180 XP</div>
+          <div id="floatingXp" class="hidden absolute -top-3 right-2 text-xs font-black text-emerald-600 bg-emerald-100 px-1.5 py-0.5 rounded-full xp-float">+30 XP</div>
         </div>
-        <div class="bg-emerald-50 rounded-xl px-3 py-2 text-center">
-          <div class="text-[11px] font-medium text-emerald-700" data-i18n="doneLabel">Bajarildi</div>
-          <div class="text-sm font-extrabold text-emerald-900" id="completedValue">0 / 4</div>
+        <div class="bg-emerald-50/80 rounded-xl px-2.5 py-2 text-center border border-emerald-100">
+          <div class="text-[11px] font-semibold text-emerald-700 flex items-center justify-center gap-1">
+            <span>🎯</span> Bajarildi
+          </div>
+          <div class="text-sm font-extrabold text-emerald-900" id="completedValue">1 / 4</div>
         </div>
       </div>
     </header>
 
-    <!-- 4-Skill Navigation Tabs -->
-    <nav class="grid grid-cols-4 gap-1.5 bg-slate-200/70 p-1 rounded-2xl mb-4" aria-label="Ko'nikmalar">
-      <button type="button" data-tab="listening" class="skill-tab py-2 px-1 rounded-xl text-xs font-semibold transition-all bg-white text-blue-600 shadow-sm">
-        Listening
+    <!-- 5-Tabs Navigation -->
+    <nav class="grid grid-cols-5 gap-1 bg-slate-200/70 p-1 rounded-2xl mb-4" aria-label="Navigation">
+      <button type="button" data-tab="listening" class="skill-tab py-2 px-1 rounded-xl text-xs font-bold transition-all bg-white text-blue-600 shadow-sm flex flex-col items-center">
+        <span class="text-sm">🎧</span>
+        <span class="text-[10px] mt-0.5">Listen</span>
       </button>
-      <button type="button" data-tab="reading" class="skill-tab py-2 px-1 rounded-xl text-xs font-semibold transition-all text-slate-600 hover:text-slate-900">
-        Reading
+      <button type="button" data-tab="reading" class="skill-tab py-2 px-1 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900 flex flex-col items-center">
+        <span class="text-sm">📖</span>
+        <span class="text-[10px] mt-0.5">Read</span>
       </button>
-      <button type="button" data-tab="writing" class="skill-tab py-2 px-1 rounded-xl text-xs font-semibold transition-all text-slate-600 hover:text-slate-900">
-        Writing
+      <button type="button" data-tab="writing" class="skill-tab py-2 px-1 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900 flex flex-col items-center">
+        <span class="text-sm">✍️</span>
+        <span class="text-[10px] mt-0.5">Write</span>
       </button>
-      <button type="button" data-tab="speaking" class="skill-tab py-2 px-1 rounded-xl text-xs font-semibold transition-all text-slate-600 hover:text-slate-900">
-        Speaking
+      <button type="button" data-tab="speaking" class="skill-tab py-2 px-1 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900 flex flex-col items-center">
+        <span class="text-sm">🎙</span>
+        <span class="text-[10px] mt-0.5">Speak</span>
+      </button>
+      <button type="button" data-tab="leaderboard" class="skill-tab py-2 px-1 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900 flex flex-col items-center">
+        <span class="text-sm">🏆</span>
+        <span class="text-[10px] mt-0.5">Reyting</span>
       </button>
     </nav>
 
-    <!-- Toast Notification -->
-    <div id="toast" class="hidden fixed bottom-5 left-1/2 -translate-x-1/2 z-50 bg-slate-900 text-white text-xs font-semibold px-4 py-2.5 rounded-full shadow-lg"></div>
-
     <!-- 1. LISTENING PANEL -->
-    <section id="panel-listening" class="skill-panel space-y-4">
-      <div class="tg-card rounded-2xl p-4 shadow-sm border border-slate-200/70">
+    <section id="panel-listening" class="skill-panel space-y-3">
+      <div class="tg-card rounded-2xl p-4 shadow-sm border border-slate-200/80">
         <div class="flex items-center justify-between mb-2">
-          <span class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700">Listening • B1</span>
-          <span class="text-xs font-semibold text-emerald-600">+25 XP</span>
+          <span class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700">Listening Practice • B2</span>
+          <span class="text-xs font-extrabold text-emerald-600">+25 XP</span>
         </div>
-        <h2 class="text-base font-bold mb-1" id="listeningTitle">Airport Announcement & Coffee Shop</h2>
-        <p class="text-xs text-slate-500 mb-4" data-i18n="listeningDesc">Audioni tinglang va quyidagi 3 ta savolga javob bering.</p>
+        <h2 class="text-base font-extrabold mb-1">University Library & Registration</h2>
+        <p class="text-xs text-slate-500 mb-3">Audioni tinglang va savolga to'g'ri javob bering.</p>
 
         <!-- Audio Player Controls -->
-        <div class="bg-slate-50 rounded-xl p-3 border border-slate-200/70">
+        <div class="bg-gradient-to-r from-slate-50 to-blue-50/40 rounded-xl p-3 border border-slate-200/80">
           <div class="flex items-center justify-between gap-2">
-            <button type="button" id="playAudioBtn" class="tg-btn flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold shadow-sm active:scale-95 transition">
+            <button type="button" id="playAudioBtn" class="tg-btn flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold shadow active:scale-95 transition">
               <span id="playAudioIcon">▶</span>
-              <span id="playAudioText">Tinglash</span>
+              <span id="playAudioText">Audioni tinglash</span>
             </button>
             <div class="flex items-center gap-1.5">
-              <button type="button" id="speedSlowBtn" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-700">0.8x</button>
-              <button type="button" id="speedNormalBtn" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-blue-600 text-white border border-blue-600">1.0x</button>
-              <button type="button" id="toggleTranscriptBtn" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-700">Matn</button>
+              <button type="button" id="speedSlowBtn" class="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-white border border-slate-200 text-slate-700">0.8x</button>
+              <button type="button" id="speedNormalBtn" class="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-blue-600 text-white border border-blue-600">1.0x</button>
+              <button type="button" id="toggleTranscriptBtn" class="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-white border border-slate-200 text-slate-700">Matn</button>
             </div>
           </div>
-          <div id="audioStatus" class="text-[11px] text-slate-500 mt-2">Tayyor: tinglash uchun tugmani bosing</div>
-          <div id="listeningTranscript" class="hidden mt-3 pt-3 border-t border-slate-200 text-xs text-slate-700 leading-relaxed">
-            "Good morning, passengers on Flight TK402 to Istanbul. Due to light morning fog, boarding will begin at Gate B12 twenty minutes later than scheduled, at 9:40 AM. Meanwhile, complimentary coffee and pastries are available at the Sky Lounge near Gate B10."
+          <div id="listeningTranscript" class="hidden mt-3 pt-3 border-t border-slate-200 text-xs text-slate-700 leading-relaxed font-medium">
+            "Welcome to the university orientation session. Today, students must register their student cards at the main library before 4 PM. If you miss this deadline, your campus Wi-Fi access will be delayed until Monday."
           </div>
         </div>
       </div>
 
-      <div id="listeningQuestions" class="space-y-3"></div>
-      <button type="button" id="submitListeningBtn" class="tg-btn w-full py-3 rounded-xl text-sm font-bold shadow-sm active:scale-[0.99] transition">
-        Javoblarni tekshirish
+      <!-- Question -->
+      <div class="tg-card rounded-2xl p-4 shadow-sm border border-slate-200/80 space-y-3">
+        <div class="text-xs font-bold text-slate-900">
+          ❓ What will happen if students miss the 4 PM registration deadline?
+        </div>
+        <div class="space-y-2 text-xs">
+          <label class="flex items-center gap-2.5 p-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-blue-50 cursor-pointer">
+            <input type="radio" name="listen-q" value="0" class="text-blue-600 focus:ring-blue-500" />
+            <span>They must pay an orientation fee</span>
+          </label>
+          <label class="flex items-center gap-2.5 p-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-blue-50 cursor-pointer">
+            <input type="radio" name="listen-q" value="1" class="text-blue-600 focus:ring-blue-500" />
+            <span>Campus Wi-Fi access will be delayed until Monday</span>
+          </label>
+          <label class="flex items-center gap-2.5 p-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-blue-50 cursor-pointer">
+            <input type="radio" name="listen-q" value="2" class="text-blue-600 focus:ring-blue-500" />
+            <span>They cannot enter the library</span>
+          </label>
+        </div>
+      </div>
+
+      <button type="button" id="submitListeningBtn" class="tg-btn w-full py-3 rounded-xl text-sm font-bold shadow active:scale-[0.99] transition">
+        Javobni tekshirish
       </button>
       <div id="listeningResult" class="hidden rounded-xl p-3 text-xs font-semibold"></div>
     </section>
 
     <!-- 2. READING PANEL -->
-    <section id="panel-reading" class="skill-panel hidden space-y-4">
-      <div class="tg-card rounded-2xl p-4 shadow-sm border border-slate-200/70">
+    <section id="panel-reading" class="skill-panel hidden space-y-3">
+      <div class="tg-card rounded-2xl p-4 shadow-sm border border-slate-200/80">
         <div class="flex items-center justify-between mb-2">
-          <span class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700">Reading • B1-B2</span>
-          <span class="text-xs font-semibold text-emerald-600">+25 XP</span>
+          <span class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700">Reading Passage • B2</span>
+          <span class="text-xs font-extrabold text-emerald-600">+25 XP</span>
         </div>
-        <h2 class="text-base font-bold mb-2">Why Micro-Learning Works Better</h2>
-        <p class="text-[11px] text-slate-500 mb-3">Ajratilgan so'zlarni ustiga bosib tarjimasini ko'ring:</p>
-        <div class="text-sm leading-relaxed text-slate-700 bg-slate-50 p-3.5 rounded-xl border border-slate-200/70 space-y-2">
+        <h2 class="text-base font-extrabold mb-1">Neuroplasticity and Fluency</h2>
+        <p class="text-[11px] text-slate-500 mb-2">Ajratilgan so'zlarni bosing — tarjimasi chiqadi:</p>
+        <div class="text-xs leading-relaxed text-slate-700 bg-slate-50 p-3.5 rounded-xl border border-slate-200/80 space-y-2">
           <p>
-            Research in cognitive psychology shows that studying for 10 to 15 minutes every day is far more
-            <button type="button" class="vocab-word underline decoration-dotted decoration-blue-500 font-semibold text-blue-700" data-meaning="effective — samarali">effective</button>
-            than cramming for three hours once a week.
+            Research in cognitive neuroscience proves that studying for 15 to 20 minutes daily is vastly
+            <button type="button" class="vocab-word underline decoration-dotted decoration-blue-600 font-bold text-blue-700" data-meaning="superior — ancha ustun, samaraliroq">superior</button>
+            to weekend cramming.
           </p>
           <p>
-            When you space out your practice, your brain has time to
-            <button type="button" class="vocab-word underline decoration-dotted decoration-blue-500 font-semibold text-blue-700" data-meaning="consolidate — mustahkamlamoq">consolidate</button>
-            new vocabulary into long-term memory. Even short daily sessions build lasting
-            <button type="button" class="vocab-word underline decoration-dotted decoration-blue-500 font-semibold text-blue-700" data-meaning="fluency — ravonlik">fluency</button>.
+            When practice is spaced out, the brain forms durable
+            <button type="button" class="vocab-word underline decoration-dotted decoration-blue-600 font-bold text-blue-700" data-meaning="neural pathways — yangi neyron yo'llari / aloqalari">neural pathways</button>,
+            solidifying vocabulary and achieving spontaneous
+            <button type="button" class="vocab-word underline decoration-dotted decoration-blue-600 font-bold text-blue-700" data-meaning="fluency — nutq ravonligi">fluency</button>.
           </p>
         </div>
-        <div id="vocabBox" class="hidden mt-3 px-3 py-2 rounded-xl bg-blue-50 text-blue-900 text-xs font-medium"></div>
+        <div id="vocabBox" class="hidden mt-2.5 px-3 py-2 rounded-xl bg-blue-50 text-blue-900 text-xs font-semibold border border-blue-200"></div>
       </div>
 
-      <div id="readingQuestions" class="space-y-3"></div>
-      <button type="button" id="submitReadingBtn" class="tg-btn w-full py-3 rounded-xl text-sm font-bold shadow-sm active:scale-[0.99] transition">
+      <!-- Question -->
+      <div class="tg-card rounded-2xl p-4 shadow-sm border border-slate-200/80 space-y-2 text-xs">
+        <div class="font-bold text-slate-900">
+          ❓ True or False: Daily spaced study sessions build stronger neural pathways than weekend cramming?
+        </div>
+        <div class="flex gap-3 pt-1">
+          <label class="flex-1 flex items-center justify-center gap-2 p-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-emerald-50 cursor-pointer font-bold">
+            <input type="radio" name="read-q" value="true" /> True (To'g'ri)
+          </label>
+          <label class="flex-1 flex items-center justify-center gap-2 p-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-rose-50 cursor-pointer font-bold">
+            <input type="radio" name="read-q" value="false" /> False (Noto'g'ri)
+          </label>
+        </div>
+      </div>
+
+      <button type="button" id="submitReadingBtn" class="tg-btn w-full py-3 rounded-xl text-sm font-bold shadow active:scale-[0.99] transition">
         Reading natijasini tekshirish
       </button>
       <div id="readingResult" class="hidden rounded-xl p-3 text-xs font-semibold"></div>
     </section>
 
-    <!-- 3. WRITING PANEL -->
-    <section id="panel-writing" class="skill-panel hidden space-y-4">
-      <div class="tg-card rounded-2xl p-4 shadow-sm border border-slate-200/70">
+    <!-- 3. WRITING PANEL WITH GEMINI 3.8 FLASH -->
+    <section id="panel-writing" class="skill-panel hidden space-y-3">
+      <div class="tg-card rounded-2xl p-4 shadow-sm border border-slate-200/80">
         <div class="flex items-center justify-between mb-2">
-          <span class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-amber-50 text-amber-700">Writing • Task</span>
-          <span class="text-xs font-semibold text-emerald-600">+30 XP</span>
+          <span class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-amber-50 text-amber-700">Writing Task • Gemini AI</span>
+          <span class="text-xs font-extrabold text-emerald-600">+30 XP</span>
         </div>
-        <h2 class="text-base font-bold mb-1">Mini Essay (30–80 words)</h2>
-        <p class="text-xs text-slate-600 mb-3">
-          <strong>Mavzu:</strong> "Do you prefer learning English with an app or in a traditional classroom? Why?"
+        <h2 class="text-base font-extrabold mb-1" id="writingTopicTitle">Higher Education Funding</h2>
+        <p class="text-xs text-slate-600 mb-2 leading-relaxed" id="writingPromptText">
+          <strong>Topic:</strong> "Some people believe that university education should be completely free for everyone. To what extent do you agree or disagree?"
         </p>
 
-        <div class="flex flex-wrap gap-1.5 mb-3">
-          <span class="text-[11px] px-2 py-1 rounded-md bg-slate-100 text-slate-700 font-medium">In my opinion</span>
-          <span class="text-[11px] px-2 py-1 rounded-md bg-slate-100 text-slate-700 font-medium">However</span>
-          <span class="text-[11px] px-2 py-1 rounded-md bg-slate-100 text-slate-700 font-medium">For example</span>
-          <span class="text-[11px] px-2 py-1 rounded-md bg-slate-100 text-slate-700 font-medium">Because</span>
-        </div>
-
-        <textarea id="writingInput" rows="5" placeholder="Ingliz tilida javobingizni yozing..." class="w-full rounded-xl border border-slate-300 p-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-slate-900"></textarea>
+        <textarea id="writingInput" rows="5" placeholder="Write your essay in English here..." class="w-full rounded-xl border border-slate-300 p-3 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-slate-900 leading-relaxed"></textarea>
 
         <div class="flex items-center justify-between text-xs text-slate-500 mt-2">
-          <span id="wordCount">0 so'z (maqsad: 30+)</span>
-          <button type="button" id="showModelWritingBtn" class="text-blue-600 font-semibold hover:underline">Namuna javob</button>
+          <span id="wordCount">0 words (target: 30+)</span>
+          <button type="button" id="showModelWritingBtn" class="text-blue-600 font-bold hover:underline">Band 7.5+ Namuna</button>
         </div>
 
         <div id="modelWritingBox" class="hidden mt-3 p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700 leading-relaxed">
-          <strong>Model Answer:</strong> In my opinion, learning English with a mobile app is more convenient because I can practice every day for 10 minutes. However, a classroom is also helpful for group discussions. For example, apps are great for vocabulary, while teachers give instant speaking feedback.
+          <strong>Band 7.5+ Model:</strong> "While free higher education fosters social equity, a shared-cost model is significantly more viable for ensuring top-tier academic standards and world-class university resources."
         </div>
       </div>
 
-      <button type="button" id="submitWritingBtn" class="tg-btn w-full py-3 rounded-xl text-sm font-bold shadow-sm active:scale-[0.99] transition">
-        Matnni tahlil qilish va topshirish
+      <button type="button" id="submitWritingBtn" class="tg-btn w-full py-3.5 rounded-xl text-sm font-bold shadow active:scale-[0.99] transition flex items-center justify-center gap-2">
+        <span id="writingBtnSpinner" class="hidden animate-spin">⏳</span>
+        <span id="writingBtnText">Gemini AI orqali tekshirish (IELTS 4 Criteria)</span>
       </button>
-      <div id="writingFeedback" class="hidden rounded-xl p-3.5 text-xs space-y-1.5"></div>
+
+      <!-- Gemini AI Writing Results Card -->
+      <div id="writingFeedback" class="hidden tg-card rounded-2xl p-4 border border-blue-200/80 shadow space-y-3"></div>
     </section>
 
-    <!-- 4. SPEAKING PANEL -->
-    <section id="panel-speaking" class="skill-panel hidden space-y-4">
-      <div class="tg-card rounded-2xl p-4 shadow-sm border border-slate-200/70">
+    <!-- 4. SPEAKING PANEL WITH GEMINI 3.8 FLASH AUDIO -->
+    <section id="panel-speaking" class="skill-panel hidden space-y-3">
+      <div class="tg-card rounded-2xl p-4 shadow-sm border border-slate-200/80">
         <div class="flex items-center justify-between mb-2">
-          <span class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-rose-50 text-rose-700">Speaking • Part 1</span>
-          <span class="text-xs font-semibold text-emerald-600">+30 XP</span>
+          <span class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-rose-50 text-rose-700">Speaking Part 1 & 2 • AI Examiner</span>
+          <span class="text-xs font-extrabold text-emerald-600">+30 XP</span>
         </div>
-        <h2 class="text-base font-bold mb-1">Describe Your Daily Routine</h2>
-        <p class="text-xs text-slate-600 mb-3">
-          Quyidagi savolga 20–45 soniya davomida ingliz tilida javob bering:
+        <h2 class="text-base font-extrabold mb-1" id="speakingTopicTitle">Describe an Useful Skill</h2>
+        <p class="text-xs text-slate-600 mb-3" id="speakingPromptText">
+          "Describe a skill you learned recently that you find very useful. Explain why you learned it and how it helps you."
         </p>
-        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/70 text-sm font-semibold text-slate-800 mb-4">
-          "What do you usually do in the morning to stay productive?"
-        </div>
 
-        <div class="text-xs text-slate-500 mb-3">
-          <strong>Foydali iboralar:</strong> <em>First of all... / After that... / It helps me focus...</em>
-        </div>
-
-        <div class="flex flex-col items-center py-3">
-          <button type="button" id="recordBtn" class="w-16 h-16 rounded-full bg-rose-500 text-white flex items-center justify-center shadow-md active:scale-95 transition">
+        <!-- Record Button & Audio Visualizer -->
+        <div class="flex flex-col items-center py-4 bg-slate-50 rounded-2xl border border-slate-200/70">
+          <button type="button" id="recordBtn" class="w-16 h-16 rounded-full bg-rose-600 text-white flex items-center justify-center shadow-lg active:scale-95 transition">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z" />
               <path stroke-linecap="round" stroke-linejoin="round" d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8" />
             </svg>
           </button>
-          <div id="recordStatus" class="text-xs font-semibold text-slate-600 mt-3">Gapirish uchun mikrofonni bosing</div>
-          <div id="speakingTimer" class="text-xs font-mono text-slate-400 mt-1">00:00</div>
+          <div id="recordStatus" class="text-xs font-bold text-slate-700 mt-2.5">Ovoz yozish uchun mikrofonni bosing</div>
+          <div id="speakingTimer" class="text-xs font-mono text-slate-500 mt-0.5 font-bold">00:00</div>
+          <audio id="recordedAudioPlayer" controls class="hidden mt-3 max-w-[240px] h-8"></audio>
         </div>
 
         <div class="mt-3">
-          <label for="speakingTranscript" class="block text-[11px] font-semibold text-slate-500 mb-1">Sizning nutqingiz (yoki matn ko'rinishida kiriting):</label>
-          <textarea id="speakingTranscript" rows="3" placeholder="Mikrofon ishlamasa, javobingizni shu yerga yozib tekshirishingiz mumkin..." class="w-full rounded-xl border border-slate-300 p-2.5 text-xs bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-rose-400"></textarea>
+          <label for="speakingTranscript" class="block text-[11px] font-bold text-slate-500 mb-1">
+            Yoki nutqingizni matn ko'rinishida yozib tekshiring:
+          </label>
+          <textarea id="speakingTranscript" rows="3" placeholder="I acquired effective public speaking techniques..." class="w-full rounded-xl border border-slate-300 p-2.5 text-xs bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-rose-400"></textarea>
         </div>
       </div>
 
-      <button type="button" id="submitSpeakingBtn" class="tg-btn w-full py-3 rounded-xl text-sm font-bold shadow-sm active:scale-[0.99] transition">
-        Speaking javobini baholash
+      <button type="button" id="submitSpeakingBtn" class="tg-btn w-full py-3.5 rounded-xl text-sm font-bold shadow active:scale-[0.99] transition flex items-center justify-center gap-2">
+        <span id="speakingBtnSpinner" class="hidden animate-spin">⏳</span>
+        <span id="speakingBtnText">Gemini AI orqali baholash (4 Criteria)</span>
       </button>
-      <div id="speakingFeedback" class="hidden rounded-xl p-3.5 text-xs space-y-1"></div>
+
+      <!-- Gemini AI Speaking Results Card -->
+      <div id="speakingFeedback" class="hidden tg-card rounded-2xl p-4 border border-rose-200/80 shadow space-y-3"></div>
     </section>
+
+    <!-- 5. LEADERBOARD PANEL -->
+    <section id="panel-leaderboard" class="skill-panel hidden space-y-3">
+      <div class="tg-card rounded-2xl p-4 shadow-sm border border-slate-200/80">
+        <div class="flex items-center justify-between mb-3">
+          <div>
+            <h2 class="text-base font-extrabold flex items-center gap-1.5">
+              <span>🏆</span> Haftalik Reyting Jadvali
+            </h2>
+            <p class="text-xs text-slate-500">Eng faol ingliz tili o'quvchilari</p>
+          </div>
+          <span class="text-xs font-bold bg-amber-100 text-amber-800 px-2.5 py-1 rounded-full">Gold League</span>
+        </div>
+
+        <div class="space-y-2" id="leaderboardList">
+          <!-- Dynamically populated or static fallback -->
+          <div class="flex items-center justify-between p-3 rounded-xl bg-amber-50/70 border border-amber-200">
+            <div class="flex items-center gap-3">
+              <span class="text-base font-black text-amber-600">1</span>
+              <div>
+                <div class="text-xs font-bold text-slate-900">Azizbek R.</div>
+                <div class="text-[10px] text-amber-700 font-semibold">🔥 IELTS 8.0 • 7 kunlik streak</div>
+              </div>
+            </div>
+            <span class="text-xs font-extrabold text-amber-900">1,450 XP</span>
+          </div>
+
+          <div class="flex items-center justify-between p-3 rounded-xl bg-slate-50 border border-slate-200">
+            <div class="flex items-center gap-3">
+              <span class="text-base font-black text-slate-500">2</span>
+              <div>
+                <div class="text-xs font-bold text-slate-900">Madina K.</div>
+                <div class="text-[10px] text-blue-700 font-semibold">💎 C1 Advanced • 5 kunlik streak</div>
+              </div>
+            </div>
+            <span class="text-xs font-extrabold text-slate-800">1,320 XP</span>
+          </div>
+
+          <div class="flex items-center justify-between p-3 rounded-xl bg-slate-50 border border-slate-200">
+            <div class="flex items-center gap-3">
+              <span class="text-base font-black text-slate-500">3</span>
+              <div>
+                <div class="text-xs font-bold text-slate-900">Jasur T.</div>
+                <div class="text-[10px] text-emerald-700 font-semibold">⚡️ Band 7.5 • 4 kunlik streak</div>
+              </div>
+            </div>
+            <span class="text-xs font-extrabold text-slate-800">1,180 XP</span>
+          </div>
+
+          <div class="flex items-center justify-between p-3 rounded-xl bg-blue-50/60 border border-blue-200">
+            <div class="flex items-center gap-3">
+              <span class="text-base font-black text-blue-600">4</span>
+              <div>
+                <div class="text-xs font-bold text-blue-950">Siz (You)</div>
+                <div class="text-[10px] text-blue-700 font-semibold">🎯 4 kunlik streak</div>
+              </div>
+            </div>
+            <span class="text-xs font-extrabold text-blue-900" id="userRankXp">180 XP</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </div>
 
   <script>
@@ -248,353 +370,373 @@
         tg.ready();
         tg.expand();
         const user = tg.initDataUnsafe && tg.initDataUnsafe.user;
-        if (user && user.first_name) {
-          document.getElementById("userName").textContent = "Salom, " + user.first_name;
-          document.getElementById("avatarInitial").textContent = user.first_name.charAt(0).toUpperCase();
+        if (user) {
+          const name = user.first_name + (user.last_name ? ' ' + user.last_name : '');
+          document.getElementById('userName').firstElementChild.textContent = name;
+          document.getElementById('avatarInitial').textContent = (user.first_name || 'U')[0].toUpperCase();
         }
       }
 
-      // App State
-      let xp = 120;
-      const completedSkills = new Set();
-
-      const i18n = {
-        uz: {
-          streakLabel: "Streak",
-          xpLabel: "Jami XP",
-          doneLabel: "Bajarildi",
-          dailyGoalText: "Kunlik maqsad: 4 ko'nikma",
-          listeningDesc: "Audioni tinglang va quyidagi 3 ta savolga javob bering."
-        },
-        en: {
-          streakLabel: "Streak",
-          xpLabel: "Total XP",
-          doneLabel: "Completed",
-          dailyGoalText: "Daily goal: 4 skills",
-          listeningDesc: "Listen to the audio and answer the 3 questions below."
-        },
-        ru: {
-          streakLabel: "Серия",
-          xpLabel: "Всего XP",
-          doneLabel: "Выполнено",
-          dailyGoalText: "Цель дня: 4 навыка",
-          listeningDesc: "Прослушайте аудио и ответьте на 3 вопроса ниже."
-        }
-      };
-
-      function showToast(msg) {
-        const toast = document.getElementById("toast");
-        toast.textContent = msg;
-        toast.classList.remove("hidden");
-        setTimeout(() => toast.classList.add("hidden"), 2500);
-      }
-
-      function addSkillXP(skillKey, amount) {
-        if (!completedSkills.has(skillKey)) {
-          completedSkills.add(skillKey);
-          xp += amount;
-          document.getElementById("xpValue").textContent = xp + " XP";
-          document.getElementById("completedValue").textContent = completedSkills.size + " / 4";
-          showToast("+" + amount + " XP qo'shildi!");
+      function haptic(type = 'impact') {
+        if (tg && tg.HapticFeedback) {
+          if (type === 'impact') tg.HapticFeedback.impactOccurred('medium');
+          if (type === 'success') tg.HapticFeedback.notificationOccurred('success');
+          if (type === 'error') tg.HapticFeedback.notificationOccurred('error');
         }
       }
 
-      // Language Switcher
-      document.getElementById("uiLangSelect").addEventListener("change", (e) => {
-        const lang = e.target.value;
-        const dict = i18n[lang] || i18n.uz;
-        document.querySelectorAll("[data-i18n]").forEach((el) => {
-          const key = el.getAttribute("data-i18n");
-          if (dict[key]) el.textContent = dict[key];
-        });
-        document.getElementById("dailyGoalText").textContent = dict.dailyGoalText;
-      });
+      // State
+      let xp = parseInt(localStorage.getItem('es_xp') || '180', 10);
+      let streak = parseInt(localStorage.getItem('es_streak') || '4', 10);
+      let completed = 1;
 
-      // Tabs
-      const tabs = document.querySelectorAll(".skill-tab");
-      const panels = document.querySelectorAll(".skill-panel");
+      function updateStats(addedXp) {
+        xp += addedXp;
+        localStorage.setItem('es_xp', xp);
+        document.getElementById('xpValue').textContent = xp + ' XP';
+        document.getElementById('userRankXp').textContent = xp + ' XP';
+
+        const fl = document.getElementById('floatingXp');
+        fl.textContent = `+${addedXp} XP`;
+        fl.classList.remove('hidden');
+        setTimeout(() => fl.classList.add('hidden'), 1200);
+
+        haptic('success');
+      }
+
+      // Tab Switching
+      const tabs = document.querySelectorAll('.skill-tab');
+      const panels = document.querySelectorAll('.skill-panel');
+
       tabs.forEach((tab) => {
-        tab.addEventListener("click", () => {
-          const target = tab.getAttribute("data-tab");
-          tabs.forEach((t) => {
-            t.classList.remove("bg-white", "text-blue-600", "shadow-sm");
-            t.classList.add("text-slate-600");
-          });
-          tab.classList.add("bg-white", "text-blue-600", "shadow-sm");
-          tab.classList.remove("text-slate-600");
+        tab.addEventListener('click', () => {
+          haptic('impact');
+          const target = tab.getAttribute('data-tab');
 
-          panels.forEach((p) => p.classList.add("hidden"));
-          document.getElementById("panel-" + target).classList.remove("hidden");
+          tabs.forEach((t) => {
+            t.className = 'skill-tab py-2 px-1 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900 flex flex-col items-center';
+          });
+          tab.className = 'skill-tab py-2 px-1 rounded-xl text-xs font-bold transition-all bg-white text-blue-600 shadow-sm flex flex-col items-center';
+
+          panels.forEach((p) => p.classList.add('hidden'));
+          const pTarget = document.getElementById('panel-' + target);
+          if (pTarget) pTarget.classList.remove('hidden');
         });
       });
 
       // 1. LISTENING LOGIC
-      const listeningQuiz = [
-        {
-          id: "l1",
-          q: "1. Where is Flight TK402 heading?",
-          options: ["London", "Istanbul", "Dubai"],
-          answer: 1
-        },
-        {
-          id: "l2",
-          q: "2. Why is boarding delayed?",
-          options: ["Technical issue", "Light morning fog", "Late crew"],
-          answer: 1
-        },
-        {
-          id: "l3",
-          q: "3. What time will boarding begin?",
-          options: ["9:20 AM", "9:40 AM", "10:00 AM"],
-          answer: 1
-        }
-      ];
+      let isPlaying = false;
+      const playBtn = document.getElementById('playAudioBtn');
+      const textToSpeak = "Welcome to the university orientation session. Today, students must register their student cards at the main library before 4 PM. If you miss this deadline, your campus Wi-Fi access will be delayed until Monday.";
 
-      function renderQuiz(containerId, items, prefix) {
-        const container = document.getElementById(containerId);
-        container.innerHTML = items.map((item) => `
-          <div class="tg-card rounded-2xl p-3.5 shadow-sm border border-slate-200/70">
-            <div class="text-xs font-bold mb-2.5">${item.q}</div>
-            <div class="space-y-1.5">
-              ${item.options.map((opt, idx) => `
-                <label class="flex items-center gap-2.5 p-2 rounded-xl border border-slate-200/80 text-xs cursor-pointer hover:bg-slate-50">
-                  <input type="radio" name="${prefix}-${item.id}" value="${idx}" class="accent-blue-600" />
-                  <span>${opt}</span>
-                </label>
-              `).join("")}
-            </div>
-          </div>
-        `).join("");
-      }
-
-      renderQuiz("listeningQuestions", listeningQuiz, "list");
-
-      let speechRate = 1.0;
-      const listeningScript = "Good morning, passengers on Flight TK402 to Istanbul. Due to light morning fog, boarding will begin at Gate B12 twenty minutes later than scheduled, at 9:40 AM. Meanwhile, complimentary coffee and pastries are available at the Sky Lounge near Gate B10.";
-
-      document.getElementById("speedSlowBtn").addEventListener("click", () => {
-        speechRate = 0.8;
-        document.getElementById("speedSlowBtn").className = "px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-blue-600 text-white border border-blue-600";
-        document.getElementById("speedNormalBtn").className = "px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-700";
-      });
-
-      document.getElementById("speedNormalBtn").addEventListener("click", () => {
-        speechRate = 1.0;
-        document.getElementById("speedNormalBtn").className = "px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-blue-600 text-white border border-blue-600";
-        document.getElementById("speedSlowBtn").className = "px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-700";
-      });
-
-      document.getElementById("toggleTranscriptBtn").addEventListener("click", () => {
-        document.getElementById("listeningTranscript").classList.toggle("hidden");
-      });
-
-      document.getElementById("playAudioBtn").addEventListener("click", () => {
-        if (!("speechSynthesis" in window)) {
-          document.getElementById("audioStatus").textContent = "Brauzer ovoz chiqarishni qo'llamaydi — 'Matn' tugmasini bosing.";
-          return;
-        }
-        window.speechSynthesis.cancel();
-        const utter = new SpeechSynthesisUtterance(listeningScript);
-        utter.lang = "en-US";
-        utter.rate = speechRate;
-        utter.onstart = () => {
-          document.getElementById("audioStatus").textContent = "Ijro etilmoqda (" + speechRate + "x)...";
-          document.getElementById("playAudioText").textContent = "Qayta tinglash";
-        };
-        utter.onend = () => {
-          document.getElementById("audioStatus").textContent = "Audio tugadi. Savollarga javob bering.";
-        };
-        window.speechSynthesis.speak(utter);
-      });
-
-      document.getElementById("submitListeningBtn").addEventListener("click", () => {
-        let score = 0;
-        listeningQuiz.forEach((item) => {
-          const checked = document.querySelector(`input[name="list-${item.id}"]:checked`);
-          if (checked && Number(checked.value) === item.answer) score++;
-        });
-        const box = document.getElementById("listeningResult");
-        box.classList.remove("hidden");
-        if (score >= 2) {
-          box.className = "rounded-xl p-3 text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200";
-          box.textContent = `Ajoyib! ${score}/3 to'g'ri javob.`;
-          addSkillXP("listening", 25);
+      playBtn.addEventListener('click', () => {
+        haptic('impact');
+        if ('speechSynthesis' in window) {
+          window.speechSynthesis.cancel();
+          const utterance = new SpeechSynthesisUtterance(textToSpeak);
+          utterance.lang = 'en-GB';
+          utterance.rate = 0.95;
+          utterance.onstart = () => {
+            document.getElementById('playAudioIcon').textContent = '⏹';
+            document.getElementById('playAudioText').textContent = 'To\'xtatish';
+          };
+          utterance.onend = () => {
+            document.getElementById('playAudioIcon').textContent = '▶';
+            document.getElementById('playAudioText').textContent = 'Tinglash';
+          };
+          window.speechSynthesis.speak(utterance);
         } else {
-          box.className = "rounded-xl p-3 text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200";
-          box.textContent = `Natija: ${score}/3. Audioni 0.8x tezlikda qayta tinglab ko'ring.`;
+          alert('Brauzeringiz ovoz sintezini qo\'llab-quvvatlamaydi.');
         }
       });
 
-      // 2. READING LOGIC
-      const readingQuiz = [
-        {
-          id: "r1",
-          q: "1. According to the text, how long should daily practice be?",
-          options: ["3 hours once a week", "10–15 minutes daily", "60 minutes daily"],
-          answer: 1
-        },
-        {
-          id: "r2",
-          q: "2. What does spacing out practice help your brain do?",
-          options: ["Forget old words", "Consolidate vocabulary", "Sleep faster"],
-          answer: 1
-        }
-      ];
-
-      renderQuiz("readingQuestions", readingQuiz, "read");
-
-      document.querySelectorAll(".vocab-word").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          const box = document.getElementById("vocabBox");
-          box.textContent = "Lug'at: " + btn.getAttribute("data-meaning");
-          box.classList.remove("hidden");
-        });
+      document.getElementById('toggleTranscriptBtn').addEventListener('click', () => {
+        haptic('impact');
+        document.getElementById('listeningTranscript').classList.toggle('hidden');
       });
 
-      document.getElementById("submitReadingBtn").addEventListener("click", () => {
-        let score = 0;
-        readingQuiz.forEach((item) => {
-          const checked = document.querySelector(`input[name="read-${item.id}"]:checked`);
-          if (checked && Number(checked.value) === item.answer) score++;
-        });
-        const box = document.getElementById("readingResult");
-        box.classList.remove("hidden");
-        if (score === 2) {
-          box.className = "rounded-xl p-3 text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200";
-          box.textContent = "To'g'ri! Barcha Reading savollariga aniq javob berdingiz (2/2).";
-          addSkillXP("reading", 25);
+      document.getElementById('submitListeningBtn').addEventListener('click', () => {
+        const checked = document.querySelector('input[name="listen-q"]:checked');
+        const box = document.getElementById('listeningResult');
+        box.classList.remove('hidden');
+        if (checked && checked.value === '1') {
+          box.className = 'rounded-xl p-3 text-xs font-bold bg-emerald-50 text-emerald-800 border border-emerald-200';
+          box.textContent = "✅ To'g'ri javob! +25 XP qo'shildi.";
+          updateStats(25);
         } else {
-          box.className = "rounded-xl p-3 text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200";
-          box.textContent = `Natija: ${score}/2. Matnni qayta o'qib urinib ko'ring.`;
+          box.className = 'rounded-xl p-3 text-xs font-bold bg-rose-50 text-rose-800 border border-rose-200';
+          box.textContent = "❌ Noto'g'ri. Audioni qayta tinglang (To'g'ri javob: Wi-Fi access delayed until Monday).";
+          haptic('error');
         }
       });
 
-      // 3. WRITING LOGIC
-      const writingInput = document.getElementById("writingInput");
-      writingInput.addEventListener("input", () => {
+      // 2. READING VOCAB WORDS
+      document.querySelectorAll('.vocab-word').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          haptic('impact');
+          const box = document.getElementById('vocabBox');
+          box.classList.remove('hidden');
+          box.textContent = '💡 ' + btn.getAttribute('data-meaning');
+        });
+      });
+
+      document.getElementById('submitReadingBtn').addEventListener('click', () => {
+        const checked = document.querySelector('input[name="read-q"]:checked');
+        const box = document.getElementById('readingResult');
+        box.classList.remove('hidden');
+        if (checked && checked.value === 'true') {
+          box.className = 'rounded-xl p-3 text-xs font-bold bg-emerald-50 text-emerald-800 border border-emerald-200';
+          box.textContent = "✅ To'g'ri! Kundalik 15-20 daqiqa ancha samarali (True). +25 XP qo'shildi.";
+          updateStats(25);
+        } else {
+          box.className = 'rounded-xl p-3 text-xs font-bold bg-rose-50 text-rose-800 border border-rose-200';
+          box.textContent = "❌ Noto'g'ri. Matnda spaced study 'vastly superior' deb aytilgan.";
+          haptic('error');
+        }
+      });
+
+      // 3. WRITING - GEMINI AI INTEGRATION
+      const writingInput = document.getElementById('writingInput');
+      writingInput.addEventListener('input', () => {
         const words = writingInput.value.trim().split(/\s+/).filter(Boolean);
-        document.getElementById("wordCount").textContent = `${words.length} so'z (maqsad: 30+)`;
+        document.getElementById('wordCount').textContent = `${words.length} words (target: 30+)`;
       });
 
-      document.getElementById("showModelWritingBtn").addEventListener("click", () => {
-        document.getElementById("modelWritingBox").classList.toggle("hidden");
+      document.getElementById('showModelWritingBtn').addEventListener('click', () => {
+        haptic('impact');
+        document.getElementById('modelWritingBox').classList.toggle('hidden');
       });
 
-      document.getElementById("submitWritingBtn").addEventListener("click", () => {
+      document.getElementById('submitWritingBtn').addEventListener('click', async () => {
+        haptic('impact');
         const text = writingInput.value.trim();
         const words = text.split(/\s+/).filter(Boolean);
-        const box = document.getElementById("writingFeedback");
-        box.classList.remove("hidden");
+        const box = document.getElementById('writingFeedback');
 
-        if (words.length < 15) {
-          box.className = "rounded-xl p-3.5 text-xs bg-rose-50 text-rose-800 border border-rose-200";
-          box.innerHTML = "<strong>Kamida 15–30 ta so'z yozing.</strong> Hozircha: " + words.length + " so'z.";
+        if (words.length < 10) {
+          box.classList.remove('hidden');
+          box.className = 'rounded-xl p-3.5 text-xs bg-rose-50 text-rose-800 border border-rose-200 font-bold';
+          box.textContent = '⚠️ Iltimos, kamida 15-30 ta so\'z yozing.';
+          haptic('error');
           return;
         }
 
-        const connectors = ["because", "however", "for example", "opinion", "also", "first"];
-        const used = connectors.filter((c) => text.toLowerCase().includes(c));
-        box.className = "rounded-xl p-3.5 text-xs bg-emerald-50 text-emerald-900 border border-emerald-200 space-y-1";
-        box.innerHTML = `
-          <div><strong>Tahlil yakunlandi (${words.length} so'z):</strong></div>
-          <div>• Bog'lovchi so'zlar ishlatilishi: ${used.length > 0 ? used.join(", ") : "Keyingi safar 'However' yoki 'Because' qo'shib ko'ring"}</div>
-          <div>• Tavsiya: Fikringizni bitta aniq misol bilan boyitsangiz, javob yanada kuchliroq chiqadi.</div>
-        `;
-        addSkillXP("writing", 30);
+        const btnSpinner = document.getElementById('writingBtnSpinner');
+        const btnText = document.getElementById('writingBtnText');
+        btnSpinner.classList.remove('hidden');
+        btnText.textContent = 'Gemini AI tahlil qilmoqda...';
+
+        try {
+          const res = await fetch('/api/writing/analyze', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'x-telegram-init-data': (tg && tg.initData) || ''
+            },
+            body: JSON.stringify({
+              topic: "University education: should it be free?",
+              essay: text
+            })
+          });
+
+          const data = await res.json();
+          btnSpinner.classList.add('hidden');
+          btnText.textContent = 'Qayta tekshirish';
+          box.classList.remove('hidden');
+
+          const c = data.criteria || {};
+          box.innerHTML = `
+            <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+              <span class="text-xs font-bold text-slate-700">Estimated Band:</span>
+              <span class="text-base font-extrabold text-blue-600 px-3 py-0.5 rounded-full bg-blue-50 border border-blue-200">
+                Band ${data.estimated_overall_band || 6.5}
+              </span>
+            </div>
+            <div class="grid grid-cols-2 gap-2 text-[11px]">
+              <div class="bg-slate-50 p-2 rounded-lg border border-slate-200">
+                <span class="font-bold text-slate-800">Task Response:</span> ${c.task_response ? c.task_response.band : '6.5'}
+                <div class="text-[10px] text-slate-500 mt-0.5">${c.task_response ? c.task_response.comment_uz : ''}</div>
+              </div>
+              <div class="bg-slate-50 p-2 rounded-lg border border-slate-200">
+                <span class="font-bold text-slate-800">Coherence:</span> ${c.coherence_and_cohesion ? c.coherence_and_cohesion.band : '6.5'}
+                <div class="text-[10px] text-slate-500 mt-0.5">${c.coherence_and_cohesion ? c.coherence_and_cohesion.comment_uz : ''}</div>
+              </div>
+              <div class="bg-slate-50 p-2 rounded-lg border border-slate-200">
+                <span class="font-bold text-slate-800">Lexical:</span> ${c.lexical_resource ? c.lexical_resource.band : '6.5'}
+                <div class="text-[10px] text-slate-500 mt-0.5">${c.lexical_resource ? c.lexical_resource.comment_uz : ''}</div>
+              </div>
+              <div class="bg-slate-50 p-2 rounded-lg border border-slate-200">
+                <span class="font-bold text-slate-800">Grammar:</span> ${c.grammatical_range_and_accuracy ? c.grammatical_range_and_accuracy.band : '6.0'}
+                <div class="text-[10px] text-slate-500 mt-0.5">${c.grammatical_range_and_accuracy ? c.grammatical_range_and_accuracy.comment_uz : ''}</div>
+              </div>
+            </div>
+            <div class="text-xs space-y-1 pt-1">
+              <div class="font-bold text-slate-900">✨ Band 7.5+ To'g'ri versiya:</div>
+              <div class="text-slate-700 bg-emerald-50/70 p-2.5 rounded-xl border border-emerald-200 italic">${data.corrected_version || text}</div>
+              <div class="text-[11px] text-blue-700 font-semibold pt-1">💡 <b>Tavsiya:</b> ${data.actionable_tip_uz || 'Akademik bog\'lovchilarni boyiting.'}</div>
+            </div>
+          `;
+          updateStats(30);
+        } catch (e) {
+          btnSpinner.classList.add('hidden');
+          btnText.textContent = 'Qayta tekshirish';
+          box.classList.remove('hidden');
+          box.innerHTML = `<div class="text-rose-600 font-bold">Xatolik: Tahlil qilib bo'lmadi. Aloqani tekshiring.</div>`;
+          haptic('error');
+        }
       });
 
-      // 4. SPEAKING LOGIC
+      // 4. SPEAKING - MEDIARECORDER + GEMINI AI
+      let mediaRecorder = null;
+      let recordedChunks = [];
+      let recordedBlob = null;
       let isRecording = false;
       let timerInterval = null;
       let seconds = 0;
-      let recognition = null;
 
-      const recordBtn = document.getElementById("recordBtn");
-      const recordStatus = document.getElementById("recordStatus");
-      const speakingTimer = document.getElementById("speakingTimer");
-      const speakingTranscript = document.getElementById("speakingTranscript");
+      const recordBtn = document.getElementById('recordBtn');
+      const recordStatus = document.getElementById('recordStatus');
+      const speakingTimer = document.getElementById('speakingTimer');
+      const recordedAudioPlayer = document.getElementById('recordedAudioPlayer');
 
-      recordBtn.addEventListener("click", () => {
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-
+      recordBtn.addEventListener('click', async () => {
+        haptic('impact');
         if (!isRecording) {
-          isRecording = true;
-          seconds = 0;
-          recordBtn.classList.add("pulse-ring");
-          recordStatus.textContent = "Yozib olinmoqda... To'xtatish uchun yana bosing";
-          timerInterval = setInterval(() => {
-            seconds++;
-            const mm = String(Math.floor(seconds / 60)).padStart(2, "0");
-            const ss = String(seconds % 60).padStart(2, "0");
-            speakingTimer.textContent = `${mm}:${ss}`;
-          }, 1000);
+          try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            mediaRecorder = new MediaRecorder(stream);
+            recordedChunks = [];
 
-          if (SpeechRecognition) {
-            recognition = new SpeechRecognition();
-            recognition.lang = "en-US";
-            recognition.continuous = true;
-            recognition.interimResults = true;
-            recognition.onresult = (event) => {
-              let transcript = "";
-              for (let i = 0; i < event.results.length; i++) {
-                transcript += event.results[i][0].transcript + " ";
-              }
-              speakingTranscript.value = transcript.trim();
+            mediaRecorder.ondataavailable = (e) => {
+              if (e.data.size > 0) recordedChunks.push(e.data);
             };
-            recognition.onerror = () => {
-              recordStatus.textContent = "Mikrofon ruxsati yo'q — matnni qo'lda kiriting";
+
+            mediaRecorder.onstop = () => {
+              recordedBlob = new Blob(recordedChunks, { type: 'audio/webm' });
+              recordedAudioPlayer.src = URL.createObjectURL(recordedBlob);
+              recordedAudioPlayer.classList.remove('hidden');
             };
-            try {
-              recognition.start();
-            } catch {
-              // Ignore if already started
-            }
-          } else {
-            recordStatus.textContent = "Ovoz aniqlash qo'llanmadi — pastdagi maydonga yozing";
+
+            mediaRecorder.start();
+            isRecording = true;
+            seconds = 0;
+            recordBtn.classList.add('pulse-ring');
+            recordStatus.textContent = "Yozib olinmoqda... To'xtatish uchun bosing";
+
+            timerInterval = setInterval(() => {
+              seconds++;
+              const mm = String(Math.floor(seconds / 60)).padStart(2, '0');
+              const ss = String(seconds % 60).padStart(2, '0');
+              speakingTimer.textContent = `${mm}:${ss}`;
+            }, 1000);
+          } catch (err) {
+            recordStatus.textContent = "Mikrofon ruxsati berilmadi. Matn orqali kiriting.";
           }
         } else {
           isRecording = false;
           clearInterval(timerInterval);
-          recordBtn.classList.remove("pulse-ring");
-          recordStatus.textContent = "Yozuv to'xtatildi. Baholash tugmasini bosing.";
-          if (recognition) {
-            try {
-              recognition.stop();
-            } catch {
-              // Ignore
-            }
+          recordBtn.classList.remove('pulse-ring');
+          recordStatus.textContent = "Yozuv saqlandi! Baholash tugmasini bosing.";
+          if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+            mediaRecorder.stop();
           }
         }
       });
 
-      document.getElementById("submitSpeakingBtn").addEventListener("click", () => {
-        const spoken = speakingTranscript.value.trim();
-        const words = spoken.split(/\s+/).filter(Boolean);
-        const box = document.getElementById("speakingFeedback");
-        box.classList.remove("hidden");
+      document.getElementById('submitSpeakingBtn').addEventListener('click', async () => {
+        haptic('impact');
+        const box = document.getElementById('speakingFeedback');
+        const textTranscript = document.getElementById('speakingTranscript').value.trim();
 
-        if (words.length < 8) {
-          box.className = "rounded-xl p-3.5 text-xs bg-amber-50 text-amber-800 border border-amber-200";
-          box.textContent = "Kamida 2–3 ta to'liq gap ayting yoki yozing (kamida 8 so'z).";
+        if (!recordedBlob && !textTranscript) {
+          box.classList.remove('hidden');
+          box.className = 'rounded-xl p-3 text-xs font-bold bg-rose-50 text-rose-800 border border-rose-200';
+          box.textContent = "⚠️ Iltimos, avval ovozingizni yozib oling yoki matn kiriting.";
+          haptic('error');
           return;
         }
 
-        box.className = "rounded-xl p-3.5 text-xs bg-emerald-50 text-emerald-900 border border-emerald-200 space-y-1";
-        box.innerHTML = `
-          <div><strong>Speaking bahosi:</strong> Yaxshi natija (${words.length} so'z, ${seconds}s)</div>
-          <div>• Ravonlik: Fikr izchil bayon qilingan.</div>
-          <div>• Maslahat: 'First of all' va 'After that' kabi kirish so'zlaridan foydalaning.</div>
-        `;
-        addSkillXP("speaking", 30);
+        const btnSpinner = document.getElementById('speakingBtnSpinner');
+        const btnText = document.getElementById('speakingBtnText');
+        btnSpinner.classList.remove('hidden');
+        btnText.textContent = 'Gemini AI tahlil qilmoqda...';
+
+        try {
+          let res;
+          if (recordedBlob) {
+            const formData = new FormData();
+            formData.append('audio', recordedBlob, 'speaking.webm');
+            res = await fetch('/api/speaking/analyze', {
+              method: 'POST',
+              headers: {
+                'x-telegram-init-data': (tg && tg.initData) || ''
+              },
+              body: formData
+            });
+          } else {
+            res = await fetch('/api/speaking/analyze_text', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'x-telegram-init-data': (tg && tg.initData) || ''
+              },
+              body: JSON.stringify({
+                topic: "Describe a useful skill you learned",
+                transcript: textTranscript
+              })
+            });
+          }
+
+          const data = await res.json();
+          btnSpinner.classList.add('hidden');
+          btnText.textContent = 'Qayta baholash';
+          box.classList.remove('hidden');
+
+          const c = data.criteria || {};
+          box.innerHTML = `
+            <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+              <span class="text-xs font-bold text-slate-700">Estimated Speaking Band:</span>
+              <span class="text-base font-extrabold text-rose-600 px-3 py-0.5 rounded-full bg-rose-50 border border-rose-200">
+                Band ${data.estimated_overall_band || 6.5}
+              </span>
+            </div>
+            <div class="grid grid-cols-2 gap-2 text-[11px]">
+              <div class="bg-slate-50 p-2 rounded-lg border border-slate-200">
+                <span class="font-bold text-slate-800">Fluency:</span> ${c.fluency_and_coherence ? c.fluency_and_coherence.band : '6.5'}
+                <div class="text-[10px] text-slate-500 mt-0.5">${c.fluency_and_coherence ? c.fluency_and_coherence.comment_uz : ''}</div>
+              </div>
+              <div class="bg-slate-50 p-2 rounded-lg border border-slate-200">
+                <span class="font-bold text-slate-800">Pronunciation:</span> ${c.pronunciation ? c.pronunciation.band : '6.5'}
+                <div class="text-[10px] text-slate-500 mt-0.5">${c.pronunciation ? c.pronunciation.comment_uz : ''}</div>
+              </div>
+              <div class="bg-slate-50 p-2 rounded-lg border border-slate-200">
+                <span class="font-bold text-slate-800">Lexical:</span> ${c.lexical_resource ? c.lexical_resource.band : '6.0'}
+                <div class="text-[10px] text-slate-500 mt-0.5">${c.lexical_resource ? c.lexical_resource.comment_uz : ''}</div>
+              </div>
+              <div class="bg-slate-50 p-2 rounded-lg border border-slate-200">
+                <span class="font-bold text-slate-800">Grammar:</span> ${c.grammatical_range_and_accuracy ? c.grammatical_range_and_accuracy.band : '6.0'}
+                <div class="text-[10px] text-slate-500 mt-0.5">${c.grammatical_range_and_accuracy ? c.grammatical_range_and_accuracy.comment_uz : ''}</div>
+              </div>
+            </div>
+            <div class="text-xs space-y-1 pt-1">
+              <div class="font-bold text-slate-900">🎯 Siz aytgan nutq (Transkript):</div>
+              <div class="text-slate-700 bg-slate-50 p-2 rounded-lg text-[11px] italic">"${data.transcript || textTranscript}"</div>
+              <div class="font-bold text-slate-900 pt-1">✨ Band 7.5+ To'g'ri versiya:</div>
+              <div class="text-slate-700 bg-emerald-50/70 p-2 rounded-lg text-[11px] italic">${data.corrected_version || ''}</div>
+              <div class="text-[11px] text-rose-700 font-semibold pt-1">💡 <b>Tavsiya:</b> ${data.actionable_tip_uz || ''}</div>
+            </div>
+          `;
+          updateStats(30);
+        } catch (e) {
+          btnSpinner.classList.add('hidden');
+          btnText.textContent = 'Qayta baholash';
+          box.classList.remove('hidden');
+          box.innerHTML = `<div class="text-rose-600 font-bold">Xatolik: Audio tahlil qilinmadi. Mikrofonni tekshiring.</div>`;
+          haptic('error');
+        }
       });
+
     })();
-  </script>
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch(() => {});
-      });
-    }
   </script>
 </body>
 </html>
