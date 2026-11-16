@@ -23,7 +23,7 @@ from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup, WebAppInfo
 from dotenv import load_dotenv
 from fastapi import FastAPI, File, Header, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, FileResponse
 from google import genai
 from google.genai import types as genai_types
 from pydantic import BaseModel
@@ -185,6 +185,34 @@ async def serve_mini_app():
 @app.get("/api/health")
 async def health_check():
     return {"status": "ok", "app": "EnglishScore & IELTS AI Platform"}
+
+@app.get("/manifest.json")
+async def get_manifest():
+    p = Path(__file__).resolve().parent.parent / "frontend" / "manifest.json"
+    if not p.exists():
+        p = Path(__file__).resolve().parent / "manifest.json"
+    return FileResponse(p, media_type="application/manifest+json")
+
+@app.get("/sw.js")
+async def get_sw():
+    p = Path(__file__).resolve().parent.parent / "frontend" / "sw.js"
+    if not p.exists():
+        p = Path(__file__).resolve().parent / "sw.js"
+    return FileResponse(p, media_type="application/javascript")
+
+@app.get("/icon-192.png")
+async def get_icon_192():
+    p = Path(__file__).resolve().parent.parent / "frontend" / "icon-192.png"
+    if not p.exists():
+        p = Path(__file__).resolve().parent / "icon-192.png"
+    return FileResponse(p, media_type="image/png")
+
+@app.get("/icon-512.png")
+async def get_icon_512():
+    p = Path(__file__).resolve().parent.parent / "frontend" / "icon-512.png"
+    if not p.exists():
+        p = Path(__file__).resolve().parent / "icon-512.png"
+    return FileResponse(p, media_type="image/png")
 
 @app.get("/api/me")
 async def get_current_user(x_telegram_init_data: str = Header(...)):

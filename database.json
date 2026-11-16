@@ -1,0 +1,245 @@
+{
+  "ratings": {},
+  "postedHistory": [
+    {
+      "type": "vocabulary",
+      "date": "2026-11-05T08:10:08.977Z"
+    },
+    {
+      "type": "story",
+      "date": "2026-11-05T08:10:09.516Z"
+    },
+    {
+      "type": "quizzes",
+      "count": 10,
+      "date": "2026-11-05T08:10:24.827Z"
+    },
+    {
+      "type": "crosswords",
+      "count": 2,
+      "date": "2026-11-05T08:10:26.756Z"
+    },
+    {
+      "type": "mistakes",
+      "date": "2026-11-05T08:10:26.956Z"
+    },
+    {
+      "type": "tasks",
+      "date": "2026-11-05T08:10:30.466Z"
+    },
+    {
+      "type": "14:00_mistakes1",
+      "date": "2026-11-05T09:07:15.327Z"
+    },
+    {
+      "type": "14:00_mistakes1",
+      "date": "2026-11-05T09:08:43.804Z"
+    },
+    {
+      "type": "17:00_vocab_part2_grammar",
+      "date": "2026-11-05T12:00:01.120Z"
+    },
+    {
+      "type": "19:00_mistakes2_quiz",
+      "date": "2026-11-05T14:00:06.024Z"
+    },
+    {
+      "type": "21:00_homework",
+      "date": "2026-11-05T17:50:13.904Z"
+    },
+    {
+      "type": "06:00_vocab_part1",
+      "date": "2026-11-05T17:52:24.618Z"
+    },
+    {
+      "type": "09:00_story",
+      "date": "2026-11-05T17:52:25.924Z"
+    },
+    {
+      "type": "12:00_skills",
+      "date": "2026-11-05T17:52:30.046Z"
+    },
+    {
+      "type": "21:00_homework",
+      "date": "2026-11-05T17:52:30.336Z"
+    },
+    {
+      "type": "23:00_daily_review",
+      "date": "2026-11-05T18:00:05.347Z"
+    },
+    {
+      "type": "14:00_mistakes1",
+      "date": "2026-11-06T09:00:05.000Z"
+    },
+    {
+      "type": "17:00_vocab_part2_grammar",
+      "date": "2026-11-06T12:00:05.576Z"
+    },
+    {
+      "type": "21:00_homework",
+      "date": "2026-11-06T16:00:05.340Z"
+    },
+    {
+      "type": "23:00_daily_review",
+      "date": "2026-11-06T18:00:01.621Z"
+    },
+    {
+      "type": "09:00_story",
+      "date": "2026-11-07T04:00:04.841Z"
+    },
+    {
+      "type": "12:00_skills",
+      "date": "2026-11-07T07:00:11.026Z"
+    },
+    {
+      "type": "14:00_mistakes1",
+      "date": "2026-11-07T09:00:05.189Z"
+    },
+    {
+      "type": "17:00_vocab_part2_grammar",
+      "date": "2026-11-07T12:00:01.896Z"
+    },
+    {
+      "type": "19:00_mistakes2_quiz",
+      "date": "2026-11-07T14:00:06.588Z"
+    },
+    {
+      "type": "23:00_daily_review",
+      "date": "2026-11-07T18:00:01.073Z"
+    },
+    {
+      "type": "19:00_mistakes2_quiz",
+      "date": "2026-11-10T14:31:37.841Z"
+    },
+    {
+      "type": "23:00_daily_review",
+      "date": "2026-11-10T18:00:05.358Z"
+    },
+    {
+      "type": "14:00_mistakes1",
+      "date": "2026-11-11T09:00:00.975Z"
+    },
+    {
+      "type": "17:00_vocab_part2_grammar",
+      "date": "2026-11-11T12:00:02.787Z"
+    },
+    {
+      "type": "19:00_mistakes2_quiz",
+      "date": "2026-11-11T14:00:08.633Z"
+    },
+    {
+      "type": "23:00_daily_review",
+      "date": "2026-11-11T18:01:08.900Z"
+    },
+    {
+      "type": "12:00_skills",
+      "date": "2026-11-12T07:00:05.485Z"
+    },
+    {
+      "type": "14:00_mistakes1",
+      "date": "2026-11-12T09:00:02.838Z"
+    },
+    {
+      "type": "17:00_vocab_part2_grammar",
+      "date": "2026-11-12T12:00:01.349Z"
+    },
+    {
+      "type": "23:00_daily_review",
+      "date": "2026-11-12T18:00:03.853Z"
+    },
+    {
+      "type": "14:00_mistakes1",
+      "date": "2026-11-13T09:00:03.472Z"
+    },
+    {
+      "type": "19:00_mistakes2_quiz",
+      "date": "2026-11-13T14:00:07.112Z"
+    },
+    {
+      "type": "21:00_homework",
+      "date": "2026-11-13T16:00:02.127Z"
+    },
+    {
+      "type": "23:00_daily_review",
+      "date": "2026-11-13T18:00:04.932Z"
+    },
+    {
+      "type": "14:00_mistakes1",
+      "date": "2026-11-14T09:00:02.887Z"
+    },
+    {
+      "type": "17:00_vocab_part2_grammar",
+      "date": "2026-11-14T12:00:04.584Z"
+    },
+    {
+      "type": "19:00_mistakes2_quiz",
+      "date": "2026-11-14T14:00:03.362Z"
+    },
+    {
+      "type": "21:00_homework",
+      "date": "2026-11-14T16:00:10.860Z"
+    },
+    {
+      "type": "23:00_daily_review",
+      "date": "2026-11-14T18:00:03.868Z"
+    },
+    {
+      "type": "12:00_skills",
+      "date": "2026-11-15T07:00:03.785Z"
+    },
+    {
+      "type": "14:00_mistakes1",
+      "date": "2026-11-15T09:00:01.838Z"
+    },
+    {
+      "type": "19:00_mistakes2_quiz",
+      "date": "2026-11-15T14:00:06.366Z"
+    }
+  ],
+  "postedToday": {
+    "2026-11-05_14_mistakes1": true,
+    "2026-11-05_17_vocab2": true,
+    "2026-11-05_19_mistakes2": true,
+    "2026-11-05_06_vocab": true,
+    "2026-11-05_09_story": true,
+    "2026-11-05_12_skills": true,
+    "2026-11-05_21_homework": true,
+    "2026-11-05_23_review": true,
+    "2026-11-06_14_mistakes1": true,
+    "2026-11-06_17_vocab2": true,
+    "2026-11-06_21_homework": true,
+    "2026-11-06_23_review": true,
+    "2026-11-07_09_story": true,
+    "2026-11-07_12_skills": true,
+    "2026-11-07_14_mistakes1": true,
+    "2026-11-07_17_vocab2": true,
+    "2026-11-07_19_mistakes2": true,
+    "2026-11-07_23_review": true,
+    "2026-11-10_23_review": true,
+    "2026-11-11_14_mistakes1": true,
+    "2026-11-11_17_vocab2": true,
+    "2026-11-11_19_mistakes2": true,
+    "2026-11-11_23_review": true,
+    "2026-11-12_12_skills": true,
+    "2026-11-12_14_mistakes1": true,
+    "2026-11-12_17_vocab2": true,
+    "2026-11-12_23_review": true,
+    "2026-11-13_14_mistakes1": true,
+    "2026-11-13_19_mistakes2": true,
+    "2026-11-13_21_homework": true,
+    "2026-11-13_23_review": true,
+    "2026-11-14_14_mistakes1": true,
+    "2026-11-14_17_vocab2": true,
+    "2026-11-14_19_mistakes2": true,
+    "2026-11-14_21_homework": true,
+    "2026-11-14_23_review": true,
+    "2026-11-15_12_skills": true,
+    "2026-11-15_14_mistakes1": true,
+    "2026-11-15_19_mistakes2": true
+  },
+  "ownerMessages": [],
+  "lastUpdateId": 265258787,
+  "settings": {
+    "autoPostEnabled": true
+  }
+}
