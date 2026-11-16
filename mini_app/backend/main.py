@@ -3,9 +3,9 @@ English 4-Skills Telegram Mini App & AI IELTS Backend
 Features:
 1. Serves the Telegram Mini App Frontend (HTML/JS) directly at "/"
 2. Telegram Bot with Mini App button and Direct Voice Message IELTS Evaluator
-3. Gemini 2.5 Flash 4-Criteria IELTS Speaking & Writing Evaluation APIs
+3. Gemini 3.8 Flash 4-Criteria IELTS Speaking & Writing Evaluation APIs
 4. Telegram initData HMAC-SHA256 Security Validation
-5. User XP, Streak & Lesson Tracking APIs
+5. PWA Manifest, Service Worker, and Icon Routes for standalone App / PWABuilder
 """
 
 import asyncio
@@ -34,7 +34,6 @@ load_dotenv()
 BOT_TOKEN = os.getenv("BOT_TOKEN", "8676027227:AAGm8-ear126qmAWz-i5BZkhaeL7n45_KvQ")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
 WEBAPP_URL = os.getenv("WEBAPP_URL", "https://englishscorewithme.onrender.com")
-
 MODEL_NAME = os.getenv("MODEL_NAME", "gemini-3.8-flash")
 
 gemini_client = genai.Client(api_key=GEMINI_API_KEY) if GEMINI_API_KEY else None
@@ -161,6 +160,22 @@ def verify_telegram_init_data(init_data: str, bot_token: str) -> dict:
 
 
 # ---------------------------------------------------------
+# Asset Location Helper
+# ---------------------------------------------------------
+def find_file(filename: str) -> Path:
+    candidates = [
+        Path(__file__).resolve().parent / filename,
+        Path(__file__).resolve().parent / "mini_app" / "frontend" / filename,
+        Path(__file__).resolve().parent.parent / "frontend" / filename,
+        Path(filename).resolve(),
+    ]
+    for c in candidates:
+        if c.exists():
+            return c
+    return Path(__file__).resolve().parent / filename
+
+
+# ---------------------------------------------------------
 # FastAPI App
 # ---------------------------------------------------------
 app = FastAPI(title="English 4-Skills & IELTS AI Platform", version="1.0.0")
@@ -173,46 +188,33 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-FRONTEND_PATH = Path(__file__).resolve().parent.parent / "frontend" / "index.html"
-
 @app.get("/", response_class=HTMLResponse)
 async def serve_mini_app():
-    """Telegram Mini App Frontendini to'g'ridan-to'g'ri taqdim etadi."""
-    if FRONTEND_PATH.exists():
-        return FRONTEND_PATH.read_text(encoding="utf-8")
-    return "<h1>English 4-Skills Mini App Backend is Running!</h1>"
+    """Telegram Mini App Frontendini (PWA) to'g'ridan-to'g'ri taqdim etadi."""
+    index_path = find_file("index.html")
+    if index_path.exists():
+        return HTMLResponse(content=index_path.read_text(encoding="utf-8"), media_type="text/html; charset=utf-8")
+    return HTMLResponse(content="<h1>English 4-Skills Mini App</h1>", media_type="text/html")
+
+@app.get("/manifest.json")
+async def get_manifest():
+    return FileResponse(find_file("manifest.json"), media_type="application/manifest+json")
+
+@app.get("/sw.js")
+async def get_sw():
+    return FileResponse(find_file("sw.js"), media_type="application/javascript")
+
+@app.get("/icon-192.png")
+async def get_icon_192():
+    return FileResponse(find_file("icon-192.png"), media_type="image/png")
+
+@app.get("/icon-512.png")
+async def get_icon_512():
+    return FileResponse(find_file("icon-512.png"), media_type="image/png")
 
 @app.get("/api/health")
 async def health_check():
     return {"status": "ok", "app": "EnglishScore & IELTS AI Platform"}
-
-@app.get("/manifest.json")
-async def get_manifest():
-    p = Path(__file__).resolve().parent.parent / "frontend" / "manifest.json"
-    if not p.exists():
-        p = Path(__file__).resolve().parent / "manifest.json"
-    return FileResponse(p, media_type="application/manifest+json")
-
-@app.get("/sw.js")
-async def get_sw():
-    p = Path(__file__).resolve().parent.parent / "frontend" / "sw.js"
-    if not p.exists():
-        p = Path(__file__).resolve().parent / "sw.js"
-    return FileResponse(p, media_type="application/javascript")
-
-@app.get("/icon-192.png")
-async def get_icon_192():
-    p = Path(__file__).resolve().parent.parent / "frontend" / "icon-192.png"
-    if not p.exists():
-        p = Path(__file__).resolve().parent / "icon-192.png"
-    return FileResponse(p, media_type="image/png")
-
-@app.get("/icon-512.png")
-async def get_icon_512():
-    p = Path(__file__).resolve().parent.parent / "frontend" / "icon-512.png"
-    if not p.exists():
-        p = Path(__file__).resolve().parent / "icon-512.png"
-    return FileResponse(p, media_type="image/png")
 
 @app.get("/api/me")
 async def get_current_user(x_telegram_init_data: str = Header(...)):
@@ -256,8 +258,7 @@ dp = Dispatcher()
 
 @dp.message(CommandStart())
 async def cmd_start(message: types.Message):
-    # Agar WEBAPP_URL berilmagan bo'lsa, xabarning o'zi chiqadi
-    app_url = WEBAPP_URL or "https://t.me"
+    app_url = WEBAPP_URL or "https://englishscorewithme.onrender.com"
     keyboard = InlineKeyboardMarkup(
         inline_keyboard=[
             [
