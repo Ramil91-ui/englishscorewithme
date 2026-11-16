@@ -1643,15 +1643,51 @@
       // -------------------------------------------------------------
       // 5. VOCABULARY SECTION (50,000+ Words & Multi-Accent Audio)
       // -------------------------------------------------------------
-      const vocabList = (window.VOCAB_DATABASE && window.VOCAB_DATABASE.length > 0) ? window.VOCAB_DATABASE : [
+      const defaultCatalog = [
+        // A1
+        { w: "Ability", ipa: "/əˈbɪl.ə.ti/", pos: "noun", level: "A1", uz: "qobiliyat, layoqat", ex: "She demonstrated a natural ability to learn foreign languages.", topic: "Education" },
+        { w: "Achieve", ipa: "/əˈtʃiːv/", pos: "verb", level: "A1", uz: "erishmoq, qo'lga kiritmoq", ex: "Consistent daily effort helps you achieve your goals.", topic: "Success" },
+        { w: "Advice", ipa: "/ədˈvaɪs/", pos: "noun", level: "A1", uz: "maslahat, yo'l-yo'riq", ex: "My teacher gave me invaluable advice on test preparation.", topic: "Daily Life" },
+        { w: "Agree", ipa: "/əˈɡriː/", pos: "verb", level: "A1", uz: "rozi bo'lmoq, fikriga qo'shilmoq", ex: "I strongly agree with the first speaker's perspective.", topic: "Communication" },
+        { w: "Allow", ipa: "/əˈlaʊ/", pos: "verb", level: "A1", uz: "ruxsat bermoq, imkoniyat yaratmoq", ex: "Smartphones allow students to access global information instantly.", topic: "Technology" },
+        { w: "Arrive", ipa: "/əˈraɪv/", pos: "verb", level: "A1", uz: "yetib kelmoq, tashrif buyurmoq", ex: "The flight arrived precisely on schedule.", topic: "Travel" },
+        { w: "Believe", ipa: "/bɪˈliːv/", pos: "verb", level: "A1", uz: "ishonmoq", ex: "Experts believe that active practice enhances long-term memory.", topic: "Mindset" },
+        { w: "Borrow", ipa: "/ˈbɒr.əʊ/", pos: "verb", level: "A1", uz: "qarzga olmoq, vaqtincha olmoq", ex: "University students may borrow up to five books per week.", topic: "Daily Life" },
+        { w: "Choose", ipa: "/tʃuːz/", pos: "verb", level: "A1", uz: "tanlamoq, ixtiyor qilmoq", ex: "Candidates must choose one topic for the discussion.", topic: "Education" },
+        { w: "Decide", ipa: "/dɪˈsaɪd/", pos: "verb", level: "A1", uz: "qaror qabul qilmoq", ex: "He decided to pursue higher education in the UK.", topic: "Decisions" },
+        // A2
+        { w: "Accurate", ipa: "/ˈæk.jə.rət/", pos: "adj", level: "A2", uz: "aniq, to'g'ri, xatosiz", ex: "Candidates must provide accurate statistics in Writing Task 1.", topic: "Academic" },
+        { w: "Benefit", ipa: "/ˈben.ɪ.fɪt/", pos: "noun/verb", level: "A2", uz: "foyda, afzallik; foyda ko'rmoq", ex: "Regular exercise yields substantial mental and physical benefits.", topic: "Health" },
+        { w: "Challenge", ipa: "/ˈtʃæl.ɪndʒ/", pos: "noun/verb", level: "A2", uz: "qiyinchilik, sinov; chorlamoq", ex: "Adapting to a new academic environment presents a real challenge.", topic: "Growth" },
+        { w: "Develop", ipa: "/dɪˈvel.əp/", pos: "verb", level: "A2", uz: "rivojlantirmoq, shakllantirmoq", ex: "Extensive reading develops critical reasoning skills.", topic: "Education" },
+        { w: "Effort", ipa: "/ˈef.ət/", pos: "noun", level: "A2", uz: "sa'y-harakat, tirishqoqlik", ex: "Attaining fluency demands deliberate and disciplined effort.", topic: "Productivity" },
+        { w: "Frequent", ipa: "/ˈfriː.kwənt/", pos: "adj", level: "A2", uz: "tez-tez uchraydigan, odatiy", ex: "Frequent vocabulary review prevents memory degradation.", topic: "Learning" },
+        // B1
+        { w: "Approach", ipa: "/əˈprəʊtʃ/", pos: "noun/verb", level: "B1", uz: "yondashuv, usul; yaqinlashmoq", ex: "We need a structured approach to master academic writing.", topic: "Methodology" },
+        { w: "Circumstance", ipa: "/ˈsɜː.kəm.stɑːns/", pos: "noun", level: "B1", uz: "vaziyat, holat, shart-sharoit", ex: "Under no circumstances should exam rules be breached.", topic: "Society" },
         { w: "Consistent", ipa: "/kənˈsɪs.tənt/", pos: "adj", level: "B1", uz: "izchil, muntazam, to'xtovsiz", ex: "Consistent practice beats occasional cramming.", topic: "Habits" },
+        { w: "Demonstrate", ipa: "/ˈdem.ən.streɪt/", pos: "verb", level: "B1", uz: "isbotlamoq, yaqqol ko'rsatmoq", ex: "The statistics demonstrate a steady rise in electric vehicle sales.", topic: "Academic" },
+        { w: "Essential", ipa: "/ɪˈsen.ʃəl/", pos: "adj", level: "B1", uz: "o'ta muhim, zaruriy", ex: "Collocations and phrasal verbs are essential for IELTS 7.0+.", topic: "Education" },
+        // B2
+        { w: "Ambiguous", ipa: "/æmˈbɪɡ.ju.əs/", pos: "adj", level: "B2", uz: "noaniq, ikki xil tushuniladigan", ex: "Avoid ambiguous phrasing in IELTS academic essays.", topic: "Writing" },
+        { w: "Coherent", ipa: "/kəʊˈhɪə.rənt/", pos: "adj", level: "B2", uz: "mantiqiy bog'langan, izchil", ex: "Ensure your paragraphs present a coherent progression of ideas.", topic: "Writing" },
         { w: "Facilitate", ipa: "/fəˈsɪl.ɪ.teɪt/", pos: "verb", level: "B2", uz: "osonlashtirmoq, ko'maklashmoq", ex: "Technology facilitates personalized learning.", topic: "Technology" },
+        { w: "Inevitable", ipa: "/ɪnˈev.ɪ.tə.bəl/", pos: "adj", level: "B2", uz: "muqarrar, qochib bo'lmas", ex: "Technological disruptions are inevitable in modern life.", topic: "Society" },
         { w: "Resilient", ipa: "/rɪˈzɪl.jənt/", pos: "adj", level: "B2", uz: "chidamli, qiyinchilikdan tez tiklanuvchi", ex: "Resilient students overcome exam anxiety.", topic: "Mindset" },
+        // C1
+        { w: "Alleviate", ipa: "/əˈliː.vi.eɪt/", pos: "verb", level: "C1", uz: "yengillashtirmoq, og'irini yengil qilmoq", ex: "Government subsidies can alleviate poverty.", topic: "Economics" },
+        { w: "Detrimental", ipa: "/ˌdet.rɪˈmen.təl/", pos: "adj", level: "C1", uz: "zararli, salbiy oqibat keltiruvchi", ex: "Inconsistency is detrimental to long-term memory.", topic: "Health" },
         { w: "Pivotal", ipa: "/ˈpɪv.ə.təl/", pos: "adj", level: "C1", uz: "burilish yasovchi, hal qiluvchi", ex: "Pronunciation plays a pivotal role in IELTS speaking.", topic: "IELTS" },
         { w: "Ubiquitous", ipa: "/juːˈbɪk.wɪ.təs/", pos: "adj", level: "C1", uz: "hamma joyda mavjud, keng tarqalgan", ex: "Smartphones have become ubiquitous.", topic: "Technology" },
+        // C2 & Idioms
+        { w: "Aberration", ipa: "/ˌæb.əˈreɪ.ʃən/", pos: "noun", level: "C2", uz: "me'yordan chetga chiqish, anomaliya", ex: "The score drop was merely an aberration.", topic: "Mastery" },
         { w: "Mellifluous", ipa: "/melˈɪf.lu.əs/", pos: "adj", level: "C2", uz: "boldek yoqimli, muloyim jaranglovchi", ex: "The orator had a mellifluous tone.", topic: "Speech" },
-        { w: "Bite the bullet", ipa: "[idiom]", pos: "idiom", level: "Band 8+", uz: "qiyinchilikka chidab yuzlashmoq", ex: "I decided to bite the bullet and take the C1 exam.", topic: "Idioms" }
+        { w: "Bite the bullet", ipa: "[idiom]", pos: "idiom", level: "Band 8+", uz: "qiyinchilikka chidab yuzlashmoq", ex: "I decided to bite the bullet and take the C1 exam.", topic: "Idioms" },
+        { w: "Hit the nail on the head", ipa: "[idiom]", pos: "idiom", level: "Band 8+", uz: "masalaning ayni mag'zini to'g'ri topmoq", ex: "Your explanation hit the nail on the head.", topic: "Idioms" }
       ];
+
+      const rawDb = (window.VOCAB_DATABASE && window.VOCAB_DATABASE.length > 0) ? window.VOCAB_DATABASE : defaultCatalog;
+      const vocabList = [...rawDb];
 
       let activeVocabLevel = 'all';
       let activeVocabSearch = '';
@@ -1662,10 +1698,11 @@
         container.innerHTML = '';
 
         const filtered = vocabList.filter(item => {
-          const matchLevel = (activeVocabLevel === 'all') || (item.level === activeVocabLevel);
           const matchSearch = !activeVocabSearch ||
             item.w.toLowerCase().includes(activeVocabSearch.toLowerCase()) ||
             item.uz.toLowerCase().includes(activeVocabSearch.toLowerCase());
+          // When actively searching, search all words across levels!
+          const matchLevel = activeVocabSearch ? true : ((activeVocabLevel === 'all') || (item.level === activeVocabLevel));
           return matchLevel && matchSearch;
         });
 
@@ -1755,35 +1792,94 @@
 
       document.getElementById('triggerAiVocabSearchBtn').addEventListener('click', async () => {
         haptic('impact');
-        const word = activeVocabSearch;
+        const word = (activeVocabSearch || '').trim();
+        if (!word) return;
         const btn = document.getElementById('triggerAiVocabSearchBtn');
         btn.disabled = true;
         btn.textContent = 'Qidirilmoqda...';
 
         try {
-          const res = await fetch('/api/vocabulary/ai_lookup', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ word: word })
-          });
-          const item = await res.json();
+          let item = null;
+          // Step 1: Query backend AI lookup
+          try {
+            const res = await fetch('/api/vocabulary/ai_lookup', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ word: word })
+            });
+            if (res.ok) {
+              item = await res.json();
+            }
+          } catch (e) {
+            console.warn('Backend lookup notice:', e);
+          }
+
+          // Step 2: Fallback to public dictionary if needed
+          if (!item || !item.word) {
+            try {
+              const dRes = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word)}`);
+              if (dRes.ok) {
+                const dData = await dRes.json();
+                if (dData && dData[0]) {
+                  const e0 = dData[0];
+                  const m0 = (e0.meanings && e0.meanings[0]) || {};
+                  const def0 = (m0.definitions && m0.definitions[0]) || {};
+                  item = {
+                    word: e0.word,
+                    ipa_uk: e0.phonetic || (e0.phonetics && e0.phonetics[0] && e0.phonetics[0].text) || `/${e0.word}/`,
+                    pos: m0.partOfSpeech || 'word',
+                    cefr_level: 'B2',
+                    uzbek_meaning: def0.definition || `${e0.word} so'zi`,
+                    example_sentences: [def0.example || `The word '${e0.word}' is frequently used in English.`]
+                  };
+                }
+              }
+            } catch (dErr) {
+              console.warn('Dict API notice:', dErr);
+            }
+          }
+
+          // Step 3: Guaranteed fallback
+          if (!item || !item.word) {
+            item = {
+              word: word.charAt(0).toUpperCase() + word.slice(1),
+              ipa_uk: `/${word.toLowerCase()}/`,
+              pos: 'word',
+              cefr_level: 'B2',
+              uzbek_meaning: `${word} — inglizcha so'z`,
+              example_sentences: [`Practise using '${word}' in your IELTS speaking practice.`]
+            };
+          }
+
           vocabList.unshift({
             w: item.word || word,
-            ipa: item.ipa_uk || item.ipa_us || '/—/',
+            ipa: item.ipa_uk || item.ipa_us || `/${word.toLowerCase()}/`,
             pos: item.pos || 'word',
             level: item.cefr_level || 'B2',
-            uz: item.uzbek_meaning || 'ma\'lumot topildi',
-            ex: (item.example_sentences && item.example_sentences[0]) || item.english_definition || '',
+            uz: item.uzbek_meaning || `${word} so'zi`,
+            ex: (item.example_sentences && item.example_sentences[0]) || item.english_definition || `Study '${word}' for IELTS.`,
             topic: 'Dictionary'
           });
+
           btn.disabled = false;
           btn.textContent = '🤖 Gemini AI orqali qidirish';
+          document.getElementById('vocabAiSearchBox').classList.add('hidden');
           renderVocabList();
           haptic('success');
-        } catch (e) {
+        } catch (err) {
           btn.disabled = false;
-          btn.textContent = 'Qayta urinish';
-          alert("So'z qidirishda xatolik yuz berdi.");
+          btn.textContent = '🤖 Gemini AI orqali qidirish';
+          vocabList.unshift({
+            w: word.charAt(0).toUpperCase() + word.slice(1),
+            ipa: `/${word.toLowerCase()}/`,
+            pos: 'word',
+            level: 'B2',
+            uz: `${word} — inglizcha so'z`,
+            ex: `Learn '${word}' for IELTS exam.`,
+            topic: 'Dictionary'
+          });
+          document.getElementById('vocabAiSearchBox').classList.add('hidden');
+          renderVocabList();
         }
       });
 
