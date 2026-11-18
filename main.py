@@ -647,6 +647,8 @@ async def handle_voice_message(message: types.Message):
     )
     await wait_msg.edit_text(reply_text, parse_mode="HTML")
 
+from channel_scheduler import channel_scheduler_loop
+
 async def run_bot():
     await dp.start_polling(bot)
 
@@ -658,6 +660,7 @@ async def main():
     await asyncio.gather(
         server.serve(),
         run_bot(),
+        channel_scheduler_loop(bot),
     )
 
 if __name__ == "__main__":
